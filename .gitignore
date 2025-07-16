@@ -1,0 +1,6 @@
+db
+db/*
+*.tar.gz
+*.zip
+*.csv
+data
