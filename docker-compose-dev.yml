@@ -36,7 +36,7 @@ services:
     depends_on:
       - db
     environment:
-      - APP_ENV=prod
+      - APP_ENV=dev
       - TZ=Africa/Abidjan
       - MAILER_DSN=gmail+smtp://anguidev@gmail.com:jotkgdyyfrlujfza@default
       - DATABASE_URL=mysql://root:QT6e5APtSYaU@db:3306/siga_db?serverVersion=10.5.27&charset=utf8mb4
