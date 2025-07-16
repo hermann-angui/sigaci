@@ -10,9 +10,10 @@ services:
       MYSQL_ROOT_PASSWORD: QT6e5APtSYaU
       MYSQL_USER: root
       MYSQL_PASSWORD: QT6e5APtSYaU
-      MYSQL_DATABASE: cnmci_db
+      MYSQL_DATABASE: siga_db
     volumes:
       - ./db:/var/lib/mysql
+      - ./docker/mariadb/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     ports:
       - 3306:3306
@@ -21,10 +22,10 @@ services:
     image: phpmyadmin/phpmyadmin
     depends_on:
       - db
-    ports:
-      - 83:80
     environment:
       UPLOAD_LIMIT: 300M
+    ports:
+      - "83:80"
 
   app:
     container_name: app
@@ -35,12 +36,12 @@ services:
     depends_on:
       - db
     environment:
-      - APP_ENV=dev
+      - APP_ENV=prod
       - TZ=Africa/Abidjan
       - MAILER_DSN=gmail+smtp://anguidev@gmail.com:jotkgdyyfrlujfza@default
-      - DATABASE_URL=mysql://root:QT6e5APtSYaU@db:3306/cnmci_db?serverVersion=14
+      - DATABASE_URL=mysql://root:QT6e5APtSYaU@db:3306/siga_db?serverVersion=10.5.27&charset=utf8mb4
     volumes:
-      - ./app:/var/www/html
+      - ./codebase:/var/www/html
 
   nginx:
     container_name: nginx
@@ -48,11 +49,11 @@ services:
     build:
       context: ./docker/nginx
     volumes:
-      - ./app:/var/www/html
+      - ./codebase:/var/www/html
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/sites/:/etc/nginx/sites-available
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+    ports:
+      - "82:80"
     depends_on:
       - app
-    ports:
-      - 82:80
