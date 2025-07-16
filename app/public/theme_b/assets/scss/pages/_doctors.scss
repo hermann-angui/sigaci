@@ -1,0 +1,99 @@
+.doctor-profile-img {
+    width: 120px;
+}
+.nav-bordered {
+    &.nav-border-bottom {
+        .nav-link {
+            border: 0;
+            border-bottom: 1px solid $border-color;
+            &.active {
+                border-color: var(--#{$prefix}primary);
+                color: var(--#{$prefix}primary);
+            }
+            &:hover {
+                border-color: var(--#{$prefix}primary);
+                color: var(--#{$prefix}primary);
+            }
+        }
+    }
+}
+.activity-feed {
+	list-style: none;
+	margin-bottom: 0;
+  	position: relative;
+	.feed-item {
+		padding-bottom: 19px;
+		padding-left: 20px;
+		position: relative;
+		&:last-child {
+			border-color: transparent;
+      		padding-bottom: 0;
+            &::before {
+                display: none;
+            }
+		}
+        &::before {
+            content: "";
+            border-left: 2px dashed var(--#{$prefix}border-color);
+            width: 1px;
+            height: calc(100% - 10px);
+            position: absolute;
+            left: 0;
+            top: 20px;
+        }
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 13px;
+			left: -3px;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			border: 2px solid var(--#{$prefix}primary);
+			background-color: var(--#{$prefix}primary);
+		}
+	}
+}
+.availabity-check {
+    .btn-check:checked 
+    ~ label {
+        background-color: var(--#{$prefix}primary) !important;
+        color: $white !important;
+        border-color: var(--#{$prefix}primary) !important;
+    }
+}
+.schedule-tab {
+    .nav-link {
+        background: $light;
+        color: $dark;
+        &:hover {
+            background: var(--#{$prefix}primary);
+            color: $white;
+        }
+    }
+}
+
+.avatar-xxxl.patient-avatar{
+  width: 120px;
+  height: 120px;
+}
+
+.notification-wrap {
+    .hover-btn {
+        opacity: 0;
+        transition: 0.5s all;
+    }
+    .card {
+        &:hover {
+            .hover-btn {
+                opacity: 1;
+                transition: 0.5s all;
+            }
+        }
+    }
+}
+
+.pages-editor{
+    height: 80px;
+}
