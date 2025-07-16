@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>Nationalities index</title>
+
+{% block body %}
+    <h1>Nationalities index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nationality in nationalities %}
+            <tr>
+                <td>{{ nationality.id }}</td>
+                <td>{{ nationality.name }}</td>
+                <td>
+                    <a href="{{ path('app_nationalities_show', {'id': nationality.id}) }}">show</a>
+                    <a href="{{ path('app_nationalities_edit', {'id': nationality.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_nationalities_new') }}">Create new</a>
+{% endblock %}

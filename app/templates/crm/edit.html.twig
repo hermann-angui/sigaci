@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Crm</title>
+
+{% block body %}
+    <h1>Edit Crm</h1>
+
+    {{ include('crm/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_crm_index') }}">back to list</a>
+
+    {{ include('crm/_delete_form.html.twig') }}
+{% endblock %}

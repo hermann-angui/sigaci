@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<title>Etablissement</title>
+
+{% block body %}
+    <h1>Etablissement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etablissement.id }}</td>
+            </tr>
+            <tr>
+                <th>Primaryactivity</th>
+                <td>{{ etablissement.primaryactivity }}</td>
+            </tr>
+            <tr>
+                <th>Activitystartdate</th>
+                <td>{{ etablissement.activitystartdate }}</td>
+            </tr>
+            <tr>
+                <th>Secondaryactivity</th>
+                <td>{{ etablissement.secondaryactivity }}</td>
+            </tr>
+            <tr>
+                <th>Companyname</th>
+                <td>{{ etablissement.companyname }}</td>
+            </tr>
+            <tr>
+                <th>Companyacronym</th>
+                <td>{{ etablissement.companyacronym }}</td>
+            </tr>
+            <tr>
+                <th>Companypurpose</th>
+                <td>{{ etablissement.companypurpose }}</td>
+            </tr>
+            <tr>
+                <th>Companylegalstatus</th>
+                <td>{{ etablissement.companylegalstatus }}</td>
+            </tr>
+            <tr>
+                <th>Numregistremetier</th>
+                <td>{{ etablissement.numregistremetier }}</td>
+            </tr>
+            <tr>
+                <th>Numrea</th>
+                <td>{{ etablissement.numrea }}</td>
+            </tr>
+            <tr>
+                <th>Numrccm</th>
+                <td>{{ etablissement.numrccm }}</td>
+            </tr>
+            <tr>
+                <th>Companycapitalsocial</th>
+                <td>{{ etablissement.companycapitalsocial }}</td>
+            </tr>
+            <tr>
+                <th>Companyregimefiscal</th>
+                <td>{{ etablissement.companyregimefiscal }}</td>
+            </tr>
+            <tr>
+                <th>Companynumcnps</th>
+                <td>{{ etablissement.companynumcnps }}</td>
+            </tr>
+            <tr>
+                <th>Companynombreassocies</th>
+                <td>{{ etablissement.companynombreassocies }}</td>
+            </tr>
+            <tr>
+                <th>Companyduree</th>
+                <td>{{ etablissement.companyduree }}</td>
+            </tr>
+            <tr>
+                <th>Companytaxpayernumber</th>
+                <td>{{ etablissement.companytaxpayernumber }}</td>
+            </tr>
+            <tr>
+                <th>Companyadressepostale</th>
+                <td>{{ etablissement.companyadressepostale }}</td>
+            </tr>
+            <tr>
+                <th>Companytel</th>
+                <td>{{ etablissement.companytel }}</td>
+            </tr>
+            <tr>
+                <th>Companyfax</th>
+                <td>{{ etablissement.companyfax }}</td>
+            </tr>
+            <tr>
+                <th>Companydepartement</th>
+                <td>{{ etablissement.companydepartement }}</td>
+            </tr>
+            <tr>
+                <th>Companycommune</th>
+                <td>{{ etablissement.companycommune }}</td>
+            </tr>
+            <tr>
+                <th>Companysp</th>
+                <td>{{ etablissement.companysp }}</td>
+            </tr>
+            <tr>
+                <th>Companyquartier</th>
+                <td>{{ etablissement.companyquartier }}</td>
+            </tr>
+            <tr>
+                <th>Companyvillage</th>
+                <td>{{ etablissement.companyvillage }}</td>
+            </tr>
+            <tr>
+                <th>Companylotnumber</th>
+                <td>{{ etablissement.companylotnumber }}</td>
+            </tr>
+            <tr>
+                <th>Companyilotnumber</th>
+                <td>{{ etablissement.companyilotnumber }}</td>
+            </tr>
+            <tr>
+                <th>Companyeffectsalariehomme</th>
+                <td>{{ etablissement.companyeffectsalariehomme }}</td>
+            </tr>
+            <tr>
+                <th>Companyeffectsalariefemme</th>
+                <td>{{ etablissement.companyeffectsalariefemme }}</td>
+            </tr>
+            <tr>
+                <th>Companyeffectapprentishomme</th>
+                <td>{{ etablissement.companyeffectapprentishomme }}</td>
+            </tr>
+            <tr>
+                <th>Companyeffectepprentishomme</th>
+                <td>{{ etablissement.companyeffectepprentishomme }}</td>
+            </tr>
+            <tr>
+                <th>Companyeffectapprentisfemme</th>
+                <td>{{ etablissement.companyeffectapprentisfemme }}</td>
+            </tr>
+            <tr>
+                <th>Activitylocation</th>
+                <td>{{ etablissement.activitylocation }}</td>
+            </tr>
+            <tr>
+                <th>ActivityLocation</th>
+                <td>{{ etablissement.activityLocation }}</td>
+            </tr>
+            <tr>
+                <th>Activitycountry</th>
+                <td>{{ etablissement.activitycountry }}</td>
+            </tr>
+            <tr>
+                <th>Activitycity</th>
+                <td>{{ etablissement.activitycity }}</td>
+            </tr>
+            <tr>
+                <th>Activityquartier</th>
+                <td>{{ etablissement.activityquartier }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ etablissement.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ etablissement.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etablissement_index') }}">back to list</a>
+
+    <a href="{{ path('app_etablissement_edit', {'id': etablissement.id}) }}">edit</a>
+
+    {{ include('etablissement/_delete_form.html.twig') }}
+{% endblock %}

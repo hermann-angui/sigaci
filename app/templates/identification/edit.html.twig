@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Identification</title>
+
+{% block body %}
+    <h1>Edit Identification</h1>
+
+    {{ include('identification/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_identification_index') }}">back to list</a>
+
+    {{ include('identification/_delete_form.html.twig') }}
+{% endblock %}

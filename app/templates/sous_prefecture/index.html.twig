@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>SousPrefecture index</title>
+
+{% block body %}
+    <h1>SousPrefecture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sous_prefecture in sous_prefectures %}
+            <tr>
+                <td>{{ sous_prefecture.id }}</td>
+                <td>{{ sous_prefecture.name }}</td>
+                <td>
+                    <a href="{{ path('app_sous_prefecture_show', {'id': sous_prefecture.id}) }}">show</a>
+                    <a href="{{ path('app_sous_prefecture_edit', {'id': sous_prefecture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sous_prefecture_new') }}">Create new</a>
+{% endblock %}

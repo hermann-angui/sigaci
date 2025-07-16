@@ -1,0 +1,208 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        .card-body{
+            border: 2px solid #f8f8fb;
+            cursor: pointer;
+        }
+
+        .card-body:hover {
+            border: 2px solid #ffbb00;
+            cursor: pointer;
+        }
+
+        .nav-tabs-custom .nav-item .nav-link::after {
+            background-color: #ffbb00;;
+        }
+
+        .nav-tabs-custom .nav-item .nav-link.active {
+            color: #117b01;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Begin page -->
+<div id="layout-wrapper">
+
+    {{ include('admin/_partials/header.html.twig') }}
+
+    <!-- ========== Left Sidebar Start ========== -->
+    {{ include('admin/_partials/left-sidebar.html.twig')}}
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h2 class="mb-sm-0 font-size-24">ENRÔLEMENT ARTSIANS A LA CNMCI</h2>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="{{path('admin_index')}}"><i class="fa fa-arrow-left"></i> Revenir à l'accueil</a></li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+                        <div class="row">
+                            <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#enattente" role="tab" aria-selected="true">
+                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                        <span class="d-none d-sm-block">EN ATTENTE DE VERIFICATION</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#completed" role="tab" aria-selected="false" tabindex="-1">
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="d-none d-sm-block">DEJA TRAITES</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content p-3 text-muted">
+                                <div class="tab-pane active show" id="enattente" role="tabpanel">
+                                    <div class="row">
+                                    {% for artisan in artisans %}
+                                        {% if artisan.status == 'ENROLEMENT_PAYEMENT_FRAIS_ENROLEMENT' %}
+                                            <div class="col-md-3 col-sm-3">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <ul class="list-inline user-chat-nav text-end mb-0">
+                                                            <li class="list-inline-item">
+                                                                <div class="dropdown">
+                                                                    <button class="btn nav-btn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                        <i class="bx bx-dots-horizontal-rounded"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-end " style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 42px);" data-popper-placement="bottom-end">
+                                                                        <a class="dropdown-item" href="{{ path('admin_artisan_show', {id: artisan.id})}}"><i class="fa fa-eye"></i> Afficher</a>
+                                                                        <a class="dropdown-item" href="{{ path('admin_artisan_edit', {id: artisan.id})}}"><i class="fa fa-pen"></i> Modifier</a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="mb-4">
+                                                            <img src="{{ asset('/artisans/' ~ artisan.reference ~ '/' ~ artisan.photo|image_path) }}" alt="" width="50">
+                                                            <h5 class="font-size-15 mb-1"><a href="javascript: void(0);" class="text-dark">{{ artisan.firstName ~ ' ' ~ artisan.lastName }}</a></h5>
+                                                            <p class="text-muted">{{ artisan.createdAt|date('d/m/y') }}</p>
+                                                            <div>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-nowrap mb-0">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <th scope="row">Mobile :</th>
+                                                                            <td>{{ artisan.mobile }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">E-mail :</th>
+                                                                            <td>{{ artisan.email }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row">Ville :</th>
+                                                                            <td>{{ artisan.city }}</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       <div class="card-footer bg-transparent border-top">
+                                                            <div class="contact-links d-flex font-size-20">
+                                                                <div class="flex-fill">
+                                                                    <a href="{{ path("admin_artisan_validate_data", { id: artisan.id}) }}" class="btn btn-success text-white"><i class="bx bx-sticker"></i>Valider</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="completed" role="tabpanel">
+                                    <div class="row">
+                                        {% for artisan in artisans %}
+                                            {% if artisan.status not in ["ENROLEMENT_PHOTO_DOCUMENT_SCANNE","ENROLEMENT_PAYEMENT_FRAIS_ENROLEMENT"] %}
+                                                <div class="col-md-3 col-sm-3">
+                                                    <div class="card text-center">
+                                                        <div class="card-body">
+                                                            <ul class="list-inline user-chat-nav text-end mb-0">
+                                                                <li class="list-inline-item">
+                                                                    <div class="dropdown">
+                                                                        <button class="btn nav-btn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                            <i class="bx bx-dots-horizontal-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu dropdown-menu-end " style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 42px);" data-popper-placement="bottom-end">
+                                                                            <a class="dropdown-item" href="{{ path('admin_artisan_show', {id: artisan.id})}}"><i class="fa fa-eye"></i> Afficher</a>
+                                                                            <a class="dropdown-item" href="{{ path('admin_artisan_edit', {id: artisan.id})}}"><i class="fa fa-pen"></i> Modifier</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="mb-4">
+                                                                <img src="{{ asset('/artisans/' ~ artisan.reference ~ '/' ~ artisan.photo|image_path) }}" alt="" width="50">
+                                                                <h5 class="font-size-15 mb-1"><a href="javascript: void(0);" class="text-dark">{{ artisan.firstName ~ ' ' ~ artisan.lastName }}</a></h5>
+                                                                <p class="text-muted">{{ artisan.createdAt|date('d/m/y') }}</p>
+                                                                <div>
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-nowrap mb-0">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <th scope="row">Mobile :</th>
+                                                                                <td>{{ artisan.mobile }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">E-mail :</th>
+                                                                                <td>{{ artisan.email }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">Ville :</th>
+                                                                                <td>{{ artisan.city }}</td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+{#                                                            <div class="card-footer bg-transparent border-top">
+                                                                <div class="contact-links d-flex font-size-20">
+                                                                    <div class="flex-fill">
+                                                                        <a href="{{ path("admin_artisan_review_cncmi", { artisan_id: artisan.id, service_id: 1 }) }}" class="btn btn-success text-white"><i class="bx bx-sticker"></i>Vérifier et imprimer les documents</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+        });
+    </script>
+{% endblock %}

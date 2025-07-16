@@ -1,0 +1,444 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        .wizard .steps > ul > li a {
+            font-size: 12px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .form-control, .form-select {
+            padding: 0.5rem 0.55rem;
+            font-size: 0.95rem;
+            color: #117b01;
+            font-weight: bolder;
+            border-radius: 0rem;
+            border: 2px solid #ffbb00;
+            text-transform: uppercase;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: 0;
+            box-shadow: none;
+            border-color: #ffbb00;
+        }
+
+        .col-form-label {
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #2a3042;
+        }
+
+        .form-check-label {
+            font-size: 0.82rem;
+        }
+
+        .form-check-input {
+            margin-top: 0.4em;
+        }
+
+        #field {
+            margin-left: .5em;
+            float: left;
+        }
+
+        #field, label {
+            float: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: small;
+        }
+
+        br {
+            clear: both;
+        }
+
+        input {
+            border: 1px solid black;
+            margin-bottom: .5em;
+        }
+
+        input.error {
+            border: 1px solid red;
+        }
+
+        label.error {
+            padding-left: 0px;
+            margin-left: 0em;
+        }
+
+        label.valid {
+            display: block;
+            width: 16px;
+            height: 16px;
+        }
+
+        .select2 span.select2-selection__rendered,
+        li.select2-results__option {
+            font-size: 1.05rem;
+            color: #117b01;
+            font-weight: bolder;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #117b01;
+            /*font-size: 0.75rem;*/
+            font-size: 1.05rem;
+            color: #fff;
+            font-weight: bolder;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #117b01;
+            line-height: 28px;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            background-color: white;
+            border: 1px solid #ffbb00;
+            border-radius: 4px;
+            cursor: text;
+            min-height: 50px;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 41px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 2px solid #ffbb00;
+            border-radius: 0px;
+        }
+
+        input.select2-search__field {
+            border: 1px solid black;
+            margin-bottom: 0.0em;
+        }
+
+
+        @media (max-width: 768px) {
+            .page-header-info h2 {
+                font-size: 26px;
+                line-height: 36px;
+            }
+        }
+
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+
+
+        #stepperform h3{
+            background: linear-gradient(59deg, rgba(252,114,0,1) 9%, rgba(244,130,0,0.8855917366946778) 32%, rgba(62,146,60,0.9398113905325444) 69%, rgba(4,113,2,1) 95%);
+            padding: 5px 5px;
+            color: white;
+            font-size: 16px;
+        }
+
+        fieldset > div {
+            padding: 10px 25px;
+            margin-top: 5px;
+        }
+
+        .image-upload-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            min-height: 200px;
+            margin: auto;
+            border: 1px dashed #adb5bd;
+            padding: 10px 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+
+        {{ include('admin/_partials/header.html.twig') }}
+
+        <!-- ========== Left Sidebar Start ========== -->
+        {{ include('admin/_partials/left-sidebar.html.twig')}}
+        <!-- Left Sidebar End -->
+
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body border-bottom">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="flex-shrink-0">
+                                            {% if artisan.photo is not null %}
+                                                <a href="{{ path('admin_artisan_generate_card',{'id': artisan.id}) }}" class="btn btn-success btn-sm waves-effect waves-light"><span class="fa fa-blender fa-1x"></span> Générer la carte</a>
+                                            {% endif %}
+                                            {% if artisan.cardPhoto is not null %}
+                                                <a href="{{ path('admin_artisan_show_card',{'id': artisan.id}) }}" class="btn btn-success btn-sm waves-effect waves-light" ><span class="fa fa-eye fa-1x"></span> Voir la carte</a>
+                                                <a href="{{ path('cnmci_fiche_artisan', {id: artisan.id}) }}" class="btn btn-success btn-sm waves-effect waves-light" ><span class="fa fa-eye fa-1x"></span> Fiche CNMCI</a>
+                                                <a href="{{ path('admin_artisan_download_card',{'id': artisan.id}) }}" class="btn btn-primary btn-sm waves-effect waves-light" ><span class="fa fa-download fa-1x"></span> Télécharger la carte</a>
+                                            {% endif %}
+                                            <a href="{{ path('admin_artisan_edit', {id: artisan.id}) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="fa fa-pen fa-1x"></i> Editer</a>
+                                            <a href="{{ path('admin_artisan_index') }}" class="btn btn-primary btn-sm waves-effect waves-light">Fermer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mb-4">N° RM: <strong class="badge bg-gradient bg-info p-2"></strong></h4>
+                                    <div class="row">
+                                        <h2 class="section-title">INFORMATIONS PERSONNELLES</h2>
+                                        <table class="table table-condensed table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="d-flex justify-content-center">
+                                                        <label for="artisan_registration_edit_photo" class="d-block d-flex justify-content-center align-content-center">
+                                                            {% if artisan.photo is null %}
+                                                                <img src="{{ asset('assets/images/avatar/avatar.jpg') }}" alt="" width="100" class="rounded-2">
+                                                            {% else %}
+                                                                <img id="imagePreview" src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photo }}" alt="" width="200" class="rounded-2">
+                                                            {% endif %}
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sexe</th>
+                                                <td>{{ artisan.sex }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <td>{{ artisan.lastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms</th>
+                                                <td>{{ artisan.firstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>{{ artisan.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Mobile</th>
+                                                <td>{{ artisan.mobile }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Whatsapp</th>
+                                                <td>{{ artisan.Whatsapp }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Fixe</th>
+                                                <td>{{ artisan.phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ville de naissance</th>
+                                                <td>{{ artisan.birthCity }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pays de naissance</th>
+                                                <td>{{ artisan.birthCountry }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Date de naissance</th>
+                                                <td>{{ artisan.dateOfBirth ? artisan.dateOfBirth|date('d-m-Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Localité de naissance</th>
+                                                <td>{{ artisan.birthLocality }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nationalité</th>
+                                                <td>{{ artisan.nationality }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Situation géographique de résidence</th>
+                                                <td>{{ artisan.commune }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ville/Commune de résidence</th>
+                                                <td>{{ artisan.city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Quartier de résidence</th>
+                                                <td>{{ artisan.quartier }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Boîte postale</th>
+                                                <td>{{ artisan.postalCode }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">DOCUMENTS D'IDENTITE</h2>
+                                        <table class="table table-condensed table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Compagnie de VTC</th>
+                                                <td>{{ artisan.company ? artisan.company|json_encode: "" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type de la pièce d'identite (CNI ou Carte consulaire)</th>
+                                                <td>{{ artisan.IdType }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>N° Pièce d'identité</th>
+                                                <td>{{ artisan.IdNumber }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Autorité délivrant la pièce d'identité</th>
+                                                <td>{{ artisan.IdDeliveryAuthority }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Délivré le</th>
+                                                <td>{{ artisan.IdDeliveryDate ? artisan.IdDeliveryDate| date('d-m-Y')  : ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Lieu d'établissement de la pièce d'identité</th>
+                                                <td>{{ artisan.IdDeliveryPlace }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro du permis de conduire</th>
+                                                <td>{{ artisan.drivingLicenseNumber }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Images CNI</th>
+                                                <td>
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPieceFront }}" alt="" width="300" class="rounded-2">
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPieceBack }}" alt="" width="300" class="rounded-2">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Images Permis</th>
+                                                <td>
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPermisFront }}" alt="" width="300" class="rounded-2">
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPermisBack }}" alt="" width="300" class="rounded-2">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">DONNEES FAMILLES</h2>
+                                        <table class="table table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Situation matrimoniale</th>
+                                                <td>{{ artisan.etatCivil }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms conjoint</th>
+                                                <td>{{ artisan.partnerFirstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom conjoint</th>
+                                                <td>{{ artisan.partnerLastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantLastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantFirstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Téléphone personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantMobile }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">CHAMBRE DES METIERS</h2>
+                                        <table class="table table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Code reçu de paiement Orange money</th>
+                                                <td>{{ artisan.paymentReceiptCnmciCode }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Reçu orange</th>
+                                                <td>
+                                                    {% if artisan.paymentReceiptCnmciPdf %}
+                                                        <embed src="/artisans/{{ artisan.reference }}/{{ artisan.paymentReceiptCnmciPdf }}" width="500" height="375" type="application/pdf">
+                                                    {% endif %}
+                                                    {% if artisan.mobileMoneyReceiptImage %}
+                                                        <img src="/artisans/{{ artisan.reference }}/{{ artisan.mobileMoneyReceiptImage }}" alt="" width="300" class="rounded-2">
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row d-flex justify-content-center mt-4">
+                                        <a href="{{ path('admin_index')}}" class="btn btn-primary waves-effect waves-light col-md-2 offset-1"><i class="fa fa-save fa-1x"></i> Enregistrer et quitter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- container-fluid -->
+            </div><!-- End Page-content -->
+
+            {{ include('admin/_partials/footer.html.twig') }}
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+  <script>
+      $('document').ready(function() {
+          $("#artisan_photo").change(function(data){
+              var imageFile = data.target.files[0];
+              var reader = new FileReader();
+              reader.readAsDataURL(imageFile);
+
+              reader.onload = function(evt){
+                  $('#imagePreview').attr('src', evt.target.result);
+                  $('#imagePreview').fadeIn(650);
+              }
+          });
+      });
+
+  </script>
+{% endblock %}
+
+

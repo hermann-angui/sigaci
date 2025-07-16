@@ -1,0 +1,93 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-center mb-1">
+                        <img src="{{ asset('assets/frontend/img/cnmci.png') }}" width="80"/>
+                    </div>
+                    <h5 class="card-title text-primary fs-5 fw-bolder">ADMIS</h5>
+                    <h5 class="card-title text-primary fs-5 fw-bolder">A L'IMMATRICULATION A LA CHAMBRE DE METIERS DE COTE D'IVOIRE</h5>
+                </div>
+                <div class="d-flex justify-content-center mb-5">
+                    {% if artisan.photo is null %}
+                        <img src="{{ asset('assets/images/avatar/avatar.jpg') }}" alt="" width="200" class="rounded-2">
+                    {% else %}
+                        <img id="imagePreview" src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photo }}" alt="" width="200" class="rounded-2">
+                    {% endif %}
+                    <div style="position: relative; z-index: 10; top:130px;right:55px;">
+                        <img src="{{ asset('assets/frontend/img/sticker-paid.png') }}" alt="" width="130">
+                    </div>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ artisan.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prénoms</th>
+                        <td>{{ artisan.firstName }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° Permis de conduire</th>
+                        <td>{{ artisan.drivingLicenseNumber }}</td>
+                    </tr>
+                    {#
+                    <tr>
+                        <th>Lieu de naissance</th>
+                        <td>{{ artisan.birthCity }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° Permis de conduire</th>
+                        <td>{{ artisan.drivingLicenseNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° Pièce d'identité</th>
+                        <td>{{ artisan.IdNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type de pièce</th>
+                        <td>{{ artisan.IdType }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile</th>
+                        <td>{{ artisan.mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tel Fixe</th>
+                        <td>{{ artisan.phone }}</td>
+                    </tr>
+                    #}
+                    <tr>
+                        <td colspan="2">
+                            <div class="text-center fw-bolder">
+                                <h5>Contact</h5>
+                                <h5>Tel: 01 02 68 87 88</h5>
+                                <h5>Fixe: 27 22 28 65 16</h5>
+                                <h5>Email: info@synacvtcci.org</h5>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ asset('assets/admin/images/logo_synacvtcci.jpg') }}" width="50"/>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{% endblock %}
+
+

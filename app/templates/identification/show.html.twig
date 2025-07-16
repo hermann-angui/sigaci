@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<title>Identification</title>
+
+{% block body %}
+    <h1>Identification</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ identification.id }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ identification.status }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ identification.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ identification.updatedAt }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ identification.type }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ identification.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ identification.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_identification_index') }}">back to list</a>
+
+    <a href="{{ path('app_identification_edit', {'id': identification.id}) }}">edit</a>
+
+    {{ include('identification/_delete_form.html.twig') }}
+{% endblock %}

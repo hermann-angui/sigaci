@@ -1,0 +1,93 @@
+{% if is_granted('ROLE_SFP') or is_granted('ROLE_ADMIN') %}
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title" key="t-menu">Menu</li>
+                <li>
+                    <a href="{{ path('admin_dashboard') }}" class="waves-effect" aria-expanded="false">
+                        <i class="bx bxs-dashboard"></i>
+                        <span key="t-t0">Tableau de bord</span>
+                    </a>
+                </li>
+{#
+                <li>
+                    <a href="{{  path('synacvtcci_member_list') }}" class="waves-effect" aria-expanded="false">
+                        <i class="bx bxs-award"></i>
+                        <span key="t-t0">Synacvtcci</span>
+                    </a>
+                </li>
+#}
+
+                <li class>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="false">
+                        <i class="bx bxs-book-bookmark"></i>
+                        <span  key="t-sa">ARTISANS</span>
+                    </a>
+                    <ul class="sub-menu mm-collapse" aria-expanded="false" style="height: 0px;">
+                        <li><a href="{{ path('admin_index') }}" key="t-sa">Accueil</a></li>
+                        <li><a href="{{ path('admin_artisan_index') }}" key="t-sa">Liste des artisans</a></li>
+                        <li><a href="{{ path('admin_artisan_valider_cnmci') }}" key="t-sa">Cartes en production</a></li>
+                        <li><a href="{{ path('admin_carte_produite_cnmci') }}" key="t-sa">Cartes produites</a></li>
+                        <li><a href="{{ path('admin_carte_expired_cnmci') }}" key="t-ex">Cartes expirées</a></li>
+{#                        <li><a href="{{ path('cnmci_souscripteurs') }}" key="t-sa">Registres produits</a></li>#}
+{#                        <li><a href="{{ path('cnmci_list_contravention') }}" key="t-sa">Contraventions</a></li>#}
+                    </ul>
+                </li>
+                <li class>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="false">
+                        <i class="bx bxs-error"></i>
+                        <span  key="t-s0">Enrôlement rejetés</span>
+                    </a>
+                    <ul class="sub-menu mm-collapse" aria-expanded="false" style="height: 0px;">
+                        <li><a href="{{ path('cnmci_rejet') ~ '?type_rejet=ENROLEMENT_PAIEMENT_REJETE_CNMCI' }}" key="t-s1">Paiements rejetés</a></li>
+                        <li><a href="{{ path('cnmci_rejet') ~ '?type_rejet=ENROLEMENT_REJETE_CNMCI' }}" key="t-s2">Enrôlements rejetés</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="false">
+                        <i class="bx bxs-building"></i>
+                        <span  key="t-s0">CNMCI</span>
+                    </a>
+                    <ul class="sub-menu mm-collapse" aria-expanded="false" style="height: 0px;">
+                        <li><a href="{{ path('cnmci_index') }}" key="t-s3">Acceuil</a></li>
+                        <li><a href="{{ path('cnmci_souscripteurs') }}" key="t-s3">Vérification & Validation</a></li>
+                        <li><a href="{{ path('cnmci_rejet') ~ '?type_rejet=ENROLEMENT_PAIEMENT_REJETE_CNMCI' }}" key="t-s1">Paiements rejetés</a></li>
+                        <li><a href="{{ path('cnmci_rejet') ~ '?type_rejet=ENROLEMENT_REJETE_CNMCI' }}" key="t-s2">Enrôlements rejetés</a></li>
+                        <li><a href="{{ path('cnmci_list_contravention') }}" key="t-s3">Contraventions</a></li>
+                        <li><a href="{{ path('cnmci_stats') }}" key="t-s3">Statistiques</a></li>
+                    </ul>
+                </li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-lock"></i>
+                        <span key="t-se0">Sécurité</span>
+                    </a>
+                    <ul class="sub-sub-menu mm-collapse" aria-expanded="false">
+                        <li><a href="{{ path('admin_user_index') }}" key="t-se1">Utilisateurs</a></li>
+                        <li><a href="#" key="t-se2">Roles</a></li>
+x                    </ul>
+                </li>
+
+                <li class>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-cog"></i>
+                        <span key="t-a0">Configuration</span>
+                    </a>
+                    <ul class="sub-sub-menu mm-collapse">
+                        <li><a href="{{ path('admin_configuration_index') }}" key="t-pa1">Paramètres système</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+{% endif %}
