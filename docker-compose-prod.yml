@@ -9,7 +9,7 @@ services:
       dockerfile: ./dockerize/Dockerfile.php
     container_name: symfony_php
     volumes:
-      - ./symfony_app:/var/www/html # Mount your Symfony application code here
+      - ./app:/var/www/html # Mount your Symfony application code here
     # No direct ports mapping needed for PHP-FPM, Nginx communicates internally
     environment:
       APP_ENV: dev
@@ -26,7 +26,7 @@ services:
     image: nginx:alpine
     container_name: symfony_nginx
     volumes:
-      - ./symfony_app:/var/www/html # Mount your Symfony application code here
+      - ./app:/var/www/html # Mount your Symfony application code here
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # Custom Nginx configuration
     # No direct ports mapping needed for Nginx, Traefik will handle external access
     depends_on:
@@ -89,7 +89,7 @@ services:
       MYSQL_USER: QT6e5APtSYaU
       MYSQL_PASSWORD: QT6e5APtSYaU
     volumes:
-      - mysql_data:/var/lib/mysql # Persistent data volume for the database
+      - ./db:/var/lib/mysql # Persistent data volume for the database
     ports:
       - "3306:3306" # Expose MySQL port (for direct access from host, optional)
     networks:
@@ -140,16 +140,16 @@ services:
     image: composer:2 # Use Composer 2
     container_name: symfony_composer
     volumes:
-      - ./symfony_app:/app # Mount your Symfony application code
+      - ./app:/app # Mount your Symfony application code
     command: ["composer", "install"] # Example command, you can run other commands manually
     depends_on:
       - php # Composer might need PHP to be available
     networks:
       - default
 
-volumes:
-  db_data: # Define the named volume for PostgreSQL data (uncomment if using PostgreSQL)
-  mysql_data: # Define the named volume for MySQL data
+#volumes:
+#  db_data: # Define the named volume for PostgreSQL data (uncomment if using PostgreSQL)
+#  mysql_data: # Define the named volume for MySQL data
 
 networks:
   default: # Default network for internal communication between app services
