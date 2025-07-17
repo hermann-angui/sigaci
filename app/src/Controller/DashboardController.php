@@ -33,7 +33,13 @@ class DashboardController extends AbstractController
     #[Route('/home', name: 'app_dashboard_a', methods: ['GET'])]
     public function home(Request $request): Response
     {
-        return $this->render('theme_b/index.html.twig');
+        return $this->render('theme_b/dashboard/index.html.twig');
+    }
+
+    #[Route('/template/registre', name: 'app_template_registre', methods: ['GET'])]
+    public function templateRegistre(Request $request): Response
+    {
+        return $this->render('blueprint/registre.html.twig');
     }
 
     #[Route('/maps', name: 'app_map', methods: ['GET'])]

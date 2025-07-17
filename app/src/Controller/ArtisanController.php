@@ -39,12 +39,13 @@ class ArtisanController extends AbstractController
                     $view = sprintf( $content, $photo, $context->getId(), $fullname, $metier );
                     return $view;
             }])
+            ->add('crm', TextColumn::class, ['label' => 'CRM', 'field' => 'crm.name'])
             ->add('nom', TextColumn::class, ['label' => 'Nom'])
             ->add('prenoms', TextColumn::class, ['label' => 'Prénoms'])
             ->add('category', TextColumn::class, ['label' => 'Type'])
             ->add('numero_rm', TextColumn::class, ['label' => 'N° RM'])
             ->add('numero_carte_professionnelle', TextColumn::class, ['label' => 'N° Carte Pro.'])
-            ->add('crm', TextColumn::class, ['label' => 'CRM', 'field' => 'crm.name'])
+
             ->add('email', TextColumn::class, ['label' => 'action', 'render' => function($value, $context) {
                 $artisan_id = $context->getId();
                 $content = "<div class='d-inline-block text-nowrap'>
@@ -79,7 +80,7 @@ class ArtisanController extends AbstractController
             return $table->getResponse();
         }
 
-        return $this->render('artisan/index.html.twig', ['datatable' => $table]);
+        return $this->render('theme_b/artisan/index.html.twig', ['datatable' => $table]);
     }
 
     #[Route('/dt', name: 'app_artisan_dt', methods: ['GET'])]

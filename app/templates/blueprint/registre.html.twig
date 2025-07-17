@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        @media print {
+            body{
+                width: 21cm;
+                height: 29.7cm;
+                margin: 30mm 45mm 30mm 45mm;
+            }
+        }
+        .main-wrapper {
+            padding: 5px;
+            height: 100%;
+            border: 1px solid black
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 5px;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            flex-direction: column;
+        }
+        #logo_cnmci {
+            width: 100px;
+            height: 100px;
+        }
+        #armoirie {
+            width: 100px;
+            height: 100px;
+        }
+        #republique_ci{
+            width: 100px;
+            height: 50px;
+        }
+        #data-wrapper{
+            border: 2px dashed #9fa0a8;
+        }
+        #data-wrapper .data-row-body  {
+            padding: 5px 5px;
+            color: #000000;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+        }
+        #data-wrapper .data-row-title {
+            display: flex;
+            justify-content: center;
+            background-color: #9fa0a8;
+        }
+        #data-wrapper .data-row-title h3 {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="nav">
+            <div>
+                <img id="logo_cnmci" src="{{ asset('assets/img/logos/cnmci.png') }}" alt="logo_cnmci" />
+            </div>
+            <div>
+                <img id="armoirie" src="{{ asset('assets/img/logos/armoirie.png') }}" alt="logo_armoirie" />
+            </div>
+            <div>
+                <img id="republique_ci" src="{{ asset('assets/img/logos/republique.jpeg') }}" alt="logo_republique" />
+            </div>
+        </div>
+        <div class="header">
+            <div style="width: 500px; display: flex; justify-content: center; border-top: 1px solid #9fa0a8; border-bottom: 1px solid #9fa0a8">
+                <span>ETABLISSEMENT PUBLIC CREE PAR LE DECRET N° 93 - 01 DU 7 JANVIER 1993</span>
+            </div>
+            <div>
+                <h3 style="border">REGISTRE DES METIERS</h3>
+                <p>
+                    -Réglement N° 01/2014/CM/UEMOA du 27 mars 2014 portant code communautaire de de l'artisanat de l'Union Economique et Monétaire Ouest Africaine - Loi N° 2014-338 du 05 juin 2014 relative à l'artisanat
+                </p>
+            </div>
+            <div class="box-title">
+                EXTRAIT D'IMMATRICULATION
+            </div>
+
+        </div>
+        <div id="data-wrapper">
+            <div class="data-row">
+                <div class="data-row-body">
+                    <div><span>N°RM : </span><span></span></div>
+                    <div><span>Date d'immatriculation : </span><span></span></div>
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-row-title">
+                    <h3>ENTREPRISE</h3>
+                </div>
+                <div class="data-row-body">
+
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-row-title">
+                    <h3>EXPLOITANT</h3>
+                </div>
+                <div class="data-row-body">
+
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-row-title">
+                    <h3>ETABLISSEMENT</h3>
+                </div>
+                <div class="data-row-body">
+
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-row-title">
+                    <h3>PERSONNE POUVANT ENGAGER L'ENTREPRISE</h3>
+                </div>
+                <div class="data-row-body">
+
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="data-row-title">
+                </div>
+                <div class="data-row-body">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

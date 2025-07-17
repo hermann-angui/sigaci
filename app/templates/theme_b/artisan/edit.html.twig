@@ -11,29 +11,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}"/>
-
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-
-    <style>
-        div.dt-container table.dataTable.table tbody>tr.selected, div.dt-container table.dataTable.table tbody>tr>.selected
-        {
-            background-color: rgba(var(--bs-primary-rgb), 0.08);
-        }
-
-        table.table.dataTable>tbody>tr {
-            background-color: transparent;
-        }
-        thead, tbody, tfoot, tr, td, th {
-            border-color: inherit;
-            border-style: solid;
-            border-width: 0;
-        }
-    </style>
-
 {% endblock %}
 
 {% block body %}
@@ -42,31 +19,6 @@
         <!-- customers List Table -->
         <div class="card">
             <div class="card-datatable table-responsive">
-                <div class="row border-1 border-light p-6">
-                    <div class="col-sm-5">
-                        <div class="form-floating form-floating-outline">
-                            <input
-                                id="tagCrmSuggestion"
-                                name="tagCrmSuggestion"
-                                class="form-control h-auto form-control-sm"
-                                placeholder="Filtre CRM"
-                                value="" />
-                            <label for="tagCrmSuggestion">CRM</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <select type="text" class="form-control form-control-sm filter" id="departement_filter" name="departement_filter">
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <select type="text" class="form-control form-control-sm filter" id="sousprefecture_filter" name="sousprefecture_filter">
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <select type="text" class="form-control filter" id="metier_filter" name="metier_filter">
-                        </select>
-                    </div>
-                </div>
                 <div id="artisanDatatable">
                     <div class="d-flex justify-content-center py-5">
                         <span>Chargement...</span>
@@ -233,7 +185,7 @@
 
 {% block javascript %}
 <!-- Vendors JS -->
-    <script src="{{ asset('assets/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/libs/swiper/swiper.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
@@ -243,78 +195,16 @@
     <script src="{{ asset('assets/libs/@form-validation/auto-focus.js') }}"></script>
     <script src="{{ asset('assets/libs/cleavejs/cleave.js') }}"></script>
     <script src="{{ asset('assets/libs/cleavejs/cleave-phone.js') }}"></script>
-
-    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
-
-
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
-
     <script>
          jQuery(document).ready(function ($) {
-           var datatable = null;
-
-           $('#artisanDatatable').initDataTables({{ datatable_settings(datatable) }}, {
-                    responsive: true,
-                    pageLength: 10,
-                  //  dom: 'lpftrip',
-                  //  searching: false,
-                    select: true,
-                  //  lengthChange: false,
-                    language: {
-                        //url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
-                        info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-                        infoEmpty: "Affichage de 0 à 0 sur 0 entrées",
-                        lengthMenu: "Afficher _MENU_ entrées",
-                    },
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        "url": '{{ path('app_artisan_index') }}',
-                        "data": function (d) {
-                            d.crm = $("#tagCrmSuggestion").val();
-                        }
-                    }
-            }
-            ).then(function(dt) {
-               datatable  = dt;
-            });
-
-            $(".filter").change(function (e) {
-                 $('#artisanDatatable').draw();
-            });
-
-            $('.select2').select2();
+            $('#artisanDatatable').initDataTables({{ datatable_settings(datatable) }});
 
             $('.dataTables_length').addClass('my-0');
             $('.dt-action-buttons').addClass('pt-0');
             $('.dataTables_filter input').addClass('ms-0');
             $('.dt-buttons').addClass('d-flex flex-wrap');
-
-            const tagCrmSuggestionEl = document.querySelector('#tagCrmSuggestion');
-
-            let tagCrmSuggestion = null;
-            $.get('{{ path('app_crm_select2_ajax') }}', function(data){
-                let whitelist = data;
-                let tagCrmSuggestion = new Tagify(tagCrmSuggestionEl, {
-                        whitelist: whitelist,
-                        maxTags: 10,
-                        dropdown: {
-                          maxItems: 20,
-                          classname: 'tags-inline',
-                          enabled: 0,
-                          closeOnSelect: false
-                        }
-                });
-                tagCrmSuggestion.on('add', function(e) {
-                    console.log($("#tagCrmSuggestion").val());
-                     datatable.draw();
-                });
-            });
-
         })
     </script>
 {% endblock %}
