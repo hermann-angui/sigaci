@@ -4,3 +4,4 @@ db/*
 *.zip
 *.csv
 data
+dockerize/traefik/acme.json
