@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: symfony-php
     volumes:
-      - ./app:/var/www/html # Mount your Symfony project into the container
+      - ./app:/var/www/html                  # Mount your Symfony project into the container
     environment:
       # Set Symfony environment to development
       APP_ENV: dev
@@ -87,7 +87,7 @@ services:
       # Enable Traefik for phpMyAdmin
       - "traefik.enable=true"
       # Router for phpMyAdmin
-      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)" # Change to your domain
+      - "traefik.http.routers.phpmyadmin.rule=Host(`db-cnmci.sfpci.com`)" # Change to your domain
       - "traefik.http.routers.phpmyadmin.entrypoints=websecure"
       - "traefik.http.routers.phpmyadmin.tls.certresolver=letsencrypt"
       # Service definition for phpMyAdmin
@@ -109,7 +109,7 @@ services:
       - "--api.dashboard=true"
       # Configure Let's Encrypt resolver
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true" # Use TLS challenge for Let's Encrypt
-      - "--certificatesresolvers.letsencrypt.acme.email=your-email@example.com" # IMPORTANT: Change to your email
+      - "--certificatesresolvers.letsencrypt.acme.email=anguidev@gmail.com" # IMPORTANT: Change to your email
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme.json" # Where certs are stored
       # Use Let's Encrypt staging environment for testing (remove for production)
       - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
