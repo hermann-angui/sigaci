@@ -89,7 +89,8 @@ services:
       # Example DATABASE_URL for MySQL (uncomment if using MySQL)
       DATABASE_URL: mysql://root:QT6e5APtSYaU@db:3306/siga_db?serverVersion=10.5.27&charset=utf8mb4
     networks:
-      - default # PHP-FPM needs to communicate with Nginx and databases on the default network
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
 
   # Nginx Web Server
   nginx:
@@ -101,8 +102,8 @@ services:
     depends_on:
       - app # Nginx depends on PHP-FPM being ready
     networks:
-      - default # Nginx needs to communicate with PHP-FPM on the default network
-      - traefik_public # Nginx needs to be accessible by Traefik
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
     labels:
       # Enable Traefik for this service
       - "traefik.enable=true"
