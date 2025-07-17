@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: ./dockerize
-      dockerfile: ./dockerize/prod/Dockerfile
+      dockerfile: ./prod/Dockerfile
     volumes:
       - ./app:/var/www/html # Mount your Symfony application code here
     # No direct ports mapping needed for PHP-FPM, Nginx communicates internally
