@@ -3,11 +3,10 @@ version: '3.8'
 
 services:
   # PHP-FPM Service
-  php:
+  app:
     build:
       context: .
-      dockerfile: ./dockerize/Dockerfile.php
-    container_name: symfony_php
+      dockerfile: ./dockerize/Dockerfile
     volumes:
       - ./app:/var/www/html # Mount your Symfony application code here
     # No direct ports mapping needed for PHP-FPM, Nginx communicates internally
@@ -24,13 +23,12 @@ services:
   # Nginx Web Server
   nginx:
     image: nginx:alpine
-    container_name: symfony_nginx
     volumes:
       - ./app:/var/www/html # Mount your Symfony application code here
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # Custom Nginx configuration
     # No direct ports mapping needed for Nginx, Traefik will handle external access
     depends_on:
-      - php # Nginx depends on PHP-FPM being ready
+      - app # Nginx depends on PHP-FPM being ready
     networks:
       - default # Nginx needs to communicate with PHP-FPM on the default network
       - traefik_public # Nginx needs to be accessible by Traefik
@@ -51,7 +49,6 @@ services:
   # Traefik Reverse Proxy and Load Balancer
   traefik:
     image: traefik:v2.11 # Use a recent Traefik v2 version
-    container_name: traefik
     command:
       # Enable Docker provider and expose Traefik API
       - "--api.dashboard=true"
@@ -80,9 +77,8 @@ services:
       - traefik_public # Traefik needs to be on the public network to route traffic
 
   # MySQL Database Service
-  mysql:
+  db:
     image: mysql:8.0 # Using MySQL 8.0
-    container_name: symfony_mysql
     environment:
       MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # IMPORTANT: Change this to a strong password
       MYSQL_DATABASE: siga_db
@@ -98,7 +94,6 @@ services:
   # phpMyAdmin Service
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: symfony_phpmyadmin
     environment:
       PMA_HOST: mysql # Connect to the 'mysql' service
       MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # Use the same root password as your MySQL service
@@ -106,7 +101,7 @@ services:
       UPLOAD_LIMIT: 64M # Increase upload limit if needed
       MEMORY_LIMIT: 256M # Increase memory limit if needed
     depends_on:
-      - mysql # phpMyAdmin depends on MySQL being ready
+      - db # phpMyAdmin depends on MySQL being ready
     networks:
       - default # phpMyAdmin needs to communicate with MySQL on the default network
       - traefik_public # phpMyAdmin needs to be accessible by Traefik
@@ -143,7 +138,7 @@ services:
       - ./app:/app # Mount your Symfony application code
     command: ["composer", "install"] # Example command, you can run other commands manually
     depends_on:
-      - php # Composer might need PHP to be available
+      - app # Composer might need PHP to be available
     networks:
       - default
 
