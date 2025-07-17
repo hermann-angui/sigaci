@@ -27,8 +27,8 @@ services:
       - "8080:8080" # The Traefik dashboard port (optional, for monitoring)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # Mount Docker socket for Traefik to discover services
-      #- ./dockerize/traefik/traefik.yml:/etc/traefik/traefik.yml:ro # Mount Traefik static configuration
-      #- ./dockerize/traefik/acme.json:/etc/traefik/acme.json # Volume for Let's Encrypt certificates
+      - ./dockerize/traefik/traefik.yml:/etc/traefik/traefik.yml:ro # Mount Traefik static configuration
+      - ./dockerize/traefik/acme.json:/etc/traefik/acme.json # Volume for Let's Encrypt certificates
     networks:
       - traefik_public # Traefik needs to be on the public network to route traffic
 
