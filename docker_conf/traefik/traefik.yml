@@ -28,7 +28,7 @@ providers:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: your-email@example.com # IMPORTANT: Replace with your actual email
+      email: anguidev@gmail.com # IMPORTANT: Replace with your actual email
       storage: /etc/traefik/acme.json # Path to store certificates
       # Use TLS challenge for automatic certificate issuance
       tlsChallenge: {}
