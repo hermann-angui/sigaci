@@ -55,8 +55,8 @@ RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
 RUN curl -sS https://getcomposer.org/installer | php -- \
    --install-dir=/usr/bin --filename=composer --version=2.8.9
 
-COPY ./php-fpm/php.ini $PHP_INI_DIR/
-COPY ./php-fpm/xdebug.ini $PHP_INI_DIR/conf.d/
+COPY ../php-fpm/php.ini $PHP_INI_DIR/
+COPY ../php-fpm/xdebug.ini $PHP_INI_DIR/conf.d/
 
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
@@ -64,7 +64,7 @@ RUN docker-php-ext-enable xdebug
 WORKDIR /var/www/html
 
 # Use supervisor to start cron, cron-tab and php-fpm
-COPY ./php-fpm/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ../php-fpm/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
 
 RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list
