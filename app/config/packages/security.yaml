@@ -11,7 +11,7 @@ security:
                 property: username
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js|media|assets)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api_login:
             pattern: ^/api/auth
@@ -78,7 +78,7 @@ security:
 #         - { path: ^(?!/(login|reset-password|api/docs|media)), roles: ROLE_USER }
 #         - { path: ^/api/auth, roles: PUBLIC_ACCESS }
 #         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-         - { path: ^(?!/(login|reset-password|api/docs|media|assets|home)), roles: ROLE_USER }
+         - { path: ^(?!/(login|reset-password|api/docs|media|assets)), roles: ROLE_USER }
          - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
          - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
          - { path: ^/api/contexts, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI contexts
