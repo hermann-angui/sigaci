@@ -15,7 +15,7 @@ WORKDIR /var/www/html
 # cron: For running scheduled tasks
 # supervisor: A process control system (optional, but good for managing cron and php-fpm)
 RUN apk add --no-cache \
-    nginx \ # Nginx is not needed in FPM container, remove if not used for some reason
+    nginx \
     git \
     curl \
     libzip-dev \
