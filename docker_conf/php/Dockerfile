@@ -1,8 +1,26 @@
 # docker/php/Dockerfile
 # Use a lightweight PHP 8.3-FPM image
-FROM php:8.3-fpm-alpine
+FROM php:8.3-fpm
+
+# Install PHP extensions and dependencies
+# Using apt-get for Debian-based images
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libicu-dev \
+    libpq-dev \
+    libxml2-dev \
+    cron \
+    supervisor \
+    locales \
+    && rm -rf /var/lib/apt/lists/* \
 
 # Set working directory inside the container
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip intl opcache bcmath exif pcntl sockets
+
 WORKDIR /var/www/html
 
 # Install system dependencies and PHP extensions
@@ -14,24 +32,6 @@ WORKDIR /var/www/html
 # xdebug: PHP debugger (for development)
 # cron: For running scheduled tasks
 # supervisor: A process control system (optional, but good for managing cron and php-fpm)
-RUN apk add --no-cache \
-    nginx \
-    git \
-    curl \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    libwebp-dev \
-    freetype-dev \
-    icu-dev \
-    cron \
-    supervisor \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql intl zip opcache \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && rm -rf /tmp/pear \
-    && rm -rf /var/cache/apk/*
 
 # Copy custom php.ini configuration
 COPY php.ini /usr/local/etc/php/conf.d/custom.ini
