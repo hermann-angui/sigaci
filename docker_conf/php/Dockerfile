@@ -31,7 +31,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && rm -rf /tmp/pear \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy custom php.ini configuration
 COPY php.ini /usr/local/etc/php/conf.d/custom.ini
