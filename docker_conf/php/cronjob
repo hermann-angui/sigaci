@@ -1,0 +1,8 @@
+# docker/php/cronjob
+# This is an example cron job.
+# It will run every minute and echo a message to a log file.
+# Replace with your actual Symfony console commands or scripts.
+
+* * * * * echo "Cron job executed at $(date)" >> /var/www/html/var/log/cron.log 2>&1
+# Example: Run a Symfony command every hour
+# 0 * * * * /usr/local/bin/php /var/www/html/bin/console app:my-custom-command --env=prod >> /var/www/html/var/log/symfony_cron.log 2>&1
