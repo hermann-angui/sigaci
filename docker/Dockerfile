@@ -33,7 +33,12 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libxslt1-dev \
     libxrender1 \
     libfontconfig1 \
-    fontconfig
+    fontconfig \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    postgresql-dev \
+    mysql-client \
+    mysql-dev
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl-dev curl git unzip libxml2-dev libpq-dev && \

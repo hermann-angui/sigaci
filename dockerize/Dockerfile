@@ -24,18 +24,18 @@ mysql-dev \
 # For Symfony's security component
 libsodium-dev \
 # For opcache and apcu
-php83-opcache \
-php83-apcu \
+#php83-opcache \
+#php83-apcu \
 # For intl extension
 icu-dev \
 # For imagick (uncomment if needed)
-# imagemagick-dev \
+imagemagick-dev \
 # For xdebug (uncomment if needed for debugging)
-# php83-xdebug \
+#php83-xdebug \
 && docker-php-ext-configure gd --with-jpeg --with-webp \
 && docker-php-ext-install -j$(nproc) gd pdo_pgsql zip intl sodium pdo_mysql \
-# && docker-php-ext-install imagick # Uncomment if you need imagick
-# && docker-php-ext-enable xdebug # Uncomment if you need xdebug
+&& docker-php-ext-install imagick \
+&& docker-php-ext-enable xdebug
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
