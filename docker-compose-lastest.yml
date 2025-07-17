@@ -19,7 +19,7 @@ services:
   # PHP-FPM Service
   php:
     build:
-      context: ./docker/php
+      context: ./docker_conf/php
       dockerfile: Dockerfile
     container_name: symfony-php
     volumes:
