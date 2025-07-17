@@ -94,7 +94,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mysql # Connect to the 'mysql' service
+      PMA_HOST: db # Connect to the 'mysql' service
       MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # Use the same root password as your MySQL service
       PMA_PORT: 3306 # The port MySQL is listening on
       UPLOAD_LIMIT: 64M # Increase upload limit if needed
