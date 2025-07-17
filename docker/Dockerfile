@@ -21,6 +21,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
+    imagemagick \
     libpng-dev \
     libjpeg-dev \
     libicu-dev \
@@ -42,10 +43,10 @@ RUN apt-get update --fix-missing && apt-get install -y \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl-dev curl git unzip libxml2-dev libpq-dev && \
-    pecl install apcu && \
+    pecl install apcu imagick && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install -j$(nproc) zip opcache intl pdo_pgsql pgsql pdo_mysql bcmath exif gd gettext && \
-    docker-php-ext-enable apcu pdo_pgsql pdo_mysql sodium && \
+    docker-php-ext-enable apcu pdo_pgsql pdo_mysql sodium imagick && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
