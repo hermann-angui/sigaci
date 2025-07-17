@@ -24,7 +24,7 @@ services:
     image: nginx:alpine
     volumes:
       - ./app:/var/www/html # Mount your Symfony application code here
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # Custom Nginx configuration
+      - ./dockerize/nginx/default.conf:/etc/nginx/conf.d/default.conf # Custom Nginx configuration
     # No direct ports mapping needed for Nginx, Traefik will handle external access
     depends_on:
       - app # Nginx depends on PHP-FPM being ready
@@ -70,8 +70,8 @@ services:
       - "8080:8080" # The Traefik dashboard port (optional, for monitoring)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # Mount Docker socket for Traefik to discover services
-      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro # Mount Traefik static configuration
-      - ./traefik/acme.json:/etc/traefik/acme.json # Volume for Let's Encrypt certificates
+      - ./dockerize/traefik/traefik.yml:/etc/traefik/traefik.yml:ro # Mount Traefik static configuration
+      - ./dockerize/traefik/acme.json:/etc/traefik/acme.json # Volume for Let's Encrypt certificates
     networks:
       - traefik_public # Traefik needs to be on the public network to route traffic
 

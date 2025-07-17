@@ -1,73 +1,74 @@
-# Dockerfile.php
-# Use the official PHP 8.3 FPM image
-FROM php:8.3-fpm-alpine
+FROM php:8.3-fpm
+MAINTAINER Angui hermann <ha@link2b.fr>
 
-# Install common PHP extensions and dependencies for Symfony
-# gd: for image manipulation
-# pdo_pgsql: for PostgreSQL database connection (uncomment if needed)
-# zip: for composer to extract archives
-# unzip: for composer to extract archives
-# git: for composer to fetch packages
-# pdo_mysql: for MySQL database connection
-# sodium: for Symfony's security component
-RUN apk add --no-cache \
-    # System dependencies required at runtime
-    nginx \
+RUN apt-get update --fix-missing && apt-get install -y \
+    gnupg \
+    g++ \
+    procps \
+    openssl \
+    zip \
+    rsync \
+    gzip \
+    nano \
+    sudo \
+    cron \
+    supervisor \
     git \
+    zip \
     unzip \
-    libzip \
-    libpng \
-    libjpeg-turbo \
-    libwebp \
-    icu-libs \
-    libsodium \
-    imagemagick \
-    # For connecting to PostgreSQL/MySQL from the shell (optional)
-    postgresql-client \
-    mysql-client \
-    && apk add --no-cache --virtual .build-deps \
-    # Build-time dependencies for compiling PHP extensions
-    $PHPIZE_DEPS \
+    zlib1g-dev \
     libzip-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    imagemagick \
     libpng-dev \
+    libjpeg-dev \
+    libicu-dev \
+    libpq-dev \
+    libxpm-dev \
+    libvpx-dev \
+    libjpeg-dev \
+    libicu-dev  \
+    libonig-dev \
+    libxslt1-dev \
+    libxrender1 \
+    libfontconfig1 \
+    fontconfig \
     libjpeg-turbo-dev \
     libwebp-dev \
     postgresql-dev \
-    libsodium-dev \
-    icu-dev \
-    imagemagick-dev \
-    # Install core PHP extensions
-    && docker-php-ext-configure gd --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) \
-    gd \
-    zip \
-    intl \
-    sodium \
-    pdo_mysql \
-    pdo_pgsql \
-    # Install PECL extensions
-    && pecl install apcu imagick xdebug \
-    # Enable all installed extensions
-    && docker-php-ext-enable \
-    opcache \
-    apcu \
-    imagick \
-    xdebug \
-    # Clean up build dependencies and apk cache
-    && apk del .build-deps \
-    && rm -rf /tmp/pear ~/.pearrc /var/cache/apk/*
+    mysql-client \
+    mysql-dev
 
-# Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libssl-dev curl git unzip libxml2-dev libpq-dev && \
+    pecl install apcu imagick && \
+    docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+    docker-php-ext-install -j$(nproc) zip opcache intl pdo_pgsql pgsql pdo_mysql bcmath exif gd gettext && \
+    docker-php-ext-enable apcu pdo_pgsql pdo_mysql sodium imagick && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Set working directory
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
+    docker-php-ext-install gd
+
+RUN curl -sS https://getcomposer.org/installer | php -- \
+   --install-dir=/usr/bin --filename=composer --version=2.8.9
+
+COPY ./php-fpm/php.ini $PHP_INI_DIR/
+COPY ./php-fpm/xdebug.ini $PHP_INI_DIR/conf.d/
+
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 WORKDIR /var/www/html
 
-# Copy Symfony application (optional, if you want to build the image with code)
-# COPY . /var/www/html
+# Use supervisor to start cron, cron-tab and php-fpm
+COPY ./php-fpm/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["/usr/bin/supervisord"]
 
-# Expose PHP-FPM port
-EXPOSE 9000
+RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list
+RUN sudo apt update
+RUN sudo apt install symfony-cli
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+CMD php-fpm
