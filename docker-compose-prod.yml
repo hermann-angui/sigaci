@@ -107,19 +107,15 @@ services:
       - default # phpMyAdmin needs to communicate with MySQL on the default network
       - traefik_public # phpMyAdmin needs to be accessible by Traefik
     labels:
-      # Enable Traefik for this service
       - "traefik.enable=true"
-      # Define the router for HTTP traffic
       - "traefik.http.routers.nginx-http.entrypoints=web"
-      - "traefik.http.routers.nginx-http.rule=Host(`cnmci.sfpci.com`)" # IMPORTANT: Change to your actual domain
+      - "traefik.http.routers.nginx-http.rule=Host(`cnmci.sfpci.com`)"
       - "traefik.http.routers.nginx-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # Define the router for HTTPS traffic
       - "traefik.http.routers.nginx-https.entrypoints=websecure"
-      - "traefik.http.routers.nginx-https.rule=Host(`cnmci.sfpci.com`)" # IMPORTANT: Change to your actual domain
-      - "traefik.http.routers.nginx-https.tls.certresolver=le" # Use the 'le' (Let's Encrypt) cert resolver
-      # Define the service for Nginx
-      - "traefik.http.services.nginx.loadbalancer.server.port=80" # Nginx is listening on port 80 internally
+      - "traefik.http.routers.nginx-https.rule=Host(`cnmci.sfpci.com`)"
+      - "traefik.http.routers.nginx-https.tls.certresolver=le"
+      - "traefik.http.services.nginx.loadbalancer.server.port=80"
 
 
 networks:
