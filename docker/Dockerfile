@@ -4,6 +4,7 @@ MAINTAINER Angui hermann <ha@link2b.fr>
 RUN apt-get update --fix-missing && apt-get install -y \
     gnupg \
     g++ \
+    libreoffice \
     procps \
     openssl \
     zip \

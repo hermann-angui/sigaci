@@ -13,6 +13,7 @@ use App\Helper\DataTableHelper;
 use App\Repository\ArtisanRepository;
 use App\Repository\VillesRepository;
 use App\Service\Artisan\ArtisanService;
+use App\Service\File\FileConverterService;
 use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -34,7 +35,14 @@ class DashboardController extends AbstractController
     #[Route('/home', name: 'app_dashboard_a', methods: ['GET'])]
     public function home(Request $request): Response
     {
-        return $this->render('theme_b/dashboard/index.html.twig');
+         return $this->render('dashboard/index.html.twig');
+    }
+
+    #[Route('/generate/registre', name: 'app_generate_registre', methods: ['GET'])]
+    public function generateRegistre(Request $request, FileConverterService $converterService): Response
+    {
+        $converterService->generatePdfFromDocx();
+        return $this->render('dashboard/index.html.twig');
     }
 
     #[Route('/template/registre', name: 'app_template_registre', methods: ['GET'])]
