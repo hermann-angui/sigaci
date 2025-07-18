@@ -27,7 +27,8 @@ class DashboardController extends AbstractController
     #[Route('', name: 'app_dashboard', methods: ['GET'])]
     public function index(Request $request): Response
     {
-       return $this->render('dashboard/index.html.twig');
+        //return $this->render('dashboard/index.html.twig');
+        return $this->render('theme_b/dashboard/index.html.twig');
     }
 
     #[Route('/home', name: 'app_dashboard_a', methods: ['GET'])]
