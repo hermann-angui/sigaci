@@ -3,6 +3,7 @@ MAINTAINER Angui hermann <ha@link2b.fr>
 
 RUN apt-get update --fix-missing && apt-get install -y \
     gnupg \
+    libreoffice \
     g++ \
     procps \
     openssl \
@@ -50,10 +51,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
    --install-dir=/usr/bin --filename=composer --version=2.8.9
 
 COPY ../php-fpm/php.ini $PHP_INI_DIR/
-COPY ../php-fpm/xdebug.ini $PHP_INI_DIR/conf.d/
-
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
 
 WORKDIR /var/www/html
 
