@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MetiersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -28,6 +30,16 @@ class Metiers
     #[ORM\ManyToOne(targetEntity: CorpsMetiers::class, inversedBy: 'metiers')]
     private ?CorpsMetiers $corpsMetiers = null;
 
+    /**
+     * @var Collection<int, Artisan>
+     */
+    #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'activitePrincipale')]
+    private Collection $artisanActvitePrincipales;
+
+    public function __construct()
+    {
+        $this->artisanActvitePrincipales = new ArrayCollection();
+    }
 
     public function setId(?int $id): self
     {
@@ -87,6 +99,41 @@ class Metiers
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Artisan>
+     */
+    public function getArtisanActvitePrincipales(): Collection
+    {
+        return $this->artisanActvitePrincipales;
+    }
+
+    public function addArtisanActvitePrincipale(Artisan $artisanActvitePrincipale): static
+    {
+        if (!$this->artisanActvitePrincipales->contains($artisanActvitePrincipale)) {
+            $this->artisanActvitePrincipales->add($artisanActvitePrincipale);
+            $artisanActvitePrincipale->setActivitePrincipale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtisanActvitePrincipale(Artisan $artisanActvitePrincipale): static
+    {
+        if ($this->artisanActvitePrincipales->removeElement($artisanActvitePrincipale)) {
+            // set the owning side to null (unless already changed)
+            if ($artisanActvitePrincipale->getActivitePrincipale() === $this) {
+                $artisanActvitePrincipale->setActivitePrincipale(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 
 

@@ -155,7 +155,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?MediaObject $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'membres')]
-    private ?EquipeAgent $equipeAgent = null;             // Recupère l'equipe dont fait partie l'agent
+    private ?EquipeAgent $equipeAgent = null;
+
+    /**
+     * @var Collection<int, Impression>
+     */
+    #[ORM\OneToMany(targetEntity: Impression::class, mappedBy: 'madeBy')]
+    private Collection $impressions;             // Recupère l'equipe dont fait partie l'agent
 
     public function __construct()
     {
@@ -164,6 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->activityLogs = new ArrayCollection();
         $this->immatriculations = new ArrayCollection();
         $this->identifications = new ArrayCollection();
+        $this->impressions = new ArrayCollection();
     }
 
     /**
@@ -717,6 +724,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEquipeAgent(?EquipeAgent $equipeAgent): static
     {
         $this->equipeAgent = $equipeAgent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Impression>
+     */
+    public function getImpressions(): Collection
+    {
+        return $this->impressions;
+    }
+
+    public function addImpression(Impression $impression): static
+    {
+        if (!$this->impressions->contains($impression)) {
+            $this->impressions->add($impression);
+            $impression->setMadeBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImpression(Impression $impression): static
+    {
+        if ($this->impressions->removeElement($impression)) {
+            // set the owning side to null (unless already changed)
+            if ($impression->getMadeBy() === $this) {
+                $impression->setMadeBy(null);
+            }
+        }
 
         return $this;
     }
