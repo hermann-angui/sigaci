@@ -58,7 +58,7 @@ services:
     depends_on:
       - db # Nginx depends on PHP-FPM being ready
     environment:
-      APP_ENV: prod
+      APP_ENV: dev
       # Example DATABASE_URL for PostgreSQL (uncomment if using PostgreSQL)
       # DATABASE_URL: postgresql://symfony_user:symfony_password@db:5432/symfony_db?serverVersion=16&charset=utf8
       # Example DATABASE_URL for MySQL (uncomment if using MySQL)
