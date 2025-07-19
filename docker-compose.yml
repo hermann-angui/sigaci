@@ -7,30 +7,30 @@ networks:
 
 services:
 
-  traefik:
-    image: "traefik:2.11"
-    container_name: "traefik"
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker"
-      - "--providers.docker.exposedByDefault=false"
-      - "--providers.docker.network=proxy"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-#     - "443:443"
-      - "8080:8080"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - proxy
+#  traefik:
+#    image: "traefik:2.11"
+#    container_name: "traefik"
+#    command:
+#      - "--api.insecure=true"
+#      - "--providers.docker"
+#      - "--providers.docker.exposedByDefault=false"
+#      - "--providers.docker.network=proxy"
+#      - "--entrypoints.web.address=:80"
+#    ports:
+#      - "80:80"
+##     - "443:443"
+#      - "8080:8080"
+#    volumes:
+#      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#    networks:
+#      - proxy
 
   db:
     image: mariadb:10.5
     container_name: db
     restart: always
-    labels:
-      - "traefik.enable=false"
+#    labels:
+#      - "traefik.enable=false"
     environment:
       MYSQL_ROOT_PASSWORD: QT6e5APtSYaU
       MYSQL_USER: root
@@ -49,14 +49,14 @@ services:
     image: phpmyadmin/phpmyadmin
     depends_on:
       - db
-    labels:
-      - "traefik.docker.network=proxy"
-      - "traefik.enable=true"
-      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.sigaci.develop`)"
+#    labels:
+#      - "traefik.docker.network=proxy"
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.sigaci.develop`)"
     environment:
       UPLOAD_LIMIT: 300M
-#    ports:
-#      - "83:80"
+    ports:
+      - "83:80"
     networks:
       - internal
       - proxy
@@ -68,8 +68,8 @@ services:
       context: ./docker
     depends_on:
       - db
-    labels:
-      - "traefik.enable=false"
+#    labels:
+#      - "traefik.enable=false"
     environment:
       - APP_ENV=dev
       - XDEBUG_MODES=debug
@@ -87,15 +87,15 @@ services:
     image: axllent/mailpit
     container_name: mailpit
     restart: unless-stopped
-    labels:
-      - "traefik.docker.network=proxy"
-      - "traefik.enable=true"
-      - "traefik.http.routers.mailpit.rule=Host(`smtp.sigaci.develop`)"
+#    labels:
+#      - "traefik.docker.network=proxy"
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.mailpit.rule=Host(`smtp.sigaci.develop`)"
     volumes:
       - ./data/smtp_data:/data
-#    ports:
-#      - "8025:8025"
-#      - "1025:1025"
+    ports:
+      - "8025:8025"
+      - "1025:1025"
     environment:
       MP_MAX_MESSAGES: 5000
       MP_DATABASE: /data/mailpit.db
@@ -115,13 +115,13 @@ services:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/sites/:/etc/nginx/sites-available
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d
-    labels:
-      - "traefik.docker.network=proxy"
-      - "traefik.enable=true"
-      - "traefik.http.routers.www.rule=Host(`sigaci.develop`)"
-      - "traefik.http.services.www.loadbalancer.server.port=80"
-#    ports:
-#      - "82:80"
+#    labels:
+#      - "traefik.docker.network=proxy"
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.www.rule=Host(`sigaci.develop`)"
+#      - "traefik.http.services.www.loadbalancer.server.port=80"
+    ports:
+      - "82:80"
     depends_on:
       - app
     networks:

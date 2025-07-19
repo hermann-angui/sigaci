@@ -123,4 +123,9 @@ class Permission
         $this->modified_at = $modified_at;
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

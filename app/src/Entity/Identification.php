@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\IdentificationRepository;
+use DateTime;
+use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: IdentificationRepository::class)]
 #[ORM\Table(name: '`identifications`')]
@@ -18,18 +22,26 @@ class Identification
     #[ORM\Column()]
     private ?int $id = null;
 
-    #[ORM\Column(length: 150, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $status;
 
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $created_at;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $created_at;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $modified_at;
+
+    #[ORM\Column(length: 150, nullable: true, unique: true)]
+    private ?string $reference;
+
+    #[ORM\Column(type:"string", unique:true)]
+    private ?string $internal_code;
 
     #[ORM\Column(length: 150, nullable: true)]
-    private ?string $updated_at;
+    private ?string $source;
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $type;
-
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $latitude;
@@ -40,8 +52,15 @@ class Identification
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?User $agent = null;
 
-    #[ORM\OneToOne(targetEntity: self::class)]
+    #[ORM\OneToOne]
     private ?Artisan $artisan = null;
+
+    public function __construct()
+    {
+        $this->internal_code = Uuid::uuid4();
+        $this->created_at = new DateTime();
+        $this->modified_at = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -63,25 +82,43 @@ class Identification
         $this->status = $status;
     }
 
-    public function getCreatedAt(): ?string
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(?string $created_at): void
+    /**
+     * @param DateTimeInterface|null $created_at
+     * @return Identification
+     */
+    public function setCreatedAt(?DateTimeInterface $created_at): Identification
     {
         $this->created_at = $created_at;
+        return $this;
     }
 
-    public function getUpdatedAt(): ?string
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getModifiedAt(): ?DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->modified_at;
     }
 
-    public function setUpdatedAt(?string $updated_at): void
+    /**
+     * @param DateTimeInterface|null $modified_at
+     * @return Identification
+     */
+    public function setModifiedAt(?DateTimeInterface $modified_at): Identification
     {
-        $this->updated_at = $updated_at;
+        $this->modified_at = $modified_at;
+        return $this;
     }
+
+
 
     public function getType(): ?string
     {
@@ -134,6 +171,60 @@ class Identification
     {
         $this->artisan = $artisan;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSource(): ?string
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param string|null $source
+     * @return Identification
+     */
+    public function setSource(?string $source): Identification
+    {
+        $this->source = $source;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string|null $reference
+     * @return Identification
+     */
+    public function setReference(?string $reference): Identification
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return UuidInterface|null
+     */
+    public function getInternalCode(): ?UuidInterface
+    {
+        return $this->internal_code;
+    }
+
+    /**
+     * @param UuidInterface|null $internal_code
+     * @return Identification
+     */
+    public function setInternalCode(?UuidInterface $internal_code): Identification
+    {
+        $this->internal_code = $internal_code;
         return $this;
     }
 

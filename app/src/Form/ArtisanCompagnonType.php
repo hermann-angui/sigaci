@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Artisan;
+use App\Entity\CategoryArtisan;
 use App\Entity\Crm;
 use App\Entity\Etablissement;
 use App\Entity\MediaObject;
+use App\Entity\Metiers;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -145,8 +147,14 @@ class ArtisanCompagnonType extends AbstractType
             ->add('whatsapp')
             ->add('codePostal')
             ->add('cnps')
-            ->add('activitePrincipale')
-            ->add('activiteSecondaire')
+            ->add('activitePrincipale', EntityType::class, [
+                'class' => Metiers::class,
+                'choice_label' => 'id',
+            ])
+            ->add('activiteSecondaire', EntityType::class, [
+                'class' => Metiers::class,
+                'choice_label' => 'id',
+            ])
             ->add('numeroRM')
             ->add('numeroCarteProfessionnelle')
             ->add('nomConjoint')
@@ -175,7 +183,10 @@ class ArtisanCompagnonType extends AbstractType
             ->add('drivingLicensePhotoBack')
             ->add('latitude')
             ->add('longitude')
-            ->add('category')
+            ->add('categoryArtisan', EntityType::class, [
+                'class' => CategoryArtisan::class,
+                'choice_label' => 'id',
+            ])
             ->add('photo', EntityType::class, [
                 'class' => MediaObject::class,
                 'choice_label' => 'id',

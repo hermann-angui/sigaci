@@ -46,6 +46,9 @@ class Carte
     private ?string $numero_rm = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $numero_carte_professionnelle = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -57,6 +60,9 @@ class Carte
     #[ORM\ManyToOne(inversedBy: 'carte')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Artisan $artisan = null;
+
+    #[ORM\OneToOne(mappedBy: 'carte', cascade: ['persist', 'remove'])]
+    private ?Impression $impression = null;
 
     public function __construct()
     {
@@ -235,6 +241,46 @@ class Carte
     public function setImageVerso(?MediaObject $image_verso): Carte
     {
         $this->image_verso = $image_verso;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     * @return Carte
+     */
+    public function setType(?string $type): Carte
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function getImpression(): ?Impression
+    {
+        return $this->impression;
+    }
+
+    public function setImpression(?Impression $impression): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($impression === null && $this->impression !== null) {
+            $this->impression->setCarte(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($impression !== null && $impression->getCarte() !== $this) {
+            $impression->setCarte($this);
+        }
+
+        $this->impression = $impression;
+
         return $this;
     }
 

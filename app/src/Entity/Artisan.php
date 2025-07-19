@@ -9,7 +9,6 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ArtisanRepository::class)]
 #[ORM\Table(name: '`artisans`')]
@@ -55,18 +54,6 @@ class Artisan
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $villeNaissance;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $paysNaissance;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $nationalite;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $domicile;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -97,9 +84,6 @@ class Artisan
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $etatCivil;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $activiteExercee;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
@@ -128,14 +112,6 @@ class Artisan
     #[ORM\Column(length: 255,unique: true, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $cnps;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $activitePrincipale;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $activiteSecondaire;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
@@ -205,10 +181,6 @@ class Artisan
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $longitude;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    private ?string $category;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $created_at;
 
@@ -224,14 +196,34 @@ class Artisan
     #[ORM\OneToOne(targetEntity: self::class)]
     private ?self $patron = null;
 
-    #[ORM\OneToOne(targetEntity: self::class)]
-    private ?Identification $identification = null;
-
-    #[ORM\OneToOne(targetEntity: self::class)]
-    private ?Immatriculation $immatriculation = null;
 
     #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?CategoryArtisan $categoryArtisan = null;
+
+    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    private ?Villes $villeNaissance = null;
+
+    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    private ?Pays $paysNaissance = null;
+
+    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    private ?Pays $nationalite = null;
+
+    #[ORM\OneToOne()]
+    private ?Immatriculation $immatriculation = null;
+
+    #[ORM\OneToOne()]
+    private ?Identification $identification = null;
+
+    #[ORM\ManyToOne]
+    private ?Metiers $activiteSecondaire = null;
+
+    #[ORM\ManyToOne]
+    private ?Metiers $activiteExercee = null;
+
+    #[ORM\ManyToOne(inversedBy: 'artisanActvitePrincipales')]
+    private ?Metiers $activitePrincipale = null;
 
     public function __construct()
     {
@@ -252,16 +244,6 @@ class Artisan
     public function setEmail(?string $email): void
     {
         $this->email = $email;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?string $category): void
-    {
-        $this->category = $category;
     }
 
     public function getCrm(): ?Crm
@@ -437,60 +419,6 @@ class Artisan
     /**
      * @return string|null
      */
-    public function getVilleNaissance(): ?string
-    {
-        return $this->villeNaissance;
-    }
-
-    /**
-     * @param string|null $villeNaissance
-     * @return Artisan
-     */
-    public function setVilleNaissance(?string $villeNaissance): Artisan
-    {
-        $this->villeNaissance = $villeNaissance;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPaysNaissance(): ?string
-    {
-        return $this->paysNaissance;
-    }
-
-    /**
-     * @param string|null $paysNaissance
-     * @return Artisan
-     */
-    public function setPaysNaissance(?string $paysNaissance): Artisan
-    {
-        $this->paysNaissance = $paysNaissance;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNationalite(): ?string
-    {
-        return $this->nationalite;
-    }
-
-    /**
-     * @param string|null $nationalite
-     * @return Artisan
-     */
-    public function setNationalite(?string $nationalite): Artisan
-    {
-        $this->nationalite = $nationalite;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getDomicile(): ?string
     {
         return $this->domicile;
@@ -632,23 +560,7 @@ class Artisan
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getActiviteExercee(): ?string
-    {
-        return $this->activiteExercee;
-    }
 
-    /**
-     * @param string|null $activiteExercee
-     * @return Artisan
-     */
-    public function setActiviteExercee(?string $activiteExercee): Artisan
-    {
-        $this->activiteExercee = $activiteExercee;
-        return $this;
-    }
 
     /**
      * @return string|null
@@ -773,42 +685,6 @@ class Artisan
     public function setCnps(?string $cnps): Artisan
     {
         $this->cnps = $cnps;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivitePrincipale(): ?string
-    {
-        return $this->activitePrincipale;
-    }
-
-    /**
-     * @param string|null $activitePrincipale
-     * @return Artisan
-     */
-    public function setActivitePrincipale(?string $activitePrincipale): Artisan
-    {
-        $this->activitePrincipale = $activitePrincipale;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActiviteSecondaire(): ?string
-    {
-        return $this->activiteSecondaire;
-    }
-
-    /**
-     * @param string|null $activiteSecondaire
-     * @return Artisan
-     */
-    public function setActiviteSecondaire(?string $activiteSecondaire): Artisan
-    {
-        $this->activiteSecondaire = $activiteSecondaire;
         return $this;
     }
 
@@ -1154,42 +1030,6 @@ class Artisan
         return $this;
     }
 
-    /**
-     * @return Identification
-     */
-    public function getIdentification(): ?Identification
-    {
-        return $this->identification;
-    }
-
-    /**
-     * @param Identification $identification
-     * @return Artisan
-     */
-    public function setIdentification(?Identification $identification): Artisan
-    {
-        $this->identification = $identification;
-        return $this;
-    }
-
-    /**
-     * @return Immatriculation
-     */
-    public function getImmatriculation(): ?Immatriculation
-    {
-        return $this->immatriculation;
-    }
-
-    /**
-     * @param Immatriculation $immatriculation
-     * @return Artisan
-     */
-    public function setImmatriculation(?Immatriculation $immatriculation): Artisan
-    {
-        $this->immatriculation = $immatriculation;
-        return $this;
-    }
-
     public function getCategoryArtisan(): ?CategoryArtisan
     {
         return $this->categoryArtisan;
@@ -1198,6 +1038,102 @@ class Artisan
     public function setCategoryArtisan(?CategoryArtisan $categoryArtisan): static
     {
         $this->categoryArtisan = $categoryArtisan;
+
+        return $this;
+    }
+
+    public function getVilleNaissance(): ?Villes
+    {
+        return $this->villeNaissance;
+    }
+
+    public function setVilleNaissance(?Villes $villeNaissance): static
+    {
+        $this->villeNaissance = $villeNaissance;
+
+        return $this;
+    }
+
+    public function getPaysNaissance(): ?Pays
+    {
+        return $this->paysNaissance;
+    }
+
+    public function setPaysNaissance(?Pays $paysNaissance): static
+    {
+        $this->paysNaissance = $paysNaissance;
+
+        return $this;
+    }
+
+    public function getNationalite(): ?Pays
+    {
+        return $this->nationalite;
+    }
+
+    public function setNationalite(?Pays $nationalite): static
+    {
+        $this->nationalite = $nationalite;
+
+        return $this;
+    }
+
+    public function getImmatriculation(): ?Immatriculation
+    {
+        return $this->immatriculation;
+    }
+
+    public function setImmatriculation(?Immatriculation $immatriculation): static
+    {
+        $this->immatriculation = $immatriculation;
+
+        return $this;
+    }
+
+    public function getIdentification(): ?Identification
+    {
+        return $this->identification;
+    }
+
+    public function setIdentification(?Identification $identification): static
+    {
+        $this->identification = $identification;
+
+        return $this;
+    }
+
+    public function getActiviteSecondaire(): ?Metiers
+    {
+        return $this->activiteSecondaire;
+    }
+
+    public function setActiviteSecondaire(?Metiers $activiteSecondaire): static
+    {
+        $this->activiteSecondaire = $activiteSecondaire;
+
+        return $this;
+    }
+
+    public function getActiviteExercee(): ?Metiers
+    {
+        return $this->activiteExercee;
+    }
+
+    public function setActiviteExercee(?Metiers $activiteExercee): static
+    {
+        $this->activiteExercee = $activiteExercee;
+
+        return $this;
+    }
+
+    public function getActivitePrincipale(): ?Metiers
+    {
+        return $this->activitePrincipale;
+    }
+
+    public function setActivitePrincipale(?Metiers $activitePrincipale): static
+    {
+        $this->activitePrincipale = $activitePrincipale;
 
         return $this;
     }

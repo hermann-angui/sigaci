@@ -16,7 +16,7 @@
         <!-- Start Page Header -->
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2 pb-3 mb-3 border-1 border-bottom">
             <div class="flex-grow-1">
-                <h4 class="fw-bold mb-0">Liste des artisans <span class="badge badge-soft-primary fw-medium border py-1 px-2 border-primary fs-13 ms-1">TOTAL : {{ total }}</span></h4>
+                <h4 class="fw-bold mb-0">Liste des artisans <span class="badge badge-soft-primary fw-medium border py-1 px-2 border-primary fs-13 ms-1">Total Artisans : {{ artisan.total }} </span></h4>
             </div>
             <div class="text-end d-flex">
                 <!-- dropdown-->
@@ -42,87 +42,6 @@
             </div>
         </div>
         <!-- End Page Header -->
-
-        <div class="row row-cols-1 row-cols-xl-12 row-cols-md-12 row-cols-sm-12">
-
-            <!-- col start -->
-            <div class="col-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <p class="mb-1">Total Entreprises artisanales</p>
-                                <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">{{ total_entreprise_artisanale  }}</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+1%</span>
-                                </div>
-                            </div>
-                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-user fs-20"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- col end -->
-
-            <!-- col start -->
-            <div class="col-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <p class="mb-1">Total Maître artisans</p>
-                                <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">{{ total_maitre_artisan  }}</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+10%</span>
-                                </div>
-                            </div>
-                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-user fs-20"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- col end -->
-
-            <!-- col start -->
-            <div class="col-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <p class="mb-1">Total compagons</p>
-                                <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">{{ total_compagnons  }}</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+10%</span>
-                                </div>
-                            </div>
-                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-user fs-20"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- col end -->
-
-            <!-- col start -->
-            <div class="col-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <p class="mb-1">Total apprentis</p>
-                                <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">{{ total_apprentis  }}</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
-                                </div>
-                            </div>
-                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-user fs-20"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- col end -->
-
-        </div>
-
         <!--  Start Filter -->
         <div class=" d-flex align-items-center justify-content-between flex-wrap">
             <div>
@@ -427,7 +346,7 @@
         </div>
         <!--  End Filter -->
         <div class="row">
-            <div id="artisanDatatable"></div>
+            <div id="userDatatable"></div>
         </div>
     </div>
     <!-- End Content -->
@@ -435,7 +354,7 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+<script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
     <script>
          jQuery(document).ready(function ($) {
            var datatable = null;

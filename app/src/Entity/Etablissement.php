@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EtablissementRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EtablissementRepository::class)]
@@ -18,78 +20,63 @@ class Etablissement
     #[ORM\GeneratedValue]
     #[ORM\Column()]
     private ?int $id = null;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $primaryactivity;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activitystartdate;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $secondaryactivity;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyname;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyacronym;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companypurpose;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companylegalstatus;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $numregistremetier;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $numrea;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $numrccm;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companycapitalsocial;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyregimefiscal;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companynumcnps;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companynombreassocies;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyduree;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companytaxpayernumber;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyadressepostale;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companytel;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyfax;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companydepartement;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companycommune;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companysp;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyquartier;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyvillage;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companylotnumber;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyilotnumber;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyeffectsalariehomme;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyeffectsalariefemme;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyeffectapprentishomme;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyeffectepprentishomme;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $companyeffectapprentisfemme;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activitylocation;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activityLocation;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activitycountry;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activitycity;
-    #[ORM\Column(length: 150, nullable: true)]
-    private ?string $activityquartier;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $raisonSocial;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sigle;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $objetSocial;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTime $dateDebutActivite;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $typeEntreprise;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numeroRCCM;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $capitalSocial;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $regimeFiscal;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nombreAssocie;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $dureePersonne;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $identifiantCnps;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numeroContribuable;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adressPostale;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telephone;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $fax;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $quartier;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $village;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lot;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ilot;
+
+    #[ORM\GeneratedValue]
+    #[ORM\Column()]
+    private ?int $effectifSalarieHomme;
+
+    #[ORM\GeneratedValue]
+    #[ORM\Column()]
+    private ?int $effectifSalarieFemme;
+
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $effectifApprentiHomme;
+
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $effectifApprentiFemme;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $latitude;
@@ -97,14 +84,26 @@ class Etablissement
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $longitude;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
-
     #[ORM\ManyToOne(inversedBy: 'etablissements')]
     private ?Crm $crm = null;
 
     #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Artisan::class)]
     private Collection $artisans;
+
+    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    private ?Department $department = null;
+
+    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    private ?Communes $commune = null;
+
+    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    private ?SousPrefecture $sousPrefecture = null;
+
+    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    private ?Pays $pays = null;
+
+    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    private ?Villes $ville = null;
 
     public function __construct()
     {
@@ -158,357 +157,6 @@ class Etablissement
         return $this;
     }
 
-    public function getPrimaryactivity(): ?string
-    {
-        return $this->primaryactivity;
-    }
-
-    public function setPrimaryactivity(?string $primaryactivity): void
-    {
-        $this->primaryactivity = $primaryactivity;
-    }
-
-    public function getActivitystartdate(): ?string
-    {
-        return $this->activitystartdate;
-    }
-
-    public function setActivitystartdate(?string $activitystartdate): void
-    {
-        $this->activitystartdate = $activitystartdate;
-    }
-
-    public function getSecondaryactivity(): ?string
-    {
-        return $this->secondaryactivity;
-    }
-
-    public function setSecondaryactivity(?string $secondaryactivity): void
-    {
-        $this->secondaryactivity = $secondaryactivity;
-    }
-
-    public function getCompanyname(): ?string
-    {
-        return $this->companyname;
-    }
-
-    public function setCompanyname(?string $companyname): void
-    {
-        $this->companyname = $companyname;
-    }
-
-    public function getCompanyacronym(): ?string
-    {
-        return $this->companyacronym;
-    }
-
-    public function setCompanyacronym(?string $companyacronym): void
-    {
-        $this->companyacronym = $companyacronym;
-    }
-
-    public function getCompanypurpose(): ?string
-    {
-        return $this->companypurpose;
-    }
-
-    public function setCompanypurpose(?string $companypurpose): void
-    {
-        $this->companypurpose = $companypurpose;
-    }
-
-    public function getCompanylegalstatus(): ?string
-    {
-        return $this->companylegalstatus;
-    }
-
-    public function setCompanylegalstatus(?string $companylegalstatus): void
-    {
-        $this->companylegalstatus = $companylegalstatus;
-    }
-
-    public function getNumregistremetier(): ?string
-    {
-        return $this->numregistremetier;
-    }
-
-    public function setNumregistremetier(?string $numregistremetier): void
-    {
-        $this->numregistremetier = $numregistremetier;
-    }
-
-    public function getNumrea(): ?string
-    {
-        return $this->numrea;
-    }
-
-    public function setNumrea(?string $numrea): void
-    {
-        $this->numrea = $numrea;
-    }
-
-    public function getNumrccm(): ?string
-    {
-        return $this->numrccm;
-    }
-
-    public function setNumrccm(?string $numrccm): void
-    {
-        $this->numrccm = $numrccm;
-    }
-
-    public function getCompanycapitalsocial(): ?string
-    {
-        return $this->companycapitalsocial;
-    }
-
-    public function setCompanycapitalsocial(?string $companycapitalsocial): void
-    {
-        $this->companycapitalsocial = $companycapitalsocial;
-    }
-
-    public function getCompanyregimefiscal(): ?string
-    {
-        return $this->companyregimefiscal;
-    }
-
-    public function setCompanyregimefiscal(?string $companyregimefiscal): void
-    {
-        $this->companyregimefiscal = $companyregimefiscal;
-    }
-
-    public function getCompanynumcnps(): ?string
-    {
-        return $this->companynumcnps;
-    }
-
-    public function setCompanynumcnps(?string $companynumcnps): void
-    {
-        $this->companynumcnps = $companynumcnps;
-    }
-
-    public function getCompanynombreassocies(): ?string
-    {
-        return $this->companynombreassocies;
-    }
-
-    public function setCompanynombreassocies(?string $companynombreassocies): void
-    {
-        $this->companynombreassocies = $companynombreassocies;
-    }
-
-    public function getCompanyduree(): ?string
-    {
-        return $this->companyduree;
-    }
-
-    public function setCompanyduree(?string $companyduree): void
-    {
-        $this->companyduree = $companyduree;
-    }
-
-    public function getCompanytaxpayernumber(): ?string
-    {
-        return $this->companytaxpayernumber;
-    }
-
-    public function setCompanytaxpayernumber(?string $companytaxpayernumber): void
-    {
-        $this->companytaxpayernumber = $companytaxpayernumber;
-    }
-
-    public function getCompanyadressepostale(): ?string
-    {
-        return $this->companyadressepostale;
-    }
-
-    public function setCompanyadressepostale(?string $companyadressepostale): void
-    {
-        $this->companyadressepostale = $companyadressepostale;
-    }
-
-    public function getCompanytel(): ?string
-    {
-        return $this->companytel;
-    }
-
-    public function setCompanytel(?string $companytel): void
-    {
-        $this->companytel = $companytel;
-    }
-
-    public function getCompanyfax(): ?string
-    {
-        return $this->companyfax;
-    }
-
-    public function setCompanyfax(?string $companyfax): void
-    {
-        $this->companyfax = $companyfax;
-    }
-
-    public function getCompanydepartement(): ?string
-    {
-        return $this->companydepartement;
-    }
-
-    public function setCompanydepartement(?string $companydepartement): void
-    {
-        $this->companydepartement = $companydepartement;
-    }
-
-    public function getCompanycommune(): ?string
-    {
-        return $this->companycommune;
-    }
-
-    public function setCompanycommune(?string $companycommune): void
-    {
-        $this->companycommune = $companycommune;
-    }
-
-    public function getCompanysp(): ?string
-    {
-        return $this->companysp;
-    }
-
-    public function setCompanysp(?string $companysp): void
-    {
-        $this->companysp = $companysp;
-    }
-
-    public function getCompanyquartier(): ?string
-    {
-        return $this->companyquartier;
-    }
-
-    public function setCompanyquartier(?string $companyquartier): void
-    {
-        $this->companyquartier = $companyquartier;
-    }
-
-    public function getCompanyvillage(): ?string
-    {
-        return $this->companyvillage;
-    }
-
-    public function setCompanyvillage(?string $companyvillage): void
-    {
-        $this->companyvillage = $companyvillage;
-    }
-
-    public function getCompanylotnumber(): ?string
-    {
-        return $this->companylotnumber;
-    }
-
-    public function setCompanylotnumber(?string $companylotnumber): void
-    {
-        $this->companylotnumber = $companylotnumber;
-    }
-
-    public function getCompanyilotnumber(): ?string
-    {
-        return $this->companyilotnumber;
-    }
-
-    public function setCompanyilotnumber(?string $companyilotnumber): void
-    {
-        $this->companyilotnumber = $companyilotnumber;
-    }
-
-    public function getCompanyeffectsalariehomme(): ?string
-    {
-        return $this->companyeffectsalariehomme;
-    }
-
-    public function setCompanyeffectsalariehomme(?string $companyeffectsalariehomme): void
-    {
-        $this->companyeffectsalariehomme = $companyeffectsalariehomme;
-    }
-
-    public function getCompanyeffectsalariefemme(): ?string
-    {
-        return $this->companyeffectsalariefemme;
-    }
-
-    public function setCompanyeffectsalariefemme(?string $companyeffectsalariefemme): void
-    {
-        $this->companyeffectsalariefemme = $companyeffectsalariefemme;
-    }
-
-    public function getCompanyeffectapprentishomme(): ?string
-    {
-        return $this->companyeffectapprentishomme;
-    }
-
-    public function setCompanyeffectapprentishomme(?string $companyeffectapprentishomme): void
-    {
-        $this->companyeffectapprentishomme = $companyeffectapprentishomme;
-    }
-
-    public function getCompanyeffectepprentishomme(): ?string
-    {
-        return $this->companyeffectepprentishomme;
-    }
-
-    public function setCompanyeffectepprentishomme(?string $companyeffectepprentishomme): void
-    {
-        $this->companyeffectepprentishomme = $companyeffectepprentishomme;
-    }
-
-    public function getCompanyeffectapprentisfemme(): ?string
-    {
-        return $this->companyeffectapprentisfemme;
-    }
-
-    public function setCompanyeffectapprentisfemme(?string $companyeffectapprentisfemme): void
-    {
-        $this->companyeffectapprentisfemme = $companyeffectapprentisfemme;
-    }
-
-    public function getActivitylocation(): ?string
-    {
-        return $this->activitylocation;
-    }
-
-    public function setActivitylocation(?string $activitylocation): void
-    {
-        $this->activitylocation = $activitylocation;
-    }
-
-
-    public function getActivitycountry(): ?string
-    {
-        return $this->activitycountry;
-    }
-
-    public function setActivitycountry(?string $activitycountry): void
-    {
-        $this->activitycountry = $activitycountry;
-    }
-
-    public function getActivitycity(): ?string
-    {
-        return $this->activitycity;
-    }
-
-    public function setActivitycity(?string $activitycity): void
-    {
-        $this->activitycity = $activitycity;
-    }
-
-    public function getActivityquartier(): ?string
-    {
-        return $this->activityquartier;
-    }
-
-    public function setActivityquartier(?string $activityquartier): void
-    {
-        $this->activityquartier = $activityquartier;
-    }
-
     public function getLatitude(): ?string
     {
         return $this->latitude;
@@ -529,16 +177,482 @@ class Etablissement
         $this->longitude = $longitude;
     }
 
-    public function getCategory(): ?string
+    /**
+     * @return string|null
+     */
+    public function getRaisonSocial(): ?string
     {
-        return $this->category;
+        return $this->raisonSocial;
     }
 
-    public function setCategory(?string $category): void
+    /**
+     * @param string|null $raisonSocial
+     * @return Etablissement
+     */
+    public function setRaisonSocial(?string $raisonSocial): Etablissement
     {
-        $this->category = $category;
+        $this->raisonSocial = $raisonSocial;
+        return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getSigle(): ?string
+    {
+        return $this->sigle;
+    }
 
+    /**
+     * @param string|null $sigle
+     * @return Etablissement
+     */
+    public function setSigle(?string $sigle): Etablissement
+    {
+        $this->sigle = $sigle;
+        return $this;
+    }
 
+    /**
+     * @return string|null
+     */
+    public function getObjetSocial(): ?string
+    {
+        return $this->objetSocial;
+    }
+
+    /**
+     * @param string|null $objetSocial
+     * @return Etablissement
+     */
+    public function setObjetSocial(?string $objetSocial): Etablissement
+    {
+        $this->objetSocial = $objetSocial;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateDebutActivite(): ?DateTime
+    {
+        return $this->dateDebutActivite;
+    }
+
+    /**
+     * @param DateTime|null $dateDebutActivite
+     * @return Etablissement
+     */
+    public function setDateDebutActivite(?DateTime $dateDebutActivite): Etablissement
+    {
+        $this->dateDebutActivite = $dateDebutActivite;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTypeEntreprise(): ?string
+    {
+        return $this->typeEntreprise;
+    }
+
+    /**
+     * @param string|null $typeEntreprise
+     * @return Etablissement
+     */
+    public function setTypeEntreprise(?string $typeEntreprise): Etablissement
+    {
+        $this->typeEntreprise = $typeEntreprise;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNumeroRCCM(): ?string
+    {
+        return $this->numeroRCCM;
+    }
+
+    /**
+     * @param string|null $numeroRCCM
+     * @return Etablissement
+     */
+    public function setNumeroRCCM(?string $numeroRCCM): Etablissement
+    {
+        $this->numeroRCCM = $numeroRCCM;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCapitalSocial(): ?string
+    {
+        return $this->capitalSocial;
+    }
+
+    /**
+     * @param string|null $capitalSocial
+     * @return Etablissement
+     */
+    public function setCapitalSocial(?string $capitalSocial): Etablissement
+    {
+        $this->capitalSocial = $capitalSocial;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRegimeFiscal(): ?string
+    {
+        return $this->regimeFiscal;
+    }
+
+    /**
+     * @param string|null $regimeFiscal
+     * @return Etablissement
+     */
+    public function setRegimeFiscal(?string $regimeFiscal): Etablissement
+    {
+        $this->regimeFiscal = $regimeFiscal;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNombreAssocie(): ?string
+    {
+        return $this->nombreAssocie;
+    }
+
+    /**
+     * @param string|null $nombreAssocie
+     * @return Etablissement
+     */
+    public function setNombreAssocie(?string $nombreAssocie): Etablissement
+    {
+        $this->nombreAssocie = $nombreAssocie;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDureePersonne(): ?string
+    {
+        return $this->dureePersonne;
+    }
+
+    /**
+     * @param string|null $dureePersonne
+     * @return Etablissement
+     */
+    public function setDureePersonne(?string $dureePersonne): Etablissement
+    {
+        $this->dureePersonne = $dureePersonne;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdentifiantCnps(): ?string
+    {
+        return $this->identifiantCnps;
+    }
+
+    /**
+     * @param string|null $identifiantCnps
+     * @return Etablissement
+     */
+    public function setIdentifiantCnps(?string $identifiantCnps): Etablissement
+    {
+        $this->identifiantCnps = $identifiantCnps;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNumeroContribuable(): ?string
+    {
+        return $this->numeroContribuable;
+    }
+
+    /**
+     * @param string|null $numeroContribuable
+     * @return Etablissement
+     */
+    public function setNumeroContribuable(?string $numeroContribuable): Etablissement
+    {
+        $this->numeroContribuable = $numeroContribuable;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdressPostale(): ?string
+    {
+        return $this->adressPostale;
+    }
+
+    /**
+     * @param string|null $adressPostale
+     * @return Etablissement
+     */
+    public function setAdressPostale(?string $adressPostale): Etablissement
+    {
+        $this->adressPostale = $adressPostale;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @param string|null $telephone
+     * @return Etablissement
+     */
+    public function setTelephone(?string $telephone): Etablissement
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFax(): ?string
+    {
+        return $this->fax;
+    }
+
+    /**
+     * @param string|null $fax
+     * @return Etablissement
+     */
+    public function setFax(?string $fax): Etablissement
+    {
+        $this->fax = $fax;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuartier(): ?string
+    {
+        return $this->quartier;
+    }
+
+    /**
+     * @param string|null $quartier
+     * @return Etablissement
+     */
+    public function setQuartier(?string $quartier): Etablissement
+    {
+        $this->quartier = $quartier;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVillage(): ?string
+    {
+        return $this->village;
+    }
+
+    /**
+     * @param string|null $village
+     * @return Etablissement
+     */
+    public function setVillage(?string $village): Etablissement
+    {
+        $this->village = $village;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLot(): ?string
+    {
+        return $this->lot;
+    }
+
+    /**
+     * @param string|null $lot
+     * @return Etablissement
+     */
+    public function setLot(?string $lot): Etablissement
+    {
+        $this->lot = $lot;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIlot(): ?string
+    {
+        return $this->ilot;
+    }
+
+    /**
+     * @param string|null $ilot
+     * @return Etablissement
+     */
+    public function setIlot(?string $ilot): Etablissement
+    {
+        $this->ilot = $ilot;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getEffectifSalarieHomme(): ?int
+    {
+        return $this->effectifSalarieHomme;
+    }
+
+    /**
+     * @param int|null $effectifSalarieHomme
+     * @return Etablissement
+     */
+    public function setEffectifSalarieHomme(?int $effectifSalarieHomme): Etablissement
+    {
+        $this->effectifSalarieHomme = $effectifSalarieHomme;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getEffectifSalarieFemme(): ?int
+    {
+        return $this->effectifSalarieFemme;
+    }
+
+    /**
+     * @param int|null $effectifSalarieFemme
+     * @return Etablissement
+     */
+    public function setEffectifSalarieFemme(?int $effectifSalarieFemme): Etablissement
+    {
+        $this->effectifSalarieFemme = $effectifSalarieFemme;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getEffectifApprentiHomme(): ?int
+    {
+        return $this->effectifApprentiHomme;
+    }
+
+    /**
+     * @param int|null $effectifApprentiHomme
+     * @return Etablissement
+     */
+    public function setEffectifApprentiHomme(?int $effectifApprentiHomme): Etablissement
+    {
+        $this->effectifApprentiHomme = $effectifApprentiHomme;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getEffectifApprentiFemme(): ?int
+    {
+        return $this->effectifApprentiFemme;
+    }
+
+    /**
+     * @param int|null $effectifApprentiFemme
+     * @return Etablissement
+     */
+    public function setEffectifApprentiFemme(?int $effectifApprentiFemme): Etablissement
+    {
+        $this->effectifApprentiFemme = $effectifApprentiFemme;
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): static
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function getCommune(): ?Communes
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(?Communes $commune): static
+    {
+        $this->commune = $commune;
+
+        return $this;
+    }
+
+    public function getSousPrefecture(): ?SousPrefecture
+    {
+        return $this->sousPrefecture;
+    }
+
+    public function setSousPrefecture(?SousPrefecture $sousPrefecture): static
+    {
+        $this->sousPrefecture = $sousPrefecture;
+
+        return $this;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?Pays $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getVille(): ?Villes
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Villes $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSigle();
+    }
 }

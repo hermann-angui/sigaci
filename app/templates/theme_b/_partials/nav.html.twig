@@ -51,10 +51,6 @@
                 </button>
             </div>
 
-            <!-- AI Assistance -->
-            <a href="javascript:void(0);" class="btn btn-liner-gradient me-3 d-lg-flex d-none">AI Assistance<i class="ti ti-chart-bubble-filled ms-1"></i></a>
-            <!-- AI Assistance -->
-
             <!-- Appointment -->
             <div class="header-item">
                 <div class="dropdown me-2">
@@ -213,50 +209,43 @@
             <!-- User Dropdown -->
             <div class="dropdown profile-dropdown d-flex align-items-center justify-content-center">
                 <a href="javascript:void(0);" class="topbar-link dropdown-toggle drop-arrow-none position-relative" data-bs-toggle="dropdown" data-bs-offset="0,22" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/img/users/user-01.jpg" width="32" class="rounded-circle d-flex" alt="user-image">
+                    <img src="{{ app.user.photo.filePath|mediaUrl }}" width="32" class="rounded-circle d-flex" alt="user-image">
                     <span class="online text-success"><i class="ti ti-circle-filled d-flex bg-white rounded-circle border border-1 border-white"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
 
                     <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
-                        <img src="assets/img/users/user-01.jpg" class="rounded-circle" width="42" height="42" alt="">
+                        <img src="{{ app.user.photo.filePath|mediaUrl }}" class="rounded-circle" width="42" height="42" alt="">
                         <div class="ms-2">
-                            <p class="fw-medium text-dark mb-0">Jimmy Anderson</p>
-                            <span class="d-block fs-13">Administrator</span>
+                            <p class="fw-medium text-dark mb-0">{{ app.user.nom ~ ' ' ~ app.user.prenoms }}</p>
+                            <span class="d-block fs-13">{{ app.user.roles|last }}</span>
                         </div>
                     </div>
 
                     <!-- Item-->
-                    <a href="profile-settings.html" class="dropdown-item">
+                    <a href="{{ path('app_dashboard') }}" class="dropdown-item">
                         <i class="ti ti-user-circle me-1 align-middle"></i>
-                        <span class="align-middle">Profile Settings</span>
+                        <span class="align-middle">Mon profile</span>
                     </a>
 
                     <!-- Item-->
-                    <a href="account-settings.html" class="dropdown-item">
+                    <a href="{{ path('app_dashboard') }}" class="dropdown-item">
                         <i class="ti ti-settings me-1 align-middle"></i>
-                        <span class="align-middle">Account Settings</span>
+                        <span class="align-middle">Configuration</span>
                     </a>
 
                     <!-- item -->
                     <div class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between dropdown-item mb-0">
-                        <label class="form-check-label" for="notify"><i class="ti ti-bell me-1"></i>Notifications</label>
+                        <label class="form-check-label" for="notify"><i class="ti ti-bell me-1"></i>Mes notifications</label>
                         <input class="form-check-input me-0" type="checkbox" role="switch" id="notify">
                     </div>
-
-                    <!-- Item-->
-                    <a href="transactions.html" class="dropdown-item">
-                        <i class="ti ti-transition-right me-1 align-middle"></i>
-                        <span class="align-middle">Transactions</span>
-                    </a>
-
 
 
                     <!-- Item-->
                     <div class="pt-2 mt-2 border-top">
-                        <a href="login.html" class="dropdown-item text-danger">
+                        <a href="{{ path('app_logout') }}" class="dropdown-item text-danger">
                             <i class="ti ti-logout me-1 fs-17 align-middle"></i>
-                            <span class="align-middle">Log Out</span>
+                            <span class="align-middle">Me déconnecter</span>
                         </a>
                     </div>
                 </div>

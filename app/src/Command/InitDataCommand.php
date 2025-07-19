@@ -4,13 +4,21 @@ namespace App\Command;
 
 use App\Entity\Artisan;
 use App\Entity\CategoryArtisan;
+use App\Entity\Communes;
+use App\Entity\CorpsMetiers;
 use App\Entity\Crm;
 use App\Entity\EquipeAgent;
+use App\Entity\Etablissement;
 use App\Entity\Identification;
 use App\Entity\Immatriculation;
 use App\Entity\MediaObject;
+use App\Entity\Metiers;
+use App\Entity\Nationalities;
 use App\Entity\Payment;
+use App\Entity\Pays;
 use App\Entity\User;
+use App\Entity\Villes;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -44,18 +52,16 @@ class InitDataCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addOption('crms', null, InputOption::VALUE_OPTIONAL, "crms", 0)
             ->addOption('mediaobjects', null, InputOption::VALUE_REQUIRED, "Media", 0)
+            ->addOption('departements', null, InputOption::VALUE_OPTIONAL, "Departements", 0)
+            ->addOption('metiers', null, InputOption::VALUE_OPTIONAL, "Metiers", 0)
+            ->addOption('crms', null, InputOption::VALUE_OPTIONAL, "crms", 0)
+            ->addOption('equipes', null, InputOption::VALUE_OPTIONAL, "Equipes", 0)
             ->addOption('users', null, InputOption::VALUE_REQUIRED, "Users", 0)
             ->addOption('artisans', null, InputOption::VALUE_REQUIRED, "Users", 0)
             ->addOption('category_artisans', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
             ->addOption('immatriculations', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
             ->addOption('identifications', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
-            ->addOption('villes', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
-            ->addOption('departements', null, InputOption::VALUE_OPTIONAL, "Departements", 0)
-            ->addOption('sous_prefectures', null, InputOption::VALUE_OPTIONAL, "Sous Prefectures", 0)
-            ->addOption('equipes', null, InputOption::VALUE_OPTIONAL, "Equipes", 0)
-            ->addOption('metiers', null, InputOption::VALUE_OPTIONAL, "Metiers", 0)
         ;
     }
 
@@ -92,20 +98,6 @@ class InitDataCommand extends Command
             $this->loadImmatriculationsData();
         }
 
-        if ($input->getOption('villes')) {
-
-        }
-
-        if ($input->getOption('departements')) {
-
-        }
-
-        if ($input->getOption('equipes')) {
-
-        }
-
-        if ($input->getOption('metiers')) {
-        }
 
         $output->writeln('Utilisateur créé avec succès!');
         return Command::SUCCESS;
@@ -168,555 +160,6 @@ class InitDataCommand extends Command
             "extrait de naissance",
             "permis de conduire"
         ];
-        $pays = [
-            "Afghanistan",
-            "Afrique du Sud",
-            "Albanie",
-            "Algérie",
-            "Allemagne",
-            "Andorre",
-            "Angola",
-            "Antigua-et-Barbuda",
-            "Arabie saoudite",
-            "Argentine",
-            "Arménie",
-            "Australie",
-            "Autriche",
-            "Azerbaïdjan",
-            "Bahamas",
-            "Bahreïn",
-            "Bangladesh",
-            "Barbade",
-            "Belgique",
-            "Belize",
-            "Bénin",
-            "Bhoutan",
-            "Biélorussie",
-            "Birmanie",
-            "Bolivie",
-            "Bosnie-Herzégovine",
-            "Botswana",
-            "Brésil",
-            "Brunei",
-            "Bulgarie",
-            "Burkina Faso",
-            "Burundi",
-            "Cambodge",
-            "Cameroun",
-            "Canada",
-            "Cap-Vert",
-            "Chili",
-            "Chine",
-            "Chypre",
-            "Colombie",
-            "Comores",
-            "Congo-Brazzaville",
-            "Congo-Kinshasa",
-            "Corée du Nord",
-            "Corée du Sud",
-            "Costa Rica",
-            "Côte d’Ivoire",
-            "Croatie",
-            "Cuba",
-            "Danemark",
-            "Djibouti",
-            "Dominique",
-            "Égypte",
-            "Émirats arabes unis",
-            "Équateur",
-            "Érythrée",
-            "Espagne",
-            "Estonie",
-            "Eswatini",
-            "États-Unis",
-            "Éthiopie",
-            "Fidji",
-            "Finlande",
-            "France",
-            "Gabon",
-            "Gambie",
-            "Géorgie",
-            "Ghana",
-            "Grèce",
-            "Grenade",
-            "Guatemala",
-            "Guinée",
-            "Guinée équatoriale",
-            "Guinée-Bissau",
-            "Guyana",
-            "Haïti",
-            "Honduras",
-            "Hongrie",
-            "Inde",
-            "Indonésie",
-            "Irak",
-            "Iran",
-            "Irlande",
-            "Islande",
-            "Israël",
-            "Italie",
-            "Jamaïque",
-            "Japon",
-            "Jordanie",
-            "Kazakhstan",
-            "Kenya",
-            "Kirghizistan",
-            "Kiribati",
-            "Kosovo",
-            "Koweït",
-            "Laos",
-            "Lesotho",
-            "Lettonie",
-            "Liban",
-            "Libéria",
-            "Libye",
-            "Liechtenstein",
-            "Lituanie",
-            "Luxembourg",
-            "Macédoine du Nord",
-            "Madagascar",
-            "Malaisie",
-            "Malawi",
-            "Maldives",
-            "Mali",
-            "Malte",
-            "Maroc",
-            "Îles Marshall",
-            "Maurice",
-            "Mauritanie",
-            "Mexique",
-            "Micronésie",
-            "Moldavie",
-            "Monaco",
-            "Mongolie",
-            "Monténégro",
-            "Mozambique",
-            "Namibie",
-            "Nauru",
-            "Népal",
-            "Nicaragua",
-            "Niger",
-            "Nigéria",
-            "Norvège",
-            "Nouvelle-Zélande",
-            "Oman",
-            "Ouganda",
-            "Ouzbékistan",
-            "Pakistan",
-            "Palaos",
-            "Palestine",
-            "Panama",
-            "Papouasie-Nouvelle-Guinée",
-            "Paraguay",
-            "Pays-Bas",
-            "Pérou",
-            "Philippines",
-            "Pologne",
-            "Portugal",
-            "Qatar",
-            "République centrafricaine",
-            "République tchèque",
-            "Roumanie",
-            "Royaume-Uni",
-            "Russie",
-            "Rwanda",
-            "Saint-Kitts-et-Nevis",
-            "Sainte-Lucie",
-            "Saint-Marin",
-            "Saint-Vincent-et-les-Grenadines",
-            "Salvador",
-            "Samoa",
-            "Sao Tomé-et-Principe",
-            "Sénégal",
-            "Serbie",
-            "Seychelles",
-            "Sierra Leone",
-            "Singapour",
-            "Slovaquie",
-            "Slovénie",
-            "Somalie",
-            "Soudan",
-            "Soudan du Sud",
-            "Sri Lanka",
-            "Suède",
-            "Suisse",
-            "Suriname",
-            "Syrie",
-            "Tadjikistan",
-            "Tanzanie",
-            "Tchad",
-            "Thaïlande",
-            "Timor oriental",
-            "Togo",
-            "Tonga",
-            "Trinité-et-Tobago",
-            "Tunisie",
-            "Turkménistan",
-            "Turquie",
-            "Tuvalu",
-            "Ukraine",
-            "Uruguay",
-            "Vanuatu",
-            "Vatican",
-            "Venezuela",
-            "Viêt Nam",
-            "Yémen",
-            "Zambie",
-            "Zimbabwe"
-        ];
-        $nationalites = [
-            "afghan (e)",
-            "albanais (e)",
-            "algérien (e)",
-            "allemand (e)",
-            "americain (e)",
-            "andorran (e)",
-            "angolais (e)",
-            "antiguaise-et-barbudien (e)",
-            "argentin (e)",
-            "armenien (e)",
-            "australien (e)",
-            "autrichien (e)",
-            "azerbaïdjanais (e)",
-            "bahamien (e)",
-            "bahreinien (e)",
-            "bangladais (e)",
-            "barbadien (e)",
-            "belge",
-            "belizien (e)",
-            "béninois (e)",
-            "bhoutanais (e)",
-            "biélorusse",
-            "birman (e)",
-            "bissau-guinéen (e)",
-            "bolivien (e)",
-            "bosnien (e)",
-            "botswanais (e)",
-            "brésilien (e)",
-            "britannique",
-            "brunéien (e)",
-            "bulgare",
-            "burkinabé (e)",
-            "burundais (e)",
-            "cambodgien (e)",
-            "camerounais (e)",
-            "canadien (e)",
-            "cap-verdien (e)",
-            "centrafricain (e)",
-            "chilien (e)",
-            "chinois (e)",
-            "chypriote (e)",
-            "colombien (e)",
-            "comorien (e)",
-            "congolais (e)",
-            "congolais (e)",
-            "cookienn (e)",
-            "costaricain (e)",
-            "croate",
-            "cubain (e)",
-            "danois (e)",
-            "djiboutien (e)",
-            "dominicain (e)",
-            "dominiquais (e)",
-            "égyptien (e)",
-            "émirien (e)",
-            "équato-guineen (e)",
-            "équatorien (e)",
-            "érythréen (e)",
-            "espagnol (e)",
-            "est-timorais (e)",
-            "estonien (e)",
-            "éthiopien (e)",
-            "fidjien (e)",
-            "finlandais (e)",
-            "français (e)",
-            "gabonais (e)",
-            "gambien (e)",
-            "georgien (e)",
-            "ghanéen (e)",
-            "grenadien (e)",
-            "guatémaltèque",
-            "guinéen (e)",
-            "guyanien (e)",
-            "haïtien (e)",
-            "hellénique",
-            "hondurien (e)",
-            "hongrois (e)",
-            "indien (e)",
-            "indonésien (e)",
-            "irakien (e)",
-            "iranien (e)",
-            "irlandais (e)",
-            "islandais (e)",
-            "israélien (e)",
-            "italien (e)",
-            "ivoirien (e)",
-            "jamaïcain (e)",
-            "japonais (e)",
-            "jordanien (e)",
-            "kazakhstanais (e)",
-            "kenyan (e)",
-            "kirghize",
-            "kiribatien (e)",
-            "kittitien et névicien (e)",
-            "koweïtien (e)",
-            "laotien (e)",
-            "lesothan (e)",
-            "letton (e)",
-            "libanais (e)",
-            "libérien (e)",
-            "libyen (e)",
-            "liechtensteinois (e)",
-            "lituanien (e)",
-            "luxembourgeois (e)",
-            "macédonien (e)",
-            "malaisien (e)",
-            "malawien (e)",
-            "maldivien (e)",
-            "malgache",
-            "malien (e)",
-            "maltais (e)",
-            "marocain (e)",
-            "marshallais (e)",
-            "mauricien (e)",
-            "mauritanien (e)",
-            "mexicain (e)",
-            "micronésien (e)",
-            "moldave",
-            "monegasque",
-            "mongolien (e)",
-            "monténégrin (e)",
-            "mozambicain (e)",
-            "namibien (e)",
-            "nauruan (e)",
-            "néerlandais (e)",
-            "néo-zélandaise (e)",
-            "népalais (e)",
-            "nicaraguayen (e)",
-            "nigérian (e)",
-            "nigérien (e)",
-            "niuéen (e)",
-            "nord-coréen (e)",
-            "norvégien (e)",
-            "omanais (e)",
-            "ougandais (e)",
-            "ouzbék (e)",
-            "pakistanais (e)",
-            "palaosien (e)",
-            "palestinien (e)",
-            "panaméen (e)",
-            "papouane-néo-guinéen (e)",
-            "paraguayen (e)",
-            "péruvien (e)",
-            "philippien (e)",
-            "polonais (e)",
-            "portugais (e)",
-            "qatarien (e)",
-            "roumain (e)",
-            "russe",
-            "rwandais (e)",
-            "saint-lucienn (e)",
-            "saint-marinais (e)",
-            "saint-vincentais (e) et grenadine",
-            "salomonais (e)",
-            "salvadorien (e)",
-            "samoan (e)",
-            "santoméen (e)",
-            "saoudien (e)",
-            "sénégalais (e)",
-            "serbe",
-            "seychellois (e)",
-            "sierra-léonais (e)",
-            "singapourien (e)",
-            "slovaque",
-            "slovène",
-            "somalien (e)",
-            "soudanais (e)",
-            "sri-lankais (e)",
-            "sud-africain (e)",
-            "sud-coréen (e)",
-            "sud-soudanais (e)",
-            "suédois (e)",
-            "suisse",
-            "surinamais (e)",
-            "swazie",
-            "syrien (e)",
-            "tadjik (e)",
-            "tanzanien (e)",
-            "tchadien (e)",
-            "tchèque",
-            "thaïlandais (e)",
-            "togolais (e)",
-            "tonguien (e)",
-            "trinidadien (e)",
-            "tunisien (e)",
-            "turkmène",
-            "turque",
-            "tuvaluan (e)",
-            "ukrainien (e)",
-            "uruguayen (e)",
-            "vanuatuan (e)",
-            "vatican (e)",
-            "vénézuélien (e)",
-            "vietnamien (e)",
-            "yéménite",
-            "zambien (e)",
-            "zimbabwéen (e)"
-        ];
-        $communes = [
-            "abengourou",
-            "abidjan",
-            "aboisso",
-            "abongoua",
-            "adaou",
-            "adiake",
-            "adjouan",
-            "adzope",
-            "agboville",
-            "agnibilekrou",
-            "akoupe",
-            "alepe",
-            "ananda",
-            "annepe",
-            "anyama",
-            "appimadoum",
-            "attinguié",
-            "bacanda",
-            "badikaha",
-            "bako",
-            "bangolo",
-            "becouefin",
-            "bedi-goazon",
-            "beoumi",
-            "bettie",
-            "biankouma",
-            "bieby",
-            "bingerville",
-            "bin-houye",
-            "blapleu",
-            "blenimeouin",
-            "blessegue",
-            "blolequin",
-            "boahia",
-            "bocanda",
-            "bogouine",
-            "bondoukou",
-            "bongouanou",
-            "bonoua",
-            "bouafle",
-            "bouake",
-            "bouandougou",
-            "bouna",
-            "boundiali",
-            "brofodoume",
-            "dabakala",
-            "dabou",
-            "dabouyo",
-            "daloa",
-            "danane",
-            "daoukro",
-            "diamarakro",
-            "dianra",
-            "diawalla",
-            "diboke",
-            "didievi",
-            "dignago",
-            "dimbokro",
-            "divo",
-            "doke",
-            "doudoukou",
-            "duekoue",
-            "fadiadougou",
-            "famienkro",
-            "ferkessedougou",
-            "gagnoa",
-            "gbangbegouine",
-            "gbangbegouine-yati",
-            "gohouo-zagna",
-            "gomon",
-            "gouine",
-            "grand-bassam",
-            "grand-lahou",
-            "guessabo",
-            "guiberoua",
-            "gueyo",
-            "guinglo-tahouake",
-            "guitry",
-            "hire",
-            "issia",
-            "jacqueville",
-            "kahin-zarabaon",
-            "kani",
-            "kanzra",
-            "katiola",
-            "kong",
-            "korhogo",
-            "koro",
-            "kouakro",
-            "kounahiri",
-            "koun-fao",
-            "kouto",
-            "koutouba",
-            "kpata",
-            "lakota",
-            "lolobo",
-            "loviguie",
-            "mamini",
-            "man",
-            "mankono",
-            "mantongouine",
-            "marahoue",
-            "m'bahiakro",
-            "m'batto",
-            "morondo",
-            "nafana (prikro)",
-            "n'douci",
-            "n'gokro",
-            "niakaramandougou",
-            "niambezaria",
-            "nielle",
-            "nofou",
-            "odienne",
-            "oume",
-            "ouyably-gnondrou",
-            "pacobo",
-            "pehe",
-            "sakassou",
-            "samatiguila",
-            "sandougou-soba",
-            "san-pedro",
-            "sassandra",
-            "seguela",
-            "sinfra",
-            "soubre",
-            "tabou",
-            "tafire",
-            "taï",
-            "tanda",
-            "tiagba",
-            "tiapoum",
-            "tiassale",
-            "tiebissou",
-            "tiedio",
-            "tieningboue",
-            "tingrela",
-            "tinhou",
-            "tiobli",
-            "togoniere",
-            "touba",
-            "tougbo",
-            "toulepleu",
-            "toumodi",
-            "toumoukoro",
-            "vavoua",
-            "varale",
-            "yakasse-me",
-            "yamoussoukro",
-            "yaou",
-            "yorodougou",
-            "zonneu",
-            "zouan-hounien"
-        ];
         $sexe= [
             'F',
             'H'
@@ -726,47 +169,42 @@ class InitDataCommand extends Command
             'Veuf(ve)',
             'Divorcé'
         ];
-        $photos = [];
-        $crms = [];
-        $categories = [];
-
         $this->faker = Factory::create();
 
-        $mediaObjects = $this->em->getRepository(MediaObject::class)->findAll();
-        foreach ($mediaObjects as $photoArtisan) {
-            $photos[] = $photoArtisan;
-        }
+        $metiers = $this->em->getRepository(Metiers::class)->findAll();
+      //  $crms = $this->em->getRepository(Crm::class)->findAll();
+        $etablissements = $this->em->getRepository(Etablissement::class)->findAll();
+        $medias = $this->em->getRepository(MediaObject::class)->findAll();
+        $communes = $this->em->getRepository(Communes::class)->findAll();
+        $villes = $this->em->getRepository(Villes::class)->findAll();
+        $pays = $this->em->getRepository(Pays::class)->findAll();
+        $nationalites = $this->em->getRepository(Nationalities::class)->findAll();
+        $categoryArtisans = $this->em->getRepository(CategoryArtisan::class)->findAll();
 
-        $crmObjects = $this->em->getRepository(Crm::class)->findAll();
-        foreach ($crmObjects as $crm) {
-            $crms[] = $crm;
-        }
-
-        $categoryObjects = $this->em->getRepository(CategoryArtisan::class)->findAll();
-        foreach ($categoryObjects as $categoryArtisan) {
-            $categories[] = $categoryArtisan;
-        }
 
         for ($i = 0; $i < self::ARTISAN_COUNT; $i++) {
             $artisan = new Artisan();
-            $artisan->setPhoto($this->faker->randomElement($photos));
+            $artisan->setPhoto($this->faker->randomElement($medias));
             $artisan->setNom($this->faker->lastName());
             $artisan->setPrenoms($this->faker->firstName);
             $artisan->setSexe($this->faker->randomElement($sexe));
+            $artisan->setVilleNaissance($this->faker->randomElement($villes));
+            $artisan->setNationalite($this->faker->randomElement($villes));
+            $artisan->setPaysNaissance($this->faker->randomElement($pays));
             $artisan->setEmail($this->faker->email);
             $artisan->setDomicile($this->faker->randomElement($communes));
             $artisan->setEtatCivil($this->faker->randomElement($maritalStatus));
 
-            $artisan->setDateNaissance(new \DateTime($this->faker->date('Y-m-d')));
+            $artisan->setDateNaissance(new DateTime($this->faker->date('Y-m-d')));
             $artisan->setDrivingLicenseNumber(mt_rand());
-            $artisan->setDateNaissance(new \DateTime($this->faker->date('Y-m-d')));
+            $artisan->setDateNaissance(new DateTime($this->faker->date('Y-m-d')));
 
-            $artisan->setActiviteExercee($this->faker->word);
+            $artisan->setActiviteExercee($this->faker->randomElement($metiers));
             $artisan->setActiviteExerceeLieu($this->faker->city());
-            $artisan->setActivitePrincipale($this->faker->name);
-            $artisan->setActiviteSecondaire($this->faker->name);
+            $artisan->setActivitePrincipale($this->faker->randomElement($metiers));
+            $artisan->setActiviteSecondaire($this->faker->randomElement($metiers));
 
-            $artisan->setCategoryArtisan($this->faker->randomElement($categories));
+            $artisan->setCategoryArtisan($this->faker->randomElement($categoryArtisans));
 
             $artisan->setNumeroPieceIdentite(mt_rand());
             $artisan->setTypePieceIdentite($this->faker->randomElement($typePieces));
@@ -787,7 +225,11 @@ class InitDataCommand extends Command
             $artisan->setNationalite($this->faker->randomElement($nationalites));
             $artisan->setNumeroRM(mt_rand());
             $artisan->setPaysNaissance($this->faker->randomElement($pays));
-            $artisan->setCrm($this->faker->randomElement($crms));
+
+            $etablissement = $this->faker->randomElement($etablissements);
+            $artisan->setEtablissement($etablissement);
+            $artisan->setCrm($etablissement->getCrm());
+
             $this->em->persist($artisan);
         }
 
@@ -919,35 +361,40 @@ class InitDataCommand extends Command
 
     private function loadImmatriculationsData(): void {
 
-        $artisanObjects = $this->em->getRepository(Artisan::class)->findAll();
-        $artisans = [];
-        foreach ($artisanObjects as $artisanObject) {
-            $artisans[] = $artisanObject;
-        }
-
-        $userObjects = $this->em->getRepository(User::class)->findAll();
-        $users = [];
-        foreach ($userObjects as $userObject) {
-            $users[] = $userObject;
-        }
-
+        $paymentTypes = [
+            "ORANGE",
+            "MTN",
+            "WAVE",
+            "MOOV"
+        ];
+        $artisans = $this->em->getRepository(Artisan::class)->findAll();
+        $identifications = $this->em->getRepository(Artisan::class)->findAll();
+        $users = $this->em->getRepository(User::class)->findBy([
+            "roles" => ["ROLE_RECENSEUR"],
+        ]);
 
         for ($i = 0; $i < self::ARTISAN_COUNT; $i++){
+
+            $paymentType = $this->faker->randomElement($paymentTypes);
+            $artisan = $this->faker->randomElement($artisans);
+
             $immatriculation = new Immatriculation();
             $immatriculation->setType("DIRECT");
+            $immatriculation->setAgent($this->faker->randomElement($users));
+            $immatriculation->setIdentification($this->faker->randomElement($identifications));
             $immatriculation->setLongitude(null);
             $immatriculation->setLongitude(null);
             $immatriculation->setStatus("PENDING");
-            $immatriculation->setArtisan($this->faker->randomElement($artisans));
+            $immatriculation->setArtisan($artisan);
             $immatriculation->setCode(Uuid::v4()->toRfc4122());
-            $immatriculation->setPaymentType("WAVE");
+            $immatriculation->setPaymentType($paymentType);
             $this->em->persist($immatriculation);
             $this->em->flush();
 
             $payment = new Payment();
-            $payment->setType("DIRECT");
+            $payment->setType("IMMATRICULATION");
             $payment->setStatus("PENDING");
-            $payment->setPaymentFor($this->faker->randomElement($artisans));
+            $payment->setPaymentFor($artisan);
             $payment->setCodePaymentOperateur(mt_rand(150000,2555885));
             $payment->setMontant(12500);
             $payment->setOperateur("WAVE");

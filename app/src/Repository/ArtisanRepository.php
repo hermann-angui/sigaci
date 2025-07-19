@@ -48,12 +48,15 @@ class ArtisanRepository extends ServiceEntityRepository
             ->getResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 
-    public function getTotalArtisans(): ?int
+    public function getTotalForEachArtisanCategory(): ?array
     {
         return $this->createQueryBuilder('m')
-            ->select('COUNT(m.id)')
+            ->select('COUNT(m.id) as total', 'category.name')
+            ->groupBy('m.categoryArtisan')
+            ->leftJoin('m.categoryArtisan', 'category')
+            ->where('m.categoryArtisan is not null')
             ->getQuery()
-            ->getResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 
     public function getLastest(): ?array
