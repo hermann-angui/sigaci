@@ -28,7 +28,7 @@ class AuthenticationSuccessListener
         // $host = $this->requestStack->getCurrentRequest()->getHost();
         $schemeAndHttpPost = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
 
-        $data = array(
+        $extra = array(
             'id' => $user->getId(),
             'nom' => $user->getNom(),
             'prenoms' => $user->getNom(),
@@ -38,6 +38,7 @@ class AuthenticationSuccessListener
             'roles' => $user->getRoles(),
         );
 
+        $data = array_merge($data, $extra);
         $event->setData($data);
     }
 }
