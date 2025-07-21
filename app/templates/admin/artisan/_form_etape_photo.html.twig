@@ -1,0 +1,192 @@
+
+    {{ form_start(form, {'method': 'POST', 'attr': {'id': 'stepperform'}}) }}
+        <h3>INFORMATIONS PERSONNELLES</h3>
+        <fieldset>
+            <div id="step0">
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(form) }}
+                </div>
+                <div class="row mb-4 mt-4">
+                    <div class="d-flex justify-content-center">
+                        <label for="artisan_photo_step_photo" class="d-block d-flex justify-content-center align-content-center">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                {% if artisan.photo %}
+{#                                    <img id="imagePreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photo }}" alt="" width="150">#}
+                                    <img id="imagePreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photo|image_path }}" alt="" width="150">
+                                {% else %}
+                                    <img id="imagePreview" src="{{ asset('assets/images/avatar/avatar.jpg') }}" alt="" width="150">
+                                {% endif %}
+                                <div class="d-block position-relative text-dark" style="top:-35px;left:32px"><i class="fa fa-camera fa-2x"></i></div>
+                                {{ form_widget(form.photo, {'attr': {'class': 'visually-hidden'}}) }}
+                                <div>Télécharger une photo</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row mb-3 mt-4">
+                    <div class="col-md-2">
+                    </div>
+                </div>
+                <div class="row mb-3 mt-4">
+                    <div class="col-md-3">
+                        {{ form_row(form.type_adhesion) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.lastName) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.firstName) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.mobile) }}
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <h3>SCAN PIECE D'IDENTITE </h3>
+        <fieldset>
+            <div id="step1">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="artisan_photo_step_photoPieceFront" class="form-label">Copie scannée de la pièce (recto)
+                            {% if artisan.photoPieceFront %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPieceFrontPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPieceFront }}" alt="" width="100" style="width:50px;">
+                                    {{ form_widget(form.photoPieceFront, {'attr': {'class': 'visually-hidden'}}) }}
+                                    <div style="margin-top:0px">Télécharger une image</div>
+                                </div>
+                            {% else %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPieceFrontPreview" src="" alt="">
+                                    <div style="margin-top:0px;text-align: center"  class="upload-icon">
+                                        <i class="fa fa-upload fa-4x d-block"></i>Télécharger une photo
+                                    </div>
+                                    {{ form_widget(form.photoPieceFront, {'attr': {'class': 'visually-hidden'}}) }}
+                                </div>
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="artisan_photo_step_photoPieceBack" class="form-label">Copie scannée de la pièce (verso)
+                            {% if artisan.photoPieceBack %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPieceBackPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPieceBack }}" alt="" width="100" style="width:50px;">
+                                    {{ form_widget(form.photoPieceBack, {'attr': {'class': 'visually-hidden'}}) }}
+                                    <div style="margin-top:0px">Télécharger une image</div>
+                                </div>
+                            {% else %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPieceBackPreview" src="" alt="">
+                                    <div style="margin-top:0px;text-align:center"  class="upload-icon">
+                                        <i class="fa fa-upload fa-4x d-block"></i>Télécharger une photo
+                                    </div>
+                                    {{ form_widget(form.photoPieceBack, {'attr': {'class': 'visually-hidden'}}) }}
+                                </div>
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <h3>SCAN PERMIS DE CONDUIRE</h3>
+        <fieldset>
+            <div id="step1">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="artisan_photo_step_photoPermisFront" class="form-label">Copie scannée du permis (recto)
+                            {% if artisan.photoPermisFront %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPermisFrontPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPermisFront }}" alt="" width="100" style="width:50px;">
+                                    {{ form_widget(form.photoPermisFront, {'attr': {'class': 'visually-hidden'}}) }}
+                                    <div style="margin-top:0px">Télécharger une image</div>
+                                </div>
+                            {% else %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPermisFrontPreview" src="" alt="">
+                                    <div style="margin-top:0px;text-align: center"  class="upload-icon">
+                                        <i class="fa fa-upload fa-4x d-block"></i>Télécharger une photo
+                                    </div>
+                                    {{ form_widget(form.photoPermisFront, {'attr': {'class': 'visually-hidden'}}) }}
+                                </div>
+                            {% endif %}
+                        </label>
+
+                    </div>
+                    <div class="col-md-6">
+                        <label for="artisan_photo_step_photoPermisBack" class="form-label">Copie scannée du permis (verso)
+                            {% if artisan.photoPermisBack %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPermisBackPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPermisBack }}" alt="" width="100" style="width:50px;">
+                                    {{ form_widget(form.photoPermisBack, {'attr': {'class': 'visually-hidden'}}) }}
+                                    <div style="margin-top:0px" class="upload-icon">Télécharger une image</div>
+                                </div>
+                            {% else %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_photo_step_photoPermisBackPreview" src="" alt="">
+                                    <div style="margin-top:0px;text-align: center"  class="upload-icon">
+                                        <i class="fa fa-upload fa-4x d-block"></i>Télécharger une image
+                                    </div>
+                                    {{ form_widget(form.photoPermisBack, {'attr': {'class': 'visually-hidden'}}) }}
+                                </div>
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <h3>DONNEES DE PAIEMENTS CHAMBRES DES METIERS (CODE ORANGE MONEY + RECU ELECTRONIQUE)</h3>
+        <fieldset>
+            <div id="step3">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        {{ form_row(form.payment_receipt_cnmci_code) }}
+                    </div>
+                    <div class="col-md-3 mb-2 mt-2 float-end">
+                        <div class="d-flex">
+                            <div>Voulez-vous charger une image ? &nbsp; &nbsp;</div>
+                            <input type="checkbox" name="select-format" id="select-format" switch="PDF" />
+                            <label for="select-format" data-on-label="oui" data-off-label="non"></label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="pdf-block">
+                        {% if artisan.paymentReceiptCnmciPdf %}
+                            <label for="artisan_registration_paymentReceiptCnmciPdf" class="form-label">Reçu de paiement Orange Money) CNMCI (format .pdf)
+                                {{ form_widget(form.paymentReceiptCnmciPdf, {'attr': {'class': 'visually-hidden'}}) }}
+                                <span class="btn btn-rounded btn-success btn-sm">Cliquer ici pour changer le fichier</span>
+                            </label>
+                            <embed src="/artisans/{{ artisan.reference }}/{{ artisan.paymentReceiptCnmciPdf|image_path }}" width="500" height="375" type="application/pdf">
+                        {% else %}
+                            {{ form_row(form.paymentReceiptCnmciPdf) }}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6" id="image-block">
+                        <label for="artisan_registration_mobileMoneyReceiptImage" class="form-label">Image reçu paiement mobile money au format jpeg, jpg
+                            {% if artisan.mobileMoneyReceiptImage %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_registration_photoPermisBackPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.mobileMoneyReceiptImage }}" alt="" width="100" style="width:80%">
+                                    {{ form_widget(form.mobileMoneyReceiptImage, {'attr': {'class': 'visually-hidden'}}) }}
+                                    <div style="margin-top:0px" class="upload-icon">Télécharger une image</div>
+                                </div>
+                            {% else %}
+                                <div class="image-upload-container">
+                                    <img id="artisan_registration_mobileMoneyReceiptImagePreview" src="" alt="" width="100" style="width:80%" >
+                                    <div style="margin-top:0px"  class="upload-icon">
+                                        <i class="fa fa-upload fa-4x d-block"></i>Télécharger une image
+                                    </div>
+                                    {{ form_widget(form.mobileMoneyReceiptImage, {'attr': {'class': 'visually-hidden'}}) }}
+                                </div>
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <hr>
+        {{ form_row(form._token) }}
+        <div class="row justify-content-center">
+            <div class="text-center"><button type="submit" class="btn btn-success btn-lg">Enregister</button></div>
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}

@@ -1,0 +1,141 @@
+version: '3.8'
+
+services:
+
+  # Traefik Reverse Proxy and Load Balancer
+  traefik:
+    image: traefik:v2.11 # Use a recent Traefik v2 version
+    command:
+      # Enable Docker provider and expose Traefik API
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false" # Only expose services with traefik.enable=true
+      # Entrypoints for HTTP and HTTPS
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Configure Let's Encrypt (ACME) resolver
+      - "--certificatesresolvers.le.acme.email=anguidev@gmail.com" # IMPORTANT: Change to your actual email
+      - "--certificatesresolvers.le.acme.storage=/etc/traefik/acme.json"
+      - "--certificatesresolvers.le.acme.tlschallenge=true" # Use TLS challenge for ACME
+      # Enable access logs
+      - "--accesslog=true"
+      # Enable debug logs (optional)
+      # - "--log.level=DEBUG"
+    ports:
+      - "80:80"   # The HTTP port
+      - "443:443" # The HTTPS port
+      - "8080:8080" # The Traefik dashboard port (optional, for monitoring)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mount Docker socket for Traefik to discover services
+      - ./dockerize/traefik/traefik.yml:/etc/traefik/traefik.yml:ro # Mount Traefik static configuration
+      - ./dockerize/traefik/acme.json:/etc/traefik/acme.json # Volume for Let's Encrypt certificates
+    networks:
+      - traefik_public # Traefik needs to be on the public network to route traffic
+
+  # MySQL Database Service
+  db:
+    image: mysql:8.0 # Using MySQL 8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # IMPORTANT: Change this to a strong password
+      MYSQL_DATABASE: siga_db
+      MYSQL_USER: QT6e5APtSYaU
+      MYSQL_PASSWORD: QT6e5APtSYaU
+    volumes:
+      - ./db:/var/lib/mysql # Persistent data volume for the database
+    ports:
+      - "3306:3306" # Expose MySQL port (for direct access from host, optional)
+    networks:
+      - default # Database only needs to communicate with PHP-FPM and phpMyAdmin
+
+  # PHP-FPM Service
+  app:
+    build:
+      context: ./dockerize
+      dockerfile: ./prod/Dockerfile
+    volumes:
+      - ./app:/var/www/html # Mount your Symfony application code here
+    # No direct ports mapping needed for PHP-FPM, Nginx communicates internally
+    depends_on:
+      - db # Nginx depends on PHP-FPM being ready
+    environment:
+      APP_ENV: dev
+      # Example DATABASE_URL for PostgreSQL (uncomment if using PostgreSQL)
+      # DATABASE_URL: postgresql://symfony_user:symfony_password@db:5432/symfony_db?serverVersion=16&charset=utf8
+      # Example DATABASE_URL for MySQL (uncomment if using MySQL)
+      DATABASE_URL: mysql://root:QT6e5APtSYaU@db:3306/siga_db?serverVersion=10.5.27&charset=utf8mb4
+    networks:
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
+
+  # phpMyAdmin Service
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    environment:
+#      PMA_HOST: db # Connect to the 'mysql' service
+#      MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # Use the same root password as your MySQL service
+#      PMA_PORT: 3306 # The port MySQL is listening on
+#      UPLOAD_LIMIT: 64M # Increase upload limit if needed
+#      MEMORY_LIMIT: 256M # Increase memory limit if needed
+#    depends_on:
+#      - db # phpMyAdmin depends on MySQL being ready
+#    networks:
+#      - default # phpMyAdmin needs to communicate with MySQL on the default network
+#      - traefik_public # phpMyAdmin needs to be accessible by Traefik
+#    ports:
+#      - "83:80"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.phpmyadmin-http.entrypoints=web"
+#      - "traefik.http.routers.phpmyadmin-http.rule=Host(`db-cnmci.sfpci.com`)" # IMPORTANT: Change to your actual subdomain
+#      - "traefik.http.routers.phpmyadmin-http.middlewares=redirect-to-https"
+#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+#      - "traefik.http.routers.phpmyadmin-https.entrypoints=websecure"
+#      - "traefik.http.routers.phpmyadmin-https.rule=Host(`db-cnmci.sfpci.com`)" # IMPORTANT: Change to your actual subdomain
+#      - "traefik.http.routers.phpmyadmin-https.tls.certresolver=le"
+#      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80" # phpMyAdmin is listening on port 80 internally
+
+  # Nginx Web Server
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./app:/var/www/html # Mount your Symfony application code here
+      - ./dockerize/nginx/default.conf:/etc/nginx/conf.d/default.conf # Custom Nginx configuration
+    # No direct ports mapping needed for Nginx, Traefik will handle external access
+    depends_on:
+      - app # Nginx depends on PHP-FPM being ready
+    networks:
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx-http.entrypoints=web"
+      - "traefik.http.routers.nginx-http.rule=Host(`cnmci.sfpci.com`)"
+      - "traefik.http.routers.nginx-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.nginx-https.entrypoints=websecure"
+      - "traefik.http.routers.nginx-https.rule=Host(`cnmci.sfpci.com`)"
+      - "traefik.http.routers.nginx-https.tls.certresolver=le"
+      - "traefik.http.services.nginx.loadbalancer.server.port=80"
+
+  yourls:
+    image: yourls
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 9090:80
+    environment:
+      YOURLS_DB_HOST: db
+      YOURLS_DB_PASS: QT6e5APtSYaU
+      YOURLS_SITE: https://cnmci.sfpci.com
+      YOURLS_USER: anguidev
+      YOURLS_PASS: scawfield
+    networks:
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
+
+networks:
+  default: # Default network for internal communication between app services
+    driver: bridge
+  traefik_public: # Network for Traefik to expose services
+    driver: bridge

@@ -1,0 +1,212 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+        <a href="index.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <span style="color: var(--bs-primary)">
+                    <img src="{{ asset('assets/img/logos/cnmci.png') }}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+              </span>
+            <span class="app-brand-text demo menu-text fw-semibold ms-2">SIGA</span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                        d="M8.47365 11.7183C8.11707 12.0749 8.11707 12.6531 8.47365 13.0097L12.071 16.607C12.4615 16.9975 12.4615 17.6305 12.071 18.021C11.6805 18.4115 11.0475 18.4115 10.657 18.021L5.83009 13.1941C5.37164 12.7356 5.37164 11.9924 5.83009 11.5339L10.657 6.707C11.0475 6.31653 11.6805 6.31653 12.071 6.707C12.4615 7.09747 12.4615 7.73053 12.071 8.121L8.47365 11.7183Z"
+                        fill-opacity="0.9" />
+                <path
+                        d="M14.3584 11.8336C14.0654 12.1266 14.0654 12.6014 14.3584 12.8944L18.071 16.607C18.4615 16.9975 18.4615 17.6305 18.071 18.021C17.6805 18.4115 17.0475 18.4115 16.657 18.021L11.6819 13.0459C11.3053 12.6693 11.3053 12.0587 11.6819 11.6821L16.657 6.707C17.0475 6.31653 17.6805 6.31653 18.071 6.707C18.4615 7.09747 18.4615 7.73053 18.071 8.121L14.3584 11.8336Z"
+                        fill-opacity="0.4" />
+            </svg>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashboards -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-home-smile-line"></i>
+                <div>Tableau de bord</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item active">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>CRM</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Immatriculations</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Identifications</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Finances</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-header mt-5">
+            <span class="menu-header-text">Actions</span>
+        </li>
+        <!-- Identifications -->
+        <li class="menu-item">
+            <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                <i class="menu-icon tf-icons ri-user-line"></i>
+                <div>Identifications</div>
+            </a>
+        </li>
+
+        <!-- Immatriculations -->
+        <li class="menu-item">
+            <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                <i class="menu-icon tf-icons ri-layout-2-line"></i>
+                <div>Immatriculations</div>
+            </a>
+        </li>
+
+        <!-- Controles -->
+        <li class="menu-item">
+            <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                <i class="menu-icon tf-icons ri-folder-received-fill"></i>
+                <div>Contrôles</div>
+            </a>
+        </li>
+
+
+        <!-- CNMCI -->
+        <li class="menu-header mt-5">
+            <span class="menu-header-text">CNMCI</span>
+        </li>
+        <!-- Artisans -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-layout-2-line"></i>
+                <div>Artisans</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ path('app_artisan_index') }}" class="menu-link">
+                        <div>Entreprises</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_artisan_index') }}" class="menu-link">
+                        <div>Artisans</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_artisan_index') }}" class="menu-link">
+                        <div >Apprentis</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_artisan_index') }}" class="menu-link">
+                        <div>Compagnons</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@{ /artisans/map }" class="menu-link">
+                        <div>Géolocalisation</div>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <!-- Nomenclature activites Pages -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-file-copy-line"></i>
+                <div>Nomenclatures des métiers</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                        <div>Activités</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                        <div>Corps de métiers</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Métiers</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-file-copy-line"></i>
+                <div>Découpage Admin..</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="@{ /crms/list }" class="menu-link" >
+                        <div>CRM</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                        <div>Départements</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                        <div>Régions</div>
+                    </a>
+                </li>
+            </ul>
+            <li class="menu-item">
+                <a href="{{ path('app_dashboard') }}" class="menu-link" >
+                    <div>Codifications</div>
+                </a>
+            </li>
+        </li>
+
+        <!-- Paramètres -->
+        <li class="menu-header mt-5">
+            <span class="menu-header-text">Paramètres</span>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-lock-2-line"></i>
+                <div>Sécurité</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Utilisateurs</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Rôles</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ path('app_dashboard') }}" class="menu-link">
+                        <div>Permissions</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="{{ path('app_dashboard') }}" class="menu-link">
+                <i class="menu-icon tf-icons ri-notification-3-line"></i>
+                <div>Notifications</div>
+            </a>
+        </li>
+    </ul>
+</aside>

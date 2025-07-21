@@ -1,0 +1,310 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        .section-title {
+            background: linear-gradient(59deg, rgba(252,114,0,1) 9%, rgba(244,130,0,0.8855917366946778) 32%, rgba(62,146,60,0.9398113905325444) 69%, rgba(4,113,2,1) 95%);
+            padding: 5px 5px;
+            color: white;
+            font-size: 16px;
+        }
+        table tbody tr td {
+            color: #117b01;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+
+        {{ include('admin/_partials/header.html.twig') }}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('admin/_partials/left-sidebar.html.twig')}}
+        {% endif %}
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div>
+
+                                </div>
+                                <div class="card-body border-bottom">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h3 class="text-uppercase">Type d' enrôlement: {{ artisan.typeAdhesion }}  </h3>
+                                        </div>
+                                        <div>
+                                            <a href="{{ path('admin_artisan_index') }}" class="btn btn-primary waves-effect waves-light">Quitter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mb-4">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                N° RM : <strong class="badge bg-gradient bg-info p-2">{{ artisan.cnmciNumeroRm?: "N/A" }}</strong>
+                                            </div>
+                                            <div>
+                                                N° Carte professionnelle : <strong class="badge bg-gradient bg-info p-2">{{ artisan.cnmciNumeroCarteProfessionelle?: "N/A" }}</strong>
+                                            </div>
+                                        </div>
+                                    </h4>
+                                    <div class="row">
+                                        <h2 class="section-title">INFORMATIONS PERSONNELLES</h2>
+                                        <table class="table table-condensed table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th colspan="2" width="5%">
+                                                    <div class="d-flex justify-content-center">
+                                                        <label for="artisan_registration_edit_photo" class="d-block d-flex justify-content-center align-content-center">
+                                                            {% if artisan.photo is null %}
+                                                                <img src="{{ asset('assets/images/avatar/avatar.jpg') }}" alt="" width="100" class="rounded-2">
+                                                            {% else %}
+                                                                <img id="imagePreview" src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photo }}" alt="" width="200" class="rounded-2">
+                                                            {% endif %}
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>Sexe</th>
+                                                <td>{{ artisan.sex }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <td>{{ artisan.lastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms</th>
+                                                <td>{{ artisan.firstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>{{ artisan.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Mobile</th>
+                                                <td>{{ artisan.mobile }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Whatsapp</th>
+                                                <td>{{ artisan.Whatsapp }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Fixe</th>
+                                                <td>{{ artisan.phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ville de naissance</th>
+                                                <td>{{ artisan.birthCity }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pays de naissance</th>
+                                                <td>{{ artisan.birthCountry }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Date de naissance</th>
+                                                <td>{{ artisan.dateOfBirth ? artisan.dateOfBirth|date('d-m-Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Localité de naissance</th>
+                                                <td>{{ artisan.birthLocality }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nationalité</th>
+                                                <td>{{ artisan.nationality }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Situation géographique de résidence</th>
+                                                <td>{{ artisan.commune }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ville résidence</th>
+                                                <td>{{ artisan.city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Quartier de résidence</th>
+                                                <td>{{ artisan.quartier }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Boîte postale</th>
+                                                <td>{{ artisan.postalCode }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">DOCUMENTS D'IDENTITE</h2>
+                                        <table class="table table-condensed table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Compagnie de VTC</th>
+                                                <td>{{ artisan.company ? artisan.company|json_encode: "" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type de la pièce d'identite (CNI ou Carte consulaire)</th>
+                                                <td>{{ artisan.IdType }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>N° Pièce d'identité</th>
+                                                <td>{{ artisan.IdNumber }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Autorité délivrant la pièce d'identité</th>
+                                                <td>{{ artisan.IdDeliveryAuthority }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Délivré le</th>
+                                                <td>{{ artisan.IdDeliveryDate ? artisan.IdDeliveryDate| date('d-m-Y')  : ''}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Lieu d'établissement de la pièce d'identité</th>
+                                                <td>{{ artisan.IdDeliveryPlace }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro du permis de conduire</th>
+                                                <td>{{ artisan.drivingLicenseNumber }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Scan pièce d'identité</th>
+                                                <td>
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPieceFront }}" alt="" width="300" class="rounded-2">
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPieceBack }}" alt="" width="300" class="rounded-2">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Scan permis d'identité</th>
+                                                <td>
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPermisFront }}" alt="" width="300" class="rounded-2">
+                                                    <img src="{{ asset('artisans/') }}{{ artisan.reference }}/{{ artisan.photoPermisBack }}" alt="" width="300" class="rounded-2">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">DONNEES FAMILLES</h2>
+                                        <table class="table table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Situation matrimoniale</th>
+                                                <td>{{ artisan.etatCivil }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms conjoint</th>
+                                                <td>{{ artisan.partnerFirstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom conjoint</th>
+                                                <td>{{ artisan.partnerLastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantLastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prénoms personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantFirstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Numéro Téléphone personne à contacter en cas d'urgence</th>
+                                                <td>{{ artisan.referantMobile }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="section-title">CHAMBRE DES METIERS</h2>
+                                        <table class="table table-bordered px-5">
+                                            <tbody>
+                                            <tr>
+                                                <th>Code reçu de paiement Orange money</th>
+                                                <td>{{ artisan.paymentReceiptCnmciCode }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Reçu orange</th>
+                                                <td>
+                                                    {% if artisan.paymentReceiptCnmciPdf %}
+                                                        <embed src="/artisans/{{ artisan.reference }}/{{ artisan.paymentReceiptCnmciPdf }}" width="500" height="375" type="application/pdf">
+                                                    {% endif %}
+                                                    {% if artisan.mobileMoneyReceiptImage %}
+                                                        <img src="/artisans/{{ artisan.reference }}/{{ artisan.mobileMoneyReceiptImage }}" alt="" width="300" class="rounded-2">
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% if artisan.children|length %}
+                                    <div class="row">
+                                        <h2 class="section-title">ENFANTS</h2>
+                                        <table class="table table-bordered px-5">
+                                            <tbody>
+                                            {% for child in artisan.children %}
+                                            <tr>
+                                                <td><span class="text-dark">Nom:</span> {{ child.lastName }}</td>
+                                                <td><span class="text-dark">Prénoms : </span>{{ child.firstName }}</td>
+                                                <td><span class="text-dark">Sexe : </span>{{ child.sex }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+                                    <div class="d-flex justify-content-center gap-3 mt-5">
+                                        {% if artisan.status == 'ENROLEMENT_PHOTO_DOCUMENT_SCANNE' %}
+                                            <a href="{{ path('admin_artisan_photostep_edit',{'id': artisan.id}) }}" class="btn btn-success btn-lg waves-effect waves-light"><i class="fa fa-pen fa-1x"></i> Modifier &nbsp;</a>
+                                            <a href="{{ path('admin_index')}}" class="btn btn-primary btn-lg waves-effect waves-light"><i class="fa fa-save fa-1x"></i>  &nbsp; Enregistrer</a>
+                                        {% else %}
+                                            <a href="{{ path('admin_save_quit',{'id': artisan.id}) }}" class="btn btn-primary btn-lg waves-effect waves-light"><i class="fa fa-save fa-1x"></i>  &nbsp; Enregistrer</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- container-fluid -->
+            </div><!-- End Page-content -->
+
+            {{ include('admin/_partials/footer.html.twig') }}
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+  <script>
+      $('document').ready(function() {
+      });
+  </script>
+{% endblock %}
+
+

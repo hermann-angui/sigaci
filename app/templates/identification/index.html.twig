@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<title>Identification index</title>
+
+{% block body %}
+    <h1>Identification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>Type</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for identification in identifications %}
+            <tr>
+                <td>{{ identification.id }}</td>
+                <td>{{ identification.status }}</td>
+                <td>{{ identification.createdAt }}</td>
+                <td>{{ identification.updatedAt }}</td>
+                <td>{{ identification.type }}</td>
+                <td>{{ identification.latitude }}</td>
+                <td>{{ identification.longitude }}</td>
+                <td>
+                    <a href="{{ path('app_identification_show', {'id': identification.id}) }}">show</a>
+                    <a href="{{ path('app_identification_edit', {'id': identification.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_identification_new') }}">Create new</a>
+{% endblock %}

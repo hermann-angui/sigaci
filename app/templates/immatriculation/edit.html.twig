@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Immatriculation</title>
+
+{% block body %}
+    <h1>Edit Immatriculation</h1>
+
+    {{ include('immatriculation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_immatriculation_index') }}">back to list</a>
+
+    {{ include('immatriculation/_delete_form.html.twig') }}
+{% endblock %}

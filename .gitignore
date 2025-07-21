@@ -1,0 +1,7 @@
+db
+db/*
+*.tar.gz
+*.zip
+*.csv
+data
+dockerize/traefik/acme.json

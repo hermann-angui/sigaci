@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New SousPrefecture</title>
+
+{% block body %}
+    <h1>Create new SousPrefecture</h1>
+
+    {{ include('sous_prefecture/_form.html.twig') }}
+
+    <a href="{{ path('app_sous_prefecture_index') }}">back to list</a>
+{% endblock %}

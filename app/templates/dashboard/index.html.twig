@@ -1,0 +1,690 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables-bs5/datatables.bootstrap5.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/apex-charts/apex-charts.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/swiper/swiper.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/cards-statistics.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/cards-analytics.css') }}"/>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row g-6 mb-6">
+            <!-- Congratulations card -->
+            <div class="col-xxl-4">
+                <div class="card h-100">
+                    <div class="card-body text-nowrap">
+                        <h5 class="card-title mb-1">Bonjour <span class="fw-bold">{{ '' }}!</span> 🎉
+                        </h5>
+                        <p class="card-subtitle mb-3">Votre chiffre du mois</p>
+                        <h4 class="text-primary mb-0">42 immatriculations</h4>
+                        <p class="mb-3">78% de votre objectif 🚀</p>
+                        <a href="javascript:;" class="btn btn-sm btn-primary">Voir le détail</a>
+                    </div>
+                    <img
+                            src="{{ '' }}"
+                            class="position-absolute bottom-0 end-0 me-4"
+                            height="140"
+                            alt="view sales"/>
+                </div>
+            </div>
+            <!--/ Congratulations card -->
+
+            <!-- Total Profit -->
+            <div class="col-xxl-2 col-md-3 col-sm-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-primary rounded-3">
+                                    <i class="ri-shopping-cart-2-line ri-24px"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 text-success me-1">+22%</p>
+                                <i class="ri-arrow-up-s-line text-success"></i>
+                            </div>
+                        </div>
+                        <div class="card-info mt-5">
+                            <h5 class="mb-1">155</h5>
+                            <p>Total immatriculations</p>
+                            <div class="badge bg-label-secondary rounded-pill">2 Derniers mois</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Total Profit -->
+
+            <!-- Total Expenses -->
+            <div class="col-xxl-2 col-md-3 col-sm-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-success rounded-3">
+                                    <i class="ri-handbag-line ri-24px"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 text-success me-1">+38%</p>
+                                <i class="ri-arrow-up-s-line text-success"></i>
+                            </div>
+                        </div>
+                        <div class="card-info mt-5">
+                            <h5 class="mb-1">139</h5>
+                            <p>Total identifications</p>
+                            <div class="badge bg-label-secondary rounded-pill">Les Six derniers mois
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Total Expenses -->
+
+            <!-- Total Profit chart -->
+            <div class="col-xxl-2 col-md-3 col-sm-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center mb-1 flex-wrap">
+                            <h5 class="mb-0 me-1">885</h5>
+                            <p class="mb-0 text-danger">-18%</p>
+                        </div>
+                        <span class="d-block card-subtitle">Montant identification</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="totalProfitChart"></div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Total Profit chart -->
+
+            <!-- Total Growth chart -->
+            <div class="col-xxl-2 col-md-3 col-sm-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center mb-1 flex-wrap">
+                            <h5 class="mb-0 me-1">500</h5>
+                            <p class="mb-0 text-success">+16%</p>
+                        </div>
+                        <span class="d-block card-subtitle">Montant immatriculation</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="totalGrowthChart"></div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Total Sales chart -->
+        </div>
+        <div class="row g-6">
+
+            <!-- Project Timeline Chart-->
+            <div class="col-lg-8 col-12">
+                <div class="card h-100">
+                    <div class="row">
+                        <div class="col-md-8 col-12 order-2 order-md-0">
+                            <div class="card-header">
+                                <h5 class="mb-1">Les meilleurs agents</h5>
+                                <p class="mb-0 card-subtitle">Total 840</p>
+                            </div>
+                            <div class="card-body px-2 pt-xl-7">
+                                <div id="projectTimelineChart"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12 border-start">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-1">Agents</h5>
+                                    <div class="dropdown">
+                                        <button
+                                                class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                                type="button"
+                                                id="projectTimeline"
+                                                data-bs-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                            <i class="ri-more-2-line ri-20px"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end"
+                                             aria-labelledby="projectTimeline">
+                                            <a class="dropdown-item"
+                                               href="javascript:void(0);">Refresh</a>
+                                            <a class="dropdown-item"
+                                               href="javascript:void(0);">Share</a>
+                                            <a class="dropdown-item"
+                                               href="javascript:void(0);">Update</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mb-0 card-subtitle">Villes Top 5</p>
+                            </div>
+                            <div class="card-body pt-4">
+                                <div class="d-flex align-items-center mb-6">
+                                    <div class="avatar">
+                                        <div class="avatar-initial bg-label-primary rounded">
+                                            <i class="ri-building-2-fill ri-24px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 d-flex flex-column">
+                                        <h6 class="mb-1">Abidjan</h6>
+                                        <small>840/2.5K</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-6">
+                                    <div class="avatar">
+                                        <div class="avatar-initial bg-label-success rounded">
+                                            <i class="ri-building-2-fill ri-24px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 d-flex flex-column">
+                                        <h6 class="mb-1">Bouaké</h6>
+                                        <small>99/1.42</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-6">
+                                    <div class="avatar">
+                                        <div class="avatar-initial bg-label-secondary rounded">
+                                            <i class="ri-building-2-fill ri-24px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 d-flex flex-column">
+                                        <h6 class="mb-1">Yamoussoukro</h6>
+                                        <small>58/100</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar">
+                                        <div class="avatar-initial bg-label-info rounded">
+                                            <i class="ri-building-2-fill ri-24px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 d-flex flex-column">
+                                        <h6 class="mb-1">San Pedro</h6>
+                                        <small>120/350</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Project Timeline Chart-->
+
+            <!-- Weekly Overview Chart -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0">Paiements</h5>
+                            <div class="dropdown">
+                                <button
+                                        class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                        type="button"
+                                        id="weeklyOverviewDropdown"
+                                        data-bs-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                    <i class="ri-more-2-line ri-20px"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end"
+                                     aria-labelledby="weeklyOverviewDropdown">
+                                    <a class="dropdown-item" href="javascript:void(0);">Derniers 28
+                                        jours</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Dernier Mois</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">L'année
+                                        dernière</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="weeklyOverviewChart"></div>
+                        <div class="mt-6">
+                            <div class="d-flex align-items-center gap-4">
+                                <h4 class="mb-0">62%</h4>
+                                <p class="mb-0">Vos performances est 35% 😎 au dessus comparé au mois
+                                    dernier</p>
+                            </div>
+                            <div class="d-grid mt-6">
+                                <button class="btn btn-primary" type="button">Voir le détail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Weekly Overview Chart -->
+
+            <!-- Meeting Schedule -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="card-title m-0 me-2">Top Agents</h5>
+                        <div class="dropdown">
+                            <button
+                                    class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                    type="button"
+                                    id="meetingSchedule"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="ri-more-2-line ri-20px"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"
+                                 aria-labelledby="meetingSchedule">
+                                <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="p-0 m-0">
+                            <li class="d-flex align-items-center mb-6">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/4.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Arlène Sié</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-primary rounded-pill">DES LAGUNES NORD
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-6">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/5.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Conference call</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-warning rounded-pill">BONDOUKOU</div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-6">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/3.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Meeting with Mark</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-secondary rounded-pill">ABENGOUROU</div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-6">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/14.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Meeting in Oakland</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-danger rounded-pill">DES LAGUNES SUD
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-6">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/8.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Call with hilda</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-success rounded-pill">DES LAGUNES EST
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="avatar flex-shrink-0 me-4">
+                                    <img src="../../assets/img/avatars/1.png" alt="avatar"
+                                         class="rounded-3"/>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">Meeting with Carl</h6>
+                                        <small class="d-flex align-items-center">
+                                            <i class="ri-calendar-line ri-16px"></i>
+                                            <span class="ms-2">21 Jul | 08:20-10:30</span>
+                                        </small>
+                                    </div>
+                                    <div class="badge bg-label-primary rounded-pill">DES LAGUNES EST
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/ Meeting Schedule -->
+
+            <!-- Payment History -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="card-title m-0 me-2">Canaux de paiement</h5>
+                        <div class="dropdown">
+                            <button
+                                    class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                    type="button"
+                                    id="paymentHistory"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="ri-more-2-line ri-20px"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"
+                                 aria-labelledby="paymentHistory">
+                                <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th class="bg-transparent border-bottom py-4 fs-xsmall fw-normal">Type de paiement
+                                </th>
+                                <th class="text-center bg-transparent border-bottom py-4 fs-xsmall fw-normal">
+                                    Date
+                                </th>
+                                <th class="text-end bg-transparent border-bottom py-4 fs-xsmall fw-normal">
+                                    Montant
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="d-flex align-items-center py-2">
+                                    <div class="px-2 rounded-3 bg-light-gray d-flex align-items-center h-px-30">
+                                        <img
+                                                src="{{ asset('assets/images/cash_icon.png') }}"
+                                                alt="credit-card"
+                                                width="30"/>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h6 class="mb-0">CASH</h6>
+                                        <small>58000</small>
+                                    </div>
+                                </td>
+                                <td class="small text-center py-2">05/Jan</td>
+
+                                <td class="text-end py-2">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">20 0820</h6>
+                                        <small>10 450</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center py-2">
+                                    <div class="px-2 rounded-3 bg-light-gray d-flex align-items-center h-px-30">
+                                        <img
+                                                src="{{ asset('assets/images/wave_logo.png') }}"
+                                                alt="debit-card"
+                                                width="30"/>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h6 class="mb-0">WAVE</h6>
+                                        <small>98 000</small>
+                                    </div>
+                                </td>
+                                <td class="small text-center py-2">12/Fev</td>
+
+                                <td class="text-end py-2">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">2 586 45</h6>
+                                        <small>8 709</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center py-2">
+                                    <div class="px-2 rounded-3 bg-light-gray d-flex align-items-center h-px-30">
+                                        <img
+                                                src="{{ asset('assets/images/mtn_logo.png') }} "
+                                                alt="atm-card"
+                                                width="30"/>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h6 class="mb-0">MTN</h6>
+                                        <small>988 2000</small>
+                                    </div>
+                                </td>
+                                <td class="small text-center py-2">24/Fev</td>
+
+                                <td class="text-end py-2">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">8 810</h6>
+                                        <small>25 0900</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center py-2">
+                                    <div class="px-2 rounded-3 bg-light-gray d-flex align-items-center h-px-30">
+                                        <img src="{{ asset('assets/images/orange_logo.png') }}"
+                                             alt="debit-card" width="30"/>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h6 class="mb-0">ORANGE</h6>
+                                        <small>584 000</small>
+                                    </div>
+                                </td>
+                                <td class="small text-center py-2">08/Mar</td>
+
+                                <td class="text-end py-2">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">80 453</h6>
+                                        <small>900 233</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center py-2">
+                                    <div class="px-2 rounded-3 bg-light-gray d-flex align-items-center h-px-30">
+                                        <img
+                                                src="{{ asset('assets/images/moov_logo.png') }}"
+                                                alt="credit-card"
+                                                width="30"/>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h6 class="mb-0">MOOV</h6>
+                                        <small>68558</small>
+                                    </div>
+                                </td>
+                                <td class="small text-center py-2">15/Avr</td>
+
+                                <td class="text-end py-2">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">-24</h6>
+                                        <small>500</small>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--/ Payment History -->
+
+            <!-- Most Sales in Countries -->
+            <div class="col-lg-4 col-md-6 order-2 order-lg-0">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="card-title m-0 me-2">Encaissements par CRM</h5>
+                        <div class="dropdown">
+                            <button
+                                    class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                    type="button"
+                                    id="mostSales"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="ri-more-2-line ri-20px"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="mostSales">
+                                <a class="dropdown-item" href="javascript:void(0);">28 Jours</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Dernier Mois</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Année précédente</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pb-1 pt-0">
+                        <div class="mb-6 mt-1">
+                            <div class="d-flex align-items-center">
+                                <h1 class="mb-0 me-2">25 500 000</h1>
+                                <div class="badge bg-label-success rounded-pill">+42%</div>
+                            </div>
+                            <p class="mt-0">Sommes perçus (immatriculations + identifications)</p>
+                        </div>
+                        <div class="table-responsive text-nowrap border-top">
+                            <table class="table">
+                                <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td class="ps-0 pe-12 py-4"><span
+                                                class="text-heading">DES LAGUNES NORD</span>
+                                    </td>
+                                    <td class="text-end py-4"><span
+                                                class="text-heading fw-medium">18 879</span></td>
+                                    <td class="pe-0 py-4">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <span class="text-heading fw-medium me-2">15%</span>
+                                            <i class="ri-arrow-down-s-line ri-24px text-danger"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-0 pe-12 py-4"><span class="text-heading">DES LAGUNES SUD</span>
+                                    </td>
+                                    <td class="text-end py-4"><span
+                                                class="text-heading fw-medium">10 357</span></td>
+                                    <td class="pe-0 py-4">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <span class="text-heading fw-medium me-2">85%</span>
+                                            <i class="ri-arrow-up-s-line ri-24px text-success"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-0 pe-12 py-4"><span class="text-heading">DES LAGUNES EST</span>
+                                    </td>
+                                    <td class="text-end py-4"><span
+                                                class="text-heading fw-medium">4 860</span></td>
+                                    <td class="pe-0 py-4">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <span class="text-heading fw-medium me-2">48%</span>
+                                            <i class="ri-arrow-up-s-line ri-24px text-success"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-0 pe-12 py-4"><span
+                                                class="text-heading">ABENGOUROU</span></td>
+                                    <td class="text-end py-4"><span
+                                                class="text-heading fw-medium">899</span></td>
+                                    <td class="pe-0 py-4">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <span class="text-heading fw-medium me-2">16%</span>
+                                            <i class="ri-arrow-down-s-line ri-24px text-danger"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-0 pe-12 py-4"><span class="text-heading">BONDOUKOU</span>
+                                    </td>
+                                    <td class="text-end py-4"><span
+                                                class="text-heading fw-medium">18</span>
+                                    </td>
+                                    <td class="pe-0 py-4">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <span class="text-heading fw-medium me-2">12%</span>
+                                            <i class="ri-arrow-up-s-line ri-24px text-success"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Most Sales in Countries -->
+
+            <!-- Roles Datatables -->
+            <div class="col-lg-12 col-12">
+                <div class="card h-100">
+                    <div class="table-responsive rounded-3">
+                        <table class="datatables-crm table table-sm table-border-bottom-0">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+<!-- Vendors JS -->
+<script src="{{ asset('assets/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/libs/apex-charts/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/libs/swiper/swiper.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+<!-- Page JS -->
+<script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
+
+<script>
+ jQuery(document).ready(function ($) {
+
+ });
+
+</script>
+{% endblock %}
+

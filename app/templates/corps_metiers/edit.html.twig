@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit CorpsMetiers</title>
+
+{% block body %}
+    <h1>Edit CorpsMetiers</h1>
+
+    {{ include('corps_metiers/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_corps_metiers_index') }}">back to list</a>
+
+    {{ include('corps_metiers/_delete_form.html.twig') }}
+{% endblock %}

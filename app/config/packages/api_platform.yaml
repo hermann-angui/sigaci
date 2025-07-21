@@ -1,0 +1,25 @@
+api_platform:
+    title: Documentation API SIGA - Système intégré de Gestion des Artisans de Côte d'Ivoire
+    version: 1.0.0
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        normalization_context:
+            skip_null_values: false
+    formats:
+        json: ["application/json"]
+        jsonld: ["application/ld+json"]
+#        jsonhal: ["application/hal+json"]
+#        jsonapi: ["application/vnd.api+json"]
+#        xml: ["application/xml", "text/xml"]
+#        yaml: ["application/x-yaml"]
+#        csv: ["text/csv"]
+#        html: ["text/html"]
+        multipart: ['multipart/form-data']
+    use_symfony_listeners: true
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header

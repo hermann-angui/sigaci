@@ -1,0 +1,321 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables-bs5/datatables.bootstrap5.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/apex-charts/apex-charts.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/swiper/swiper.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+
+    <style>
+        div.dt-container table.dataTable.table tbody>tr.selected, div.dt-container table.dataTable.table tbody>tr>.selected
+        {
+            background-color: rgba(var(--bs-primary-rgb), 0.08);
+        }
+
+        table.table.dataTable>tbody>tr {
+            background-color: transparent;
+        }
+        thead, tbody, tfoot, tr, td, th {
+            border-color: inherit;
+            border-style: solid;
+            border-width: 0;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- customers List Table -->
+        <div class="card">
+            <div class="card-datatable table-responsive">
+                <div class="row border-1 border-light p-6">
+                    <div class="col-sm-5">
+                        <div class="form-floating form-floating-outline">
+                            <input
+                                id="tagCrmSuggestion"
+                                name="tagCrmSuggestion"
+                                class="form-control h-auto form-control-sm"
+                                placeholder="Filtre CRM"
+                                value="" />
+                            <label for="tagCrmSuggestion">CRM</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <select type="text" class="form-control form-control-sm filter" id="departement_filter" name="departement_filter">
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select type="text" class="form-control form-control-sm filter" id="sousprefecture_filter" name="sousprefecture_filter">
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select type="text" class="form-control filter" id="metier_filter" name="metier_filter">
+                        </select>
+                    </div>
+                </div>
+                <div id="artisanDatatable">
+                    <div class="d-flex justify-content-center py-5">
+                        <span>Chargement...</span>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Offcanvas to add new customer -->
+            <div
+                class="offcanvas offcanvas-end"
+                tabindex="-1"
+                id="offcanvasEcommerceCustomerAdd"
+                aria-labelledby="offcanvasEcommerceCustomerAddLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 id="offcanvasEcommerceCustomerAddLabel" class="offcanvas-title">Artisan</h5>
+                    <button
+                        type="button"
+                        class="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body mx-0 flex-grow-0">
+                    <form class="ecommerce-customer-add pt-0" id="eCommerceCustomerAddForm" onsubmit="return false">
+                        <div class="ecommerce-customer-add-basic mb-5">
+                            <h6 class="mb-5">Basic Information</h6>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="ecommerce-customer-add-name"
+                                    placeholder="John Doe"
+                                    name="customerName"
+                                    aria-label="John Doe"/>
+                                <label for="ecommerce-customer-add-name">Name*</label>
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-email"
+                                    class="form-control"
+                                    placeholder="john.doe@example.com"
+                                    aria-label="john.doe@example.com"
+                                    name="customerEmail"/>
+                                <label for="ecommerce-customer-add-email">Email*</label>
+                            </div>
+                            <div class="form-floating form-floating-outline">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-contact"
+                                    class="form-control phone-mask"
+                                    placeholder="+(123) 456-7890"
+                                    aria-label="+(123) 456-7890"
+                                    name="customerContact"/>
+                                <label for="ecommerce-customer-add-contact">Mobile</label>
+                            </div>
+                        </div>
+                        <div class="ecommerce-customer-add-shiping mb-5">
+                            <h6 class="mb-5">Shipping Information</h6>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-address"
+                                    class="form-control"
+                                    placeholder="45 Roker Terrace"
+                                    aria-label="45 Roker Terrace"
+                                    name="customerAddress1"/>
+                                <label for="ecommerce-customer-add-address">Address Line 1</label>
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-address-2"
+                                    class="form-control"
+                                    placeholder="Address 2"
+                                    aria-label="address2"
+                                    name="customerAddress2"/>
+                                <label for="ecommerce-customer-add-address-2">Address Line 2</label>
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-town"
+                                    class="form-control"
+                                    placeholder="New York"
+                                    aria-label="New York"
+                                    name="customerTown"/>
+                                <label for="ecommerce-customer-add-town">Town</label>
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-state"
+                                    class="form-control"
+                                    placeholder="Southern tip"
+                                    aria-label="Southern tip"
+                                    name="customerState"/>
+                                <label for="ecommerce-customer-add-state">State / Province</label>
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    id="ecommerce-customer-add-post-code"
+                                    class="form-control"
+                                    placeholder="734990"
+                                    aria-label="734990"
+                                    name="pin"
+                                    pattern="[0-9]{8}"
+                                    maxlength="8"/>
+                                <label for="ecommerce-customer-add-post-code">Post Code</label>
+                            </div>
+                            <div class="form-floating form-floating-outline">
+                                <select id="ecommerce-customer-add-country" class="select2 form-select">
+                                    <option value="">Select</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                    <option value="Belarus">Belarus</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="China">China</option>
+                                    <option value="France">France</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="India">India</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Israel">Israel</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Korea">Korea, Republic of</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="Russia">Russian Federation</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Turkey">Turkey</option>
+                                    <option value="Ukraine">Ukraine</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States">United States</option>
+                                </select>
+                                <label for="ecommerce-customer-add-country">Country</label>
+                            </div>
+                        </div>
+
+                        <div class="d-sm-flex mb-5">
+                            <div class="me-auto mb-2 mb-md-0">
+                                <h6 class="mb-1">Use as a billing address?</h6>
+                                <small>If you need more info, please check budget.</small>
+                            </div>
+                            <div class="form-check form-switch my-auto me-n2">
+                                <input type="checkbox" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary me-3 data-submit">Add</button>
+                            <button type="reset" class="btn btn-outline-danger" data-bs-dismiss="offcanvas">Discard
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Content -->
+{% endblock %}
+
+{% block javascript %}
+<!-- Vendors JS -->
+    <script src="{{ asset('assets/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/libs/swiper/swiper.js') }}"></script>
+    <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/popular.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/auto-focus.js') }}"></script>
+    <script src="{{ asset('assets/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/libs/cleavejs/cleave-phone.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+
+
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+    <script>
+         jQuery(document).ready(function ($) {
+           var datatable = null;
+
+           $('#artisanDatatable').initDataTables({{ datatable_settings(datatable) }}, {
+                    responsive: true,
+                    pageLength: 10,
+                  //  dom: 'lpftrip',
+                  //  searching: false,
+                    select: true,
+                  //  lengthChange: false,
+                    language: {
+                        //url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+                        info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                        infoEmpty: "Affichage de 0 à 0 sur 0 entrées",
+                        lengthMenu: "Afficher _MENU_ entrées",
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        "url": '{{ path('app_artisan_index') }}',
+                        "data": function (d) {
+                            d.crm = $("#tagCrmSuggestion").val();
+                        }
+                    }
+            }
+            ).then(function(dt) {
+               datatable  = dt;
+            });
+
+            $(".filter").change(function (e) {
+                 $('#artisanDatatable').draw();
+            });
+
+            $('.select2').select2();
+
+            $('.dataTables_length').addClass('my-0');
+            $('.dt-action-buttons').addClass('pt-0');
+            $('.dataTables_filter input').addClass('ms-0');
+            $('.dt-buttons').addClass('d-flex flex-wrap');
+
+            const tagCrmSuggestionEl = document.querySelector('#tagCrmSuggestion');
+
+            let tagCrmSuggestion = null;
+            $.get('{{ path('app_crm_select2_ajax') }}', function(data){
+                let whitelist = data;
+                let tagCrmSuggestion = new Tagify(tagCrmSuggestionEl, {
+                        whitelist: whitelist,
+                        maxTags: 10,
+                        dropdown: {
+                          maxItems: 20,
+                          classname: 'tags-inline',
+                          enabled: 0,
+                          closeOnSelect: false
+                        }
+                });
+                tagCrmSuggestion.on('add', function(e) {
+                    console.log($("#tagCrmSuggestion").val());
+                     datatable.draw();
+                });
+            });
+
+        })
+    </script>
+{% endblock %}
+

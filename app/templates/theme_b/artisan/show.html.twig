@@ -1,0 +1,297 @@
+{% extends 'layout_b.html.twig' %}
+
+{% block stylesheet %}
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/select2/css/select2.min.css') }}">
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/css/dataTables.bootstrap5.min.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    <!-- Start Content -->
+    <div class="content">
+
+        <!-- page header start -->
+        <div class="mb-4">
+            <h6 class="fw-bold mb-0 d-flex align-items-center">
+                <a href="" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Détail de l'artisan</a>
+            </h6>
+        </div>
+        <!-- page header end -->
+
+        <!-- card start -->
+        <div class="card">
+            <div class="row align-items-end">
+                <div class="col-xl-5 col-lg-5">
+                    <div class="d-sm-flex align-items-center position-relative z-0 overflow-hidden p-3">
+                        <a href="javascript:void(0);" class="avatar avatar-xxxl patient-avatar me-2 flex-shrink-0">
+                            <img src="{{ artisan.photo.filePath|mediaUrl }}" alt="product" class="rounded">
+                        </a>
+                        <div>
+                            <h3 class="text-primary mb-1">{{  artisan.nom ~ ' ' ~ artisan.prenoms }}</h3>
+                            <h5 class="mb-1"><a href="javascript:void(0);" class="fw-bold">{{  artisan.activitePrincipale?:'' }}</a></h5>
+                            <p class="mb-3">{{  artisan.whatsapp?:"" }}</p>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-id me-1 text-dark"></i>N°RM : <span class="text-dark ms-1">{{  artisan.numeroRM?:'' }}</span></p>
+                            </div>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-id me-1 text-dark"></i>N° Carte Professionnele : <span class="text-dark ms-1">{{ artisan.numeroCarteProfessionnelle?:'' }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <h6 class="fs-13 fw-bold mb-1">Code d'identification : </h6>
+                                    <p class="mb-0">{{ identification?identification.reference:'' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <h6 class="fs-13 fw-bold mb-1">Date : </h6>
+                                    <p class="mb-0">{{ identification?identification.createdAt:'' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <h6 class="fs-13 fw-bold mb-1">Code d'immatriculation : </h6>
+                                    <p class="mb-0">{{ immatriculation?immatriculation.reference:'' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <h6 class="fs-13 fw-bold mb-1">Date : </h6>
+                                    <p class="mb-0">{{ immatriculation?immatriculation.createdAt:'' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="p-3 text-lg-end">
+                        <div class="mb-4">
+                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14 me-2"><i class="ti ti-phone"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14 me-2"><i class="ti ti-message-circle"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14"><i class="ti ti-video"></i></a>
+                        </div>
+                        <a href="" class="btn btn-primary"><i class="ti ti-calendar-event me-1"></i>Carte artisan</a>
+                        <a href="" class="btn btn-primary"><i class="ti ti-calendar-event me-1"></i>Registre de métier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- card end -->
+
+        <!-- row start -->
+        <div class="row">
+            <div class="col-xl-5 d-flex">
+                <div class="card shadow-sm flex-fill w-100">
+                    <div class="card-header">
+                        <h5 class="fw-bold mb-0"><i class="ti ti-user-star me-1"></i>Informations personnelles</h5>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-calendar-event fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Date de naissance</h6>
+                                        <p class="mb-0">{{ artisan.dateNaissance|date('Y-m-d') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-droplet fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Lieu de naissance</h6>
+                                        <p class="mb-0">{{ artisan.lieuNaissance }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-gender-male fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Sexe</h6>
+                                        <p class="mb-0">{{ artisan.sexe }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-mail fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Email</h6>
+                                        <p class="mb-0 text-break"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3d2dfd1d6c1c7dcf3d6cbd2dec3dfd69dd0dcde">[{{ artisan.email }}]</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-calendar-event fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Date de naissance</h6>
+                                        <p class="mb-0">{{ artisan.dateNaissance|date('Y-m-d') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-droplet fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Lieu de naissance</h6>
+                                        <p class="mb-0">{{ artisan.lieuNaissance }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-gender-male fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Sexe</h6>
+                                        <p class="mb-0">{{ artisan.sexe }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-mail fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Email</h6>
+                                        <p class="mb-0 text-break"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3d2dfd1d6c1c7dcf3d6cbd2dec3dfd69dd0dcde">[{{ artisan.email }}]</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-calendar-event fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Date de naissance</h6>
+                                        <p class="mb-0">{{ artisan.dateNaissance|date('Y-m-d') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-droplet fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Lieu de naissance</h6>
+                                        <p class="mb-0">{{ artisan.lieuNaissance }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-gender-male fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Sexe</h6>
+                                        <p class="mb-0">{{ artisan.sexe }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="avatar rounded-circle bg-light text-dark flex-shrink-0 me-2"><i class="ti ti-mail fs-16"></i></span>
+                                    <div>
+                                        <h6 class="fs-13 fw-bold mb-1">Email</h6>
+                                        <p class="mb-0 text-break"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3d2dfd1d6c1c7dcf3d6cbd2dec3dfd69dd0dcde">[{{ artisan.email }}]</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 d-flex">
+                <div class="card shadow-sm flex-fill w-100">
+                    <div class="card-header">
+                        <h5 class="fw-bold mb-0"><i class="ti ti-book me-1"></i>Localisation</h5>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="row" id="map">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row end -->
+    </div>
+    <!-- End Content -->
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/libs/leaflet/leaflet.js') }}"></script>
+    <script>
+
+        function initMap() {
+            var centerCoords = { lat: 48.8566, lng: 2.3522 }; // Paris
+
+            $(function () {
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    center: centerCoords,
+                    zoom: 10
+                });
+
+                new google.maps.Marker({
+                    position: centerCoords,
+                    map: map,
+                    title: 'Paris, France'
+                });
+            });
+        }
+         jQuery(document).ready(function ($) {
+            let latitude = {{ artisan.latitude }};
+             let longitude = {{ artisan.longitude }};
+             const layerControlVar = document.getElementById('carte');
+              if (layerControlVar) {
+                const artisan = L.marker([latitude, longitude]).bindPopup("{{ artisan.nom ~ ' ' ~ artisan.prenoms }}");
+                const cities = L.layerGroup([artisan]);
+                const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                   // attribution: '© OpenStreetMap'
+                  }),
+                  osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution:
+                      ''
+                  });
+                const layerControl = L.map('carte', {
+                  center: [latitude, longitude],
+                  zoom: 10,
+                  layers: [osm, cities]
+                });
+                const baseMaps = {
+                  OpenStreetMap: osm,
+                  'OpenStreetMap.HOT': osmHOT
+                };
+                const overlayMaps = {
+                  Cities: cities
+                };
+                L.control.layers(baseMaps, overlayMaps).addTo(layerControl);
+                L.tileLayer('https://c.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+                  maxZoom: 18
+                }).addTo(layerControl);
+              }
+        })
+    </script>
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8XjTan_GEnXYrmYrdh_oQ2cy6an1HdFs&callback=initMap"> </script>
+
+{% endblock %}
+

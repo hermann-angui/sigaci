@@ -1,0 +1,470 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}"/>
+
+    <style>
+        input:focus, input:focus-visible {
+            border-color: transparent;
+        }
+
+        .form-check-input:checked[type=radio] {
+            --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 20'%3e%3cpath fill='none' stroke='%23fff' stroke-width='1.3' d='M5 10l3 3l6-6'/%3e%3c/svg%3e") !important;
+        }
+
+        .form-check-input[type=radio] {
+            border-radius: 0rem !important;
+        }
+
+        input[type="text"] {
+            border:none;
+            border-bottom:1px dashed #000000;
+        }
+    </style>
+
+
+{% endblock %}
+
+
+{% block body %}
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <div class="row">
+            <div class="col-6 d-flex">
+                <img src="{{ asset('assets/img/logos/cnmci.png') }}" alt="logo cnmci" style="width:90px; padding:10px 10px;"/>
+                <div class="d-flex flex-column justify-content-center"
+                     style="font-size: 1rem; color:black;width:280px;">
+                    Chambre Nationale de Métiers de Côte d'Ivoire
+                </div>
+            </div>
+            <div class="col-6"></div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div
+                style="text-align:center; width:50%; padding:10px; font-weight: bold; font-size:1.2rem; color:black;border-top:3px solid #f58a34; border-bottom:3px solid #f58a34">
+                FORMULAIRE DE DEMANDE DE CARTE DE COMPAGNON ARTISAN
+            </div>
+        </div>
+        <div class="mt-5" style="border:2px solid #ebcaa8">
+            {{ form_start(form, {'method': 'post'}) }}
+                <!-- A. RENSEIGNEMENTS SUR LE COMPAGNON ARTISAN -->
+                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
+                    <div style="font-weight: bold; font-size:1.2rem; color:black">A. RENSEIGNEMENTS SUR LE COMPAGNON
+                        ARTISAN
+                    </div>
+                </div>
+                <div class="row p-4">
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <div class="d-flex flex-column justify-content-center align-items-center image-upload">
+                            <label for="photo">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-4">
+                        <label class="col-auto me-2" for="{{ field_id(form.nom) }}">{{ field_label(form.nom) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.nom) }}" id="{{ field_id(form.nom) }}" value="{{ field_value(form.nom) }}" />
+                        {{ form_errors(form.nom, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-7">
+                        <label class="col-auto me-2" for="{{ field_id(form.prenoms) }}">{{ field_label(form.prenoms) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.prenoms) }}" id="{{ field_id(form.prenoms) }}" value="{{ field_value(form.prenoms) }}" />
+                        {{ form_errors(form.prenoms, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-3">
+                        <label class="col-auto me-2" for="{{ field_id(form.dateNaissance) }}">{{ field_label(form.dateNaissance) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.dateNaissance) }}" id="{{ field_id(form.dateNaissance) }}" value="{{ field_value(form.dateNaissance) }}" />
+                        {{ form_errors(form.dateNaissance, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-3">
+                        <label class="col-auto me-2" for="{{ field_id(form.lieuNaissance) }}">{{ field_label(form.lieuNaissance) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.lieuNaissance) }}" id="{{ field_id(form.lieuNaissance) }}" value="{{ field_value(form.lieuNaissance) }}" />
+                        {{ form_errors(form.lieuNaissance, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-5">
+                        <label class="col-auto me-2" for="{{ field_id(form.nationalite) }}">{{ field_label(form.nationalite) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.nationalite) }}" id="{{ field_id(form.nationalite) }}" value="{{ field_value(form.nationalite) }}" />
+                        {{ form_errors(form.nationalite, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-3">
+                        <div class="me-2">Sexe :</div>
+                        <div class="form-check form-check-inline">
+                            {% for child in form.sexe %}
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="d-flex col-5">
+                        <label class="col-auto me-2" for="{{ field_id(form.domicile) }}">{{ field_label(form.domicile) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.domicile) }}" id="{{ field_id(form.domicile) }}" value="{{ field_value(form.domicile) }}" />
+                        {{ form_errors(form.domicile, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-4">
+                        <label class="col-auto me-2" for="{{ field_id(form.quartier) }}">{{ field_label(form.quartier) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.quartier) }}" id="{{ field_id(form.quartier) }}" value="{{ field_value(form.quartier) }}" />
+                        {{ form_errors(form.quartier, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label class="me-2">Type de Document :</label>
+                        <div class="form-check form-check-inline">
+                            {% for child in form.typePieceIdentite %}
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-3">
+                        <label class="col-3" for="{{ field_id(form.numeroPieceIdentite) }}">{{ field_label(form.numeroPieceIdentite) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.numeroPieceIdentite) }}" id="{{ field_id(form.numeroPieceIdentite) }}" value="{{ field_value(form.numeroPieceIdentite) }}" />
+                        {{ form_errors(form.numeroPieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-3">
+                        <label class="col-3" for="{{ field_id(form.lieuDelivrancePieceIdentite) }}">{{ field_label(form.lieuDelivrancePieceIdentite) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.lieuDelivrancePieceIdentite) }}" id="{{ field_id(form.lieuDelivrancePieceIdentite) }}" value="{{ field_value(form.lieuDelivrancePieceIdentite) }}" />
+                        {{ form_errors(form.lieuDelivrancePieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-5">
+                        <label class="col-auto" for="{{ field_id(form.dateDelivrancePieceIdentite) }}">{{ field_label(form.dateDelivrancePieceIdentite) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.dateDelivrancePieceIdentite) }}" id="{{ field_id(form.dateDelivrancePieceIdentite) }}" value="{{ field_value(form.dateDelivrancePieceIdentite) }}" />
+                        {{ form_errors(form.dateDelivrancePieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label>Etat civil : </label>
+                        <div class="form-check form-check-inline">
+                            {% for child in form.etatCivil %}
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-12">
+                        <label class="col-auto me-2" for="{{ field_id(form.activiteExercee) }}">{{ field_label(form.activiteExercee) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.activiteExercee) }}" id="{{ field_id(form.activiteExercee) }}" value="{{ field_value(form.activiteExercee) }}"/>
+                        {{ form_errors(form.activiteExercee, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+{#                <div class="row p-3">
+                    <div class="d-flex col-12">
+                        {{ form_label(form.dateDebutActivite, {'attr': {'class': 'col-auto me-2'}}) }}
+                        {{ form_widget(form.dateDebutActivite, {'attr': {'class': 'col-8'}}) }}
+                        {{ form_errors(form.dateDebutActivite, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-12">
+                        {{ form_label(form.dateDebutActivitePro, {'attr': {'class': 'col-auto me-2'}}) }}
+                        {{ form_widget(form.dateDebutActivitePro, {'attr': {'class': 'col-8'}}) }}
+                        {{ form_errors(form.dateDebutActivitePro, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>#}
+                <div class="row p-3">
+                    <div class="d-flex col-5">
+                        <label class="col-auto me-2" for="{{ field_id(form.telephone) }}">{{ field_label(form.telephone) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.telephone) }}" id="{{ field_id(form.telephone) }}" value="{{ field_value(form.telephone) }}" />
+                        {{ form_errors(form.telephone, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto me-2" for="{{ field_id(form.email) }}">{{ field_label(form.email) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.email) }}" id="{{ field_id(form.email) }}" value="{{ field_value(form.email) }}" />
+                        {{ form_errors(form.email, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-4">
+                        <label class="col-auto me-2" for="{{ field_id(form.cnps) }}">{{ field_label(form.cnps) }} : <span class="required">*</span></label>
+                        <input class="col-8" type="text" name="{{ field_name(form.cnps) }}" id="{{ field_id(form.cnps) }}" value="{{ field_value(form.cnps) }}" />
+                        {{ form_errors(form.cnps, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+
+                <!-- B. RENSEIGNEMENTS SUR LA FORMATION PROFESSIONNELLE DU COMPAGNON ARTISAN -->
+                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
+                    <div style="font-weight: bold; font-size:1.2rem; color:black"> B. RENSEIGNEMENTS SUR LA FORMATION
+                        PROFESSIONNELLE DU COMPAGNON ARTISAN
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label>Niveau d'étude : </label>
+                        <div class="form-check form-check-inline">
+                            {% for child in form.formationNiveauEtude %}
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto me-2" for="{{ field_id(form.formationClasseEtude) }}">{{ field_label(form.formationClasseEtude) }} : <span class="required">*</span></label>
+                        <input class="col-6" type="text" name="{{ field_name(form.formationClasseEtude) }}" id="{{ field_id(form.formationClasseEtude) }}" value="{{ field_value(form.formationClasseEtude) }}" />
+                        {{ form_errors(form.formationClasseEtude, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto me-2" for="{{ field_id(form.formationDiplomeObtenu) }}">{{ field_label(form.formationDiplomeObtenu) }} : <span class="required">*</span></label>
+                        <input class="col-6" type="text" name="{{ field_name(form.formationDiplomeObtenu) }}" id="{{ field_id(form.formationDiplomeObtenu) }}" value="{{ field_value(form.formationDiplomeObtenu) }}" />
+                        {{ form_errors(form.formationDiplomeObtenu, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetier) }}">{{ field_label(form.formationApprentissageMetier) }} : <span class="required">*</span></label>
+                        <input class="col-6" type="text" name="{{ field_name(form.formationApprentissageMetier) }}" id="{{ field_id(form.formationApprentissageMetier) }}" value="{{ field_value(form.formationApprentissageMetier) }}" />
+                        {{ form_errors(form.formationApprentissageMetier, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetierNiveau) }}">{{ field_label(form.formationApprentissageMetierNiveau) }} : <span class="required">*</span></label>
+                        <input class="col-5" type="text" name="{{ field_name(form.formationApprentissageMetierNiveau) }}" id="{{ field_id(form.formationApprentissageMetierNiveau) }}" value="{{ field_value(form.formationApprentissageMetierNiveau) }}" />
+                        {{ form_errors(form.formationApprentissageMetierNiveau, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetierDiplome) }}">{{ field_label(form.formationApprentissageMetierDiplome) }} : <span class="required">*</span></label>
+                        <input class="col-5" type="text" name="{{ field_name(form.formationApprentissageMetierDiplome) }}" id="{{ field_id(form.formationApprentissageMetierDiplome) }}" value="{{ field_value(form.formationApprentissageMetierNiveau) }}" />
+                        {{ form_errors(form.formationApprentissageMetierDiplome, {'attr': {'class': 'invalid-feedback'}}) }}
+                    </div>
+                </div>
+
+                <!-- C. RENSEIGNEMENTS SUR L’ETABLISSEMENT OÙ TRAVAILLE LE COMPAGNON ARTISAN -->
+                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
+                    <div style="font-weight: bold; font-size:1.2rem; color:black"> C. RENSEIGNEMENTS SUR L’ETABLISSEMENT OÙ TRAVAILLE LE COMPAGNON ARTISAN
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Activité principale exercée : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field="etablissement.activitePrincipale"
+                               classappend="activitePrincipale">
+                        <div  class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Activités secondaires : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field="activitePrincipale"
+                               classappend="">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Raison social : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field="raisonSociale"
+                               classappend="fields.hasErrors('etablissement.raisonSociale')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.raisonSociale')" class="invalid-feedback"
+                             errors=".raisonSociale"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto" for="etablissement.sigle">Sigle ou Enseigne :<span
+                                class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".sigle"
+                               classappend="fields.hasErrors('etablissement.sigle')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.sigle')" class="invalid-feedback"
+                             errors=".sigle"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-12">
+                        <label class="col-auto">Objet social :<span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".objetSocial"
+                               classappend="fields.hasErrors('etablissement.objetSocial')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.objetSocial')" class="invalid-feedback"
+                             errors=".objetSocial"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label class="me-2">Type d’entreprise: </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" field="typeEntreprise">
+                            <label class="form-check-label"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">N° Registre de métiers : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".numRegistreMetier"
+                               classappend="fields.hasErrors('etablissement.numRegistreMetier')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.numRegistreMetier')" class="invalid-feedback"
+                             errors=".numRegistreMetier"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto">N° REA :<span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".numRea"
+                               classappend="fields.hasErrors('etablissement.numRea')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.numRea')" class="invalid-feedback"
+                             errors=".numRea"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">N° RCCM : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".numRccm"
+                               classappend="fields.hasErrors('etablissement.numRccm')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.numRccm')" class="invalid-feedback"
+                             errors=".numRccm"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Capital social : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".capitalSocial"
+                               classappend="fields.hasErrors('etablissement.capitalSocial')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.capitalSocial')" class="invalid-feedback"
+                             errors=".capitalSocial"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex">
+                        <label class="me-2">Régime Fiscal :</label>
+                        <div class="form-check form-check-inline" each="regimeFiscaux">
+                            <input class="form-check-input" type="radio" field="regimeFiscal"
+                                   value="regimeFiscal">
+                            <label class="form-check-label" text="regimeFiscal"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-8">
+                        <label class="col-auto">Identifiant CNPS de l’entreprise : <span
+                                class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".identifiantCNPS"
+                               classappend="fields.hasErrors('etablissement.identifiantCNPS')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.identifiantCNPS')" class="invalid-feedback"
+                             errors=".identifiantCNPS"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Adresse postale : <span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".adressePostale"
+                               classappend="fields.hasErrors('etablissement.adressePostale')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.adressePostale')" class="invalid-feedback"
+                             errors=".adressePostale"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto" for="etablissement.telephone">Téléphone :<span class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".telephone"
+                               classappend="fields.hasErrors('etablissement.telephone')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.telephone')" class="invalid-feedback"
+                             errors=".telephone"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">Adresse géographique : Département : <span
+                                class="required">*</span></label>
+                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
+                               field=".departement"
+                               classappend="fields.hasErrors('etablissement.departement')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.departement')" class="invalid-feedback"
+                             errors=".departement"></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto" for="etablissement.commune">Commune : <span
+                                class="required">*</span></label>
+                        <input class="col-8" type="text"  field=".commune"
+                               classappend="fields.hasErrors('etablissement.commune')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('etablissement.commune')" class="invalid-feedback"
+                             errors=".commune"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-4">
+                        <label class="col-auto">S/P : <span class="required">*</span></label>
+                        <input class="col-8" type="text" field="sp" >
+                        <div  class="invalid-feedback" errors="sp"></div>
+                    </div>
+                    <div class="d-flex col-4">
+                        <label class="col-auto" for="etablissement.quartier">Quartier : <span class="required">*</span></label>
+                        <input class="col-8" type="text" classappend="etablissement">
+                        <div class="invalid-feedback" errors="quartier"></div>
+                    </div>
+                    <div class="d-flex col-4">
+                        <label class="col-auto" for="etablissement.village">Village : <span class="required">*</span></label>
+                        <input class="col-8" type="text" field="village" >
+                        <div class="invalid-feedback" errors="village"></div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="d-flex col-6">
+                        <label class="col-auto">LOT N° : <span class="required">*</span></label>
+                        <input class="col-8" type="text" field="lot">
+                        <div class="invalid-feedback" ></div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <label class="col-auto">ILOT N° : <span class="required">*</span></label>
+                        <input class="col-8" type="text" field="iLot">
+                        <div class="invalid-feedback" errors="iLot"></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center p-8">
+                    <button type="submit" class="btn btn-primary w-25 waves-effect waves-light">Enregistrer</button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="content-backdrop fade"></div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+
+<!-- Vendors JS -->
+<script src="{{ asset('assets/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/libs/swiper/swiper.js') }}"></script>
+    <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/popular.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/libs/@form-validation/auto-focus.js') }}"></script>
+    <script src="{{ asset('assets/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/app-ecommerce-customer-all.js') }}"></script>
+    <script>
+         jQuery(document).ready(function ($) {
+
+         });
+    </script>
+{% endblock %}
+

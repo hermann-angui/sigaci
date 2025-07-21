@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <title>Formulaire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Administration" name="description"/>
+    <link href="/var/www/html/public/assets/admin/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet"
+          type="text/css"/>
+    <link href="/var/www/html/public/assets/admin/css/bootstrap-print.min.css" id="bootstrap-style" rel="stylesheet"
+          type="text/css"/>
+    <style>
+
+        .head {
+            background-color: #ffd4f9;
+            color: #000000;
+        }
+        #top-row .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            margin-top: 0.4em;
+        }
+
+        .form-check-input:checked[type=radio] {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
+        }
+        /*
+                    .form-label,
+                    .col-form-label,
+                    .form-check-label {
+                        font-size: 14px;
+                    }
+        */
+        .form-check-input {
+            width: 0.85em;
+            height: 0.85em;
+            margin-top: 0.4em;
+            background-color: #cecece;
+        }
+
+        .form-check-input:checked {
+            background-color: #101011;
+            border-color: #000000;
+        }
+
+
+        .form-check-input[type=radio] {
+            border-radius: 0.2em;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            border: none;
+            border-bottom: 1px dot-dash #000;
+            background-color: #f1f1f1;
+            height: 2em;
+        }
+
+        .page-header {
+            height: 160px !important;
+        }
+
+        .row {
+            display: -webkit-box;
+            display: flex;
+        }
+
+        .row>div {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .row>div:last-child {
+            margin-right: 0;
+        }
+
+        table {
+            border-collapse: separate !important;
+        }
+
+        th,
+        td {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+</head>
+<body>
+    <table style="margin-top:20px;margin-bottom:10px;border-collapse: collapse;border:1px solid white">
+        <tr style="border-collapse: collapse;border:1px solid white">
+            <td style="padding:5px 5px;border-collapse: collapse;border:1px solid white">
+                <img src="/var/www/html/public/assets/frontend/img/cnmci.png" width="100" alt="logo cnmci" style="border-collapse: collapse;border-width:0px 0px;">
+            </td>
+            <td style="border:0px;padding:5px 5px;border-left: 1px solid #000000;">
+                <span>Chambre Nationale de<br>Métiers de Cote d'Ivoire</span>
+            </td>
+            <td style="margin-left:850px;padding:5px 5px;border-collapse: collapse;border:1px solid white">
+                {% if artisan.activity == "CONDUCTEUR VTC" %}
+                <img src="/var/www/html/public/assets/frontend/img/logo-synacvtcci.jpg" width="95" height="85" alt="logo synacvtcci"/>
+                {% endif %}
+            </td>
+            <div style="position:absolute;top:-5px;right:20px;">
+                <div>
+                    <img id="imagePreview" src="/var/www/html/public/artisans/{{ artisan.reference }}/{{ artisan.photo }}" alt="" width="95" class="rounded-0">
+                </div>
+            </div>
+        </tr>
+    </table>
+
+    <table style="margin-top:30px;border-collapse: collapse;border-top:1px solid #000000;border-bottom:1px solid #000000; margin-bottom:2px;width:100%;">
+        <tr style="border:0px;">
+            <th style="border:0;padding:10px 10px;display:flex;justify-content:center;">
+                <span class="fw-bold">FORMULAIRE DE DEMANDE D'IMMATRICULATION</span>
+            </th>
+        </tr>
+    </table>
+
+    <table class="border border-light border-1 w-100">
+        <tr>
+          <td style="border-collapse: collapse;border:1px solid white;"><input type="radio" class="form-check-input top-row" name="metiers" checked></td>
+          <td style="border-collapse: collapse;border:1px solid white;"><span class="fw-bold">IMMATRICULATION AU REGISTRE DES METIERS</span></td>
+          <td style="border-collapse: collapse;border:1px solid white;"><input type="radio" class="form-check-input top-row" name="artisanale"></td>
+          <td style="border-collapse: collapse;border:1px solid white;"><span class="fw-bold">IMMATRICULATION AU REPERTOIRE DES ENTREPRISES ARTISANALES</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-collapse:collapse;border:1px solid white;">
+                <p class="mt-3" style="font-size: 12px;">(Arrete N° 1053/MA/CAB du 10 Décembre 2020 définissant les modalités d'immatriculation au Registre des Métiers)</p>
+            </td>
+            <td colspan="2" style="border-collapse: collapse; border:1px solid white;">
+                <p class="mt-3" style="font-size: 12px;">(Arrete N° 1053/MA/CAB du 10 Janvier 2016 définissant les modalités d'immatriculation au Repertoire des entreprises artisanales)</p>
+            </td>
+        </tr>
+    </table>
+
+    <table class="border border-light border-1 w-100">
+        <tr style="background-color: #f2d0e9;">
+            <th colspan="3">A. RENSEIGNEMENT SUR L'EXPLOITANT</th>
+        </tr>
+        <tr style="border:0;">
+            <td>Nom : <span>{{ artisan.lastName }}</span></td>
+            <td colspan="2">Prénoms : <span>{{ artisan.firstName }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Né(e) le : <span>{{ artisan.dateOfBirth | date('d/m/Y') }}</span></td>
+            <td>à : <span>{{ artisan.birthCity }}</span></td>
+            <td>Nationalité: <span>{{ artisan.nationality }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Sexe :
+                <input class="form-check-input" type="radio" {{ artisan.sex == 'H' ? 'checked' : ''}}> Masculin
+                <input class="form-check-input" type="radio" {{ artisan.sex == 'F' ? 'checked' : ''}}> Féminin
+            </td>
+            <td colspan="">Domicilié (e) à : <span>{{ artisan.commune }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Type de document :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantTypeDoc" name="exploitantTypeDoc" value="CNI" {{ artisan.idType == 'CNI' ? 'checked' : '' }}>CNI</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantTypeDoc" name="exploitantTypeDoc" value="CC" {{ artisan.idType == 'CC' ? 'checked' : '' }}>CC</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantTypeDoc" name="exploitantTypeDoc" value="PASSEPORT" {{ artisan.idType == 'PASSEPORT' ? 'checked' : '' }}>PASSEPORT</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantTypeDoc" name="exploitantTypeDoc" value="CARTE DE RESIDENT" {{ artisan.idType == 'CARTE DE RESIDENT' ? 'checked' : '' }}>Carte de résident</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantTypeDoc" name="exploitantTypeDoc" value="AUTRE" {{ artisan.idType == 'AUTRE' ? 'checked' : '' }}>Autre</span>
+                    <span class="form-check-label"></span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td>N° : <span>{{ artisan.idNumber }}</span></td>
+            <td>Délivré à : <span>{{ artisan.idDeliveryPlace }}</span></td>
+            <td>Le : <span>{{ artisan.idDeliveryDate| date('d/m/Y') }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Etat civil :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantEtatCivil" name="exploitantEtatCivil" value="MARIE(E)" {{ artisan.etatCivil == 'MARIE(E)' ? 'checked' : '' }}>MARIE(E)</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantEtatCivil" name="exploitantEtatCivil" value="CELIBATAIRE" {{ artisan.etatCivil == 'CELIBATAIRE' ? 'checked' : '' }}>CELIBATAIRE</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantEtatCivil" name="exploitantEtatCivil" value="DIVORCE(E)" {{ artisan.etatCivil == 'DIVORCE(E)' ? 'checked' : '' }}>DIVORCE(E)</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="exploitantEtatCivil" name="exploitantEtatCivil" value="VEUF(VE)" {{ artisan.etatCivil == 'VEUF(VE)' ? 'checked' : '' }}>VEUF(VE)</span>
+                    <span class="form-check-label"></span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td>Telephone : <span>{{ artisan.mobile }}</span></td>
+            <td colspan="2">Email : <span>{{ artisan.email }}</span></td>
+        </tr>
+    </table>
+
+    <table class="border border-light border-1 w-100">
+        <tr style="background-color: #f2d0e9;">
+            <th colspan="3" style="margin-top: 0.2em;margin-bottom: 0em;">B. RENSEIGNEMENTS SUR LA FORMATION PROFESSIONNELLE</th>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">Niveau d'études :
+                <input class="form-check-input" type="radio"> 1- Non scolarisé
+                <input class="form-check-input" type="radio"> 2- Primaire
+                <input class="form-check-input" type="radio"> 3- Secondaire
+                <input class="form-check-input" type="radio"> 4- Supérieur
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="2">Précisez la classe(2-3-4) : <span></span></td>
+            <td>Précisez le diplôme obtenu : <span></span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">Apprentissage du métier :
+                <input class="form-check-input" type="radio"> 1- Sur le tas
+                <input class="form-check-input" type="radio"> 2- Centre de Formation Professionnelle (CFP)
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="2">Précisez le niveau (2) : <span></span></td>
+            <td>Précisez le diplôme obtenu :<span></span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="2">Avez-vous un diplôme delivré par la CNMCI :
+                <input class="form-check-input" type="radio">Non
+                <input class="form-check-input" type="radio">Oui
+            </td>
+            <td>Lequel ? :
+                <input class="form-check-input" type="radio"> Maître Artisan
+                <input class="form-check-input" type="radio"> Fin d'Apprentissage
+            </td>
+        </tr>
+    </table>
+
+    <table class="border border-light border-1 w-100">
+        <tr style="background-color: #f2d0e9;">
+            <th colspan="3" style="margin-top: 0.2em;margin-bottom: 0em;">C. RENSEIGNEMENTS SUR L'ETABLISSEMENT </th>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">Activité principale exercée : <span>{{ artisan.activity}}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">Activité secondaire : <span>{{ artisan.activitySecondary }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Raison social : <span>{{ artisan.lastName ~ " " ~  artisan.firstName }}</span></td>
+            <td colspan="2">Sigle ou Enseigne :<span>{{ artisan.lastName|first|upper ~ artisan.firstName|first|upper}}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">Date de début d'activité : <span>{{ artisan.activityDateDebut| date('d/m/Y') }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Type de l'entreprise :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">Entreprise individuelle</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">SARL</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">GIE</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">Société coopérative</span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Regime fiscal :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">Taxe communale de l'Entrepenant</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">Taxe d'Etat de l'Entreprenant</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil">Autres</span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td>Identifiant CNPS de l'entreprise ou de l'artisan :<span></span></td>
+            <td colspan="2">N° Compte contribuable :<span></span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Adresse postale :<span></span></td>
+            <td>Telephone :<span></span></td>
+            <td>Fax :<span></span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Adresse g&eacute;ographique :  departement<span></span></td>
+            <td><span></span></td>
+            <td>Commune : <span>{{ artisan.commune }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>S/P : <span></span></td>
+            <td>Quartier : <span>{{ artisan.quartier }}</span></td>
+            <td>Village : <span></span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Effectif des salariés : <span>&nbsp;&nbsp;</span> Femmes<span>&nbsp;&nbsp;</span> Hommes</td>
+            <td>Effectif des salariés : <span>&nbsp;&nbsp;</span> Femmes<span>&nbsp;&nbsp;</span> Hommes</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <table class="border border-light border-1 w-100">
+        <tr style="background-color: #f2d0e9;">
+            <th colspan="3" style="margin-top: 0.2em;margin-bottom: 0em;">D. RENSEIGNEMENT SUR PERSONNE POUVANT ENGAGER L'ENTREPRISE</th>
+        </tr>
+        <tr style="border:0;">
+            <td>Nom : <span>{{ artisan.lastName }}</span></td>
+            <td colspan="2">Prénoms : <span>{{ artisan.firstName }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td>Né(e) le : <span>{{ artisan.dateOfBirth | date('d/m/Y') }}</span></td>
+            <td>à : <span>{{ artisan.birthCity }}</span></td>
+            <td>Nationalité : <span>{{ artisan.nationality }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="2">Sexe :
+                <input class="form-check-input" type="radio" {{ artisan.sex == 'H' ? 'checked' : ''}}> Masculin
+                <input class="form-check-input" type="radio" {{ artisan.sex == 'F' ? 'checked' : ''}}> Féminin
+            </td>
+            <td>Domicilié (e) à : <span>{{ artisan.domicile }} ({{ artisan.quartier }})</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Type de document :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantTypeDoc" name="referantTypeDoc" value="CNI" {{ artisan.idType == 'CNI' ? 'checked' : '' }}>CNI</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantTypeDoc" name="referantTypeDoc" value="CC" {{ artisan.idType == 'CC' ? 'checked' : '' }}>CC</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantTypeDoc" name="referantTypeDoc" value="PASSEPORT" {{ artisan.idType == 'PASSEPORT' ? 'checked' : '' }}>PASSEPORT</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantTypeDoc" name="referantTypeDoc" value="CARTE DE RESIDENT" {{ artisan.idType == 'CARTE DE RESIDENT' ? 'checked' : '' }}>Carte de résident</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantTypeDoc" name="referantTypeDoc" value="AUTRE" {{ artisan.idType == 'AUTRE' ? 'checked' : '' }}>Autre</span>
+                    <span class="form-check-label"></span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td>N° : <span>{{ artisan.idNumber }}</span></td>
+            <td>Délivré à : <span>{{ artisan.idDeliveryPlace }}</span></td>
+            <td>Le : <span>{{ artisan.idDeliveryDate| date('d/m/Y') }}</span></td>
+        </tr>
+        <tr style="border:0;">
+            <td colspan="3">
+                <div class="form-check-label">Etat civil :
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil" value="MARIE(E)" {{ artisan.etatCivil == 'MARIE(E)' ? 'checked' : '' }}>MARIE(E)</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil" value="CELIBATAIRE" {{ artisan.etatCivil == 'CELIBATAIRE' ? 'checked' : '' }}>CELIBATAIRE</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil" value="DIVORCE(E)" {{ artisan.etatCivil == 'DIVORCE(E)' ? 'checked' : '' }}>DIVORCE(E)</span>
+                    <span class="form-check-label"><input class="form-check-input mx-2" type="radio" id="referantEtatCivil" name="referantEtatCivil" value="VEUF(VE)" {{ artisan.etatCivil == 'VEUF(VE)' ? 'checked' : '' }}>VEUF(VE)</span>
+                    <span class="form-check-label"></span>
+                </div>
+            </td>
+        </tr>
+        <tr style="border:0;">
+            <td>Telephone : <span>{{ artisan.mobile }}</span></td>
+            <td colspan="2">Email : <span>{{ artisan.email }}</span></td>
+        </tr>
+    </table>
+
+    <table style="margin-top: 10px;border-collapse: collapse;table-layout: fixed;width: 100%;border:1px solid white;">
+        <tr style="border-collapse: collapse;border:1px solid white;">
+            <td style="font-size:12px; border-collapse: collapse; padding: 5px 5px;border:1px solid white;">
+                (*) Les promoteurs des entreprises artisanales participant personnellement et continuellement à l'actvité et possédant une qualification professionnelle dans le métier exercé peuvent introduire une demande de carte professionnelle d'artisant
+            </td>
+            <td style="font-size:12px; border-collapse: collapse; padding: 5px 5px;border:1px solid white;">
+                Déclaration certifiée sincère<br>
+                A .............. le ..............
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+

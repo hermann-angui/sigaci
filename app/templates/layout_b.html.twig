@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr" data-layout="default" data-bs-theme="light" data-sidebar="light" data-topbar="white" data-color="primary">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SIGA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SFP">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('theme_b/assets/img/favicon.png') }}">
+
+    <!-- Apple Icon -->
+    <link rel="apple-touch-icon" href="{{ asset('theme_b/assets/img/apple-icon.png') }}">
+
+    <script src="{{ asset('theme_b/assets/js/theme-script.js') }}" ></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/css/bootstrap.min.css') }}">
+
+    <!-- Datetimepicker CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/css/bootstrap-datetimepicker.min.css') }}">
+
+    <!-- Daterangepikcer CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/daterangepicker/daterangepicker.css') }}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/fontawesome/css/all.min.css') }}">
+
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/css/dataTables.bootstrap5.min.css') }}">
+
+    <!-- Tabler Icon CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/tabler-icons/tabler-icons.min.css') }}">
+
+    <!-- Simplebar CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/simplebar/simplebar.min.css') }}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ asset('theme_b/assets/css/style.css') }}" id="app-style">
+
+    {% block stylesheet %}
+    {% endblock  %}
+</head>
+
+<body>
+<!-- Begin Wrapper -->
+<div class="main-wrapper">
+    <!-- Topbar Start -->
+    {% block nav %}
+        {{ include('theme_b/_partials/nav.html.twig') }}
+    {% endblock %}
+    <!-- Topbar End -->
+
+    <!-- Search Modal -->
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-transparent">
+                <div class="card shadow-none mb-0">
+                    <div class="px-3 py-2 d-flex flex-row align-items-center" id="search-top">
+                        <i class="ti ti-search fs-22"></i>
+                        <input type="search" class="form-control border-0" placeholder="Search">
+                        <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close"><i class="ti ti-x fs-22"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidenav Menu Start -->
+    {% block sidebar %}
+        {{ include('theme_b/_partials/sidebar.html.twig') }}
+    {% endblock %}
+    <!-- Sidenav Menu End -->
+
+
+    <!-- ========================
+    Start Page Content
+    ========================= -->
+
+    <div class="page-wrapper">
+
+        <!-- Start Content -->
+        {% block body %}
+
+        {% endblock %}
+        <!-- End Content -->
+
+        <!-- Footer Start -->
+        <!-- Footer End -->
+    </div>
+</div>
+
+
+<!-- jQuery -->
+<script src="{{ asset('theme_b/assets/js/jquery-3.7.1.min.js') }}" ></script>
+
+<!-- Bootstrap Core JS -->
+<script src="{{ asset('theme_b/assets/js/bootstrap.bundle.min.js') }}" ></script>
+
+<!-- Simplebar JS -->
+<script src="{{ asset('theme_b/assets/plugins/simplebar/simplebar.min.js') }}" ></script>
+
+<!-- Chart JS -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+{#<script src="{{ asset('theme_b/assets/plugins/apexchart/apexcharts.min.js') }}" ></script>#}
+<script src="{{ asset('theme_b/assets/plugins/apexchart/chart-data.js') }}" ></script>
+
+<!-- Daterangepikcer JS -->
+<script src="{{ asset('theme_b/assets/js/moment.min.js') }}" ></script>
+<script src="{{ asset('theme_b/assets/plugins/daterangepicker/daterangepicker.js') }}" ></script>
+<script src="{{ asset('theme_b/assets/js/bootstrap-datetimepicker.min.js') }}" ></script>
+
+<!-- Datatable JS -->
+<script src="{{ asset('theme_b/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('theme_b/assets/js/dataTables.bootstrap5.min.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ asset('theme_b/assets/js/script.js') }}" ></script>
+
+<script src="{{ asset('theme_b/js/rocket-loader.min.js') }}" data-cf-settings="3ef0d66fd68d1a88bd9738e9-|49" defer></script>
+
+{% block javascript %}
+{% endblock %}
+</body>
+</html>

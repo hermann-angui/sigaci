@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit BrancheMetier</title>
+
+{% block body %}
+    <h1>Edit BrancheMetier</h1>
+
+    {{ include('branche_metier/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_branche_metier_index') }}">back to list</a>
+
+    {{ include('branche_metier/_delete_form.html.twig') }}
+{% endblock %}

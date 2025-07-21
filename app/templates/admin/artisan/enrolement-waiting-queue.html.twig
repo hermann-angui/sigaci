@@ -1,0 +1,125 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    <link href="{{ asset('assets/admin/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/admin/libs/datatables.net-bs4/css/select.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    {{ parent() }}
+    <style>
+        .card-body{
+            border: 2px solid #f8f8fb;
+            cursor: pointer;
+        }
+        .card-body:hover {
+            border: 2px solid #ffbb00;
+            cursor: pointer;
+        }
+        .app-search span {
+            position: absolute;
+            z-index: 10;
+            font-size: 26px;
+            line-height: 75px;
+            left: 15px;
+            top: 0;
+            color: var(--bs-gray-600);
+        }
+        .app-search .form-control {
+            padding-left: 77px;
+        }
+        .dataTables_filter {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('admin/_partials/header.html.twig') }}
+
+        <!-- ========== Left Sidebar Start ========== -->
+        {{ include('admin/_partials/left-sidebar.html.twig')}}
+        <!-- Left Sidebar End -->
+    {% endif %}
+
+    {% if is_granted('ROLE_AGENT') %}
+        {{ include('admin/_partials/simple-header.html.twig') }}
+    {% endif %}
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 font-size-18">Recherche rapide de souscripteur</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="{{ path("admin_index")}}">Accueil</a></li>
+                                    <li class="breadcrumb-item active">Recherche rapide</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center align-content-center mt-1">
+                    <div class="col-lg-12 mx-3">
+                        <div class="d-flex border border-2 border-dark p-1 rounded align-items-center">
+                            <span class="bx bx-search-alt fs-3"></span>
+                            <input name="searchTerm" id="searchTerm" type="text" class="form-control border-0 bg-transparent fs-5" placeholder="SAISIR LE NUMERO DE SUIVI DE DOSSIER" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    {{ include('admin/pages/_souscripteur_pending_datatable.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END layout-wrapper -->
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/admin/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        var datatable = initDatatable();
+
+        $("#searchTerm").change(function () {
+            datatable.draw();
+        });
+
+        function initDatatable(){
+            var dt = $('#datatable').DataTable( {
+                "responsive": true,
+                 "pageLength": 50,
+                "language": {
+                    url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json',
+                    processing: "<img height='32' width='32' src='{{ asset("assets/images/preloaders/5.svg") }}' />",
+                    sLoadingRecords :"<img height='32' width='32' src='{{ asset("assets/images/preloaders/5.svg") }} />"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": '{{ path('admin_artisan_enrolement_waiting_queue_datatable') }}',
+                    "data": function (d) {
+                        d.searchTerm = $("#searchTerm").val();
+                    }
+                },
+                "columns": [
+                    {"data":  "id"},
+                    {"data":  "last_name"},
+                    {"data":  "first_name"},
+                    { "data": "" }
+                ],
+                "paging": false,
+                "order": [[1, 'desc']]
+            } );
+            return dt;
+        }
+    });
+</script>
+{% endblock %}

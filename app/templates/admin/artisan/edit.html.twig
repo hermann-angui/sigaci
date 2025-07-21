@@ -1,0 +1,461 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('assets/admin/libs/select2/css/select2.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('assets/admin/libs/toastr/build/toastr.min.css') }}" type="text/css" rel="stylesheet">
+    <style>
+        .form-control, .form-select {
+            padding: 0.5rem 0.55rem;
+            font-size: 0.95rem;
+            color: #117b01;
+            font-weight: bolder;
+            border-radius: 0rem;
+            border: 2px solid #ffbb00;
+            text-transform: uppercase;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: 0;
+            box-shadow: none;
+            border-color: #ffbb00;
+        }
+
+        .form-switch .form-check-input {
+            border: 2px solid #ffbb00;
+        }
+
+        .form-check-input:checked {
+            background-color: #117b01;
+            border: 2px solid #117b01;
+        }
+        .col-form-label {
+            padding-top: calc(0.375rem + 1px);
+            padding-bottom: calc(0.375rem + 1px);
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #2a3042;
+        }
+
+        .form-check-label {
+            font-size: 0.82rem;
+        }
+
+        .form-check-input {
+            margin-top: 0.4em;
+        }
+
+        #field {
+            margin-left: .5em;
+            float: left;
+        }
+
+        #field, label {
+            float: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: small;
+        }
+
+        br {
+            clear: both;
+        }
+
+        input {
+            border: 1px solid black;
+            margin-bottom: .5em;
+        }
+
+        input.error {
+            border: 1px solid red;
+        }
+
+        label.error {
+            padding-left: 0px;
+            margin-left: 0em;
+        }
+
+        label.valid {
+            display: block;
+            width: 16px;
+            height: 16px;
+        }
+
+        .select2 span.select2-selection__rendered,
+        li.select2-results__option {
+            font-size: 1.05rem;
+            color: #117b01;
+            font-weight: bolder;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #117b01;
+            /*font-size: 0.75rem;*/
+            font-size: 1.05rem;
+            color: #fff;
+            font-weight: bolder;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #117b01;
+            line-height: 28px;
+        }
+
+
+        input.select2-search__field {
+            border: 1px solid black;
+            margin-bottom: 0.0em;
+        }
+
+
+        @media (max-width: 768px) {
+            .page-header-info h2 {
+                font-size: 26px;
+                line-height: 36px;
+            }
+        }
+
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+
+
+        #stepperform h3{
+            background: linear-gradient(59deg, rgba(252,114,0,1) 9%, rgba(244,130,0,0.8855917366946778) 32%, rgba(62,146,60,0.9398113905325444) 69%, rgba(4,113,2,1) 95%);
+            padding: 5px 5px;
+            color: white;
+            font-size: 16px;
+        }
+
+        fieldset > div {
+            padding: 10px 25px;
+            margin-top: 5px;
+        }
+
+        .image-upload-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            min-height: 200px;
+            margin: auto;
+            border: 1px dashed #adb5bd;
+            padding: 10px 10px;
+        }
+        .select2-container .select2-container--default,
+        .select2-selection .select2-selection--multiple,
+        .select2-container--default .select2-selection--multiple,
+        .select2-container .select2-selection--multiple {
+            background-color: white;
+            border-radius: 0px;
+            cursor: text;
+            min-height: 43px;
+            min-height: 38px;
+            border: 2px solid #ffbb00 !important;
+        }
+        .select2-container .select2-selection--single {
+            height: 41px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 2px solid #ffbb00;
+            border-radius: 0px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('admin/_partials/header.html.twig') }}
+
+            <!-- ========== Left Sidebar Start ========== -->
+            {{ include('admin/_partials/left-sidebar.html.twig')}}
+            <!-- Left Sidebar End -->
+        {% endif %}
+
+        {% if is_granted('ROLE_AGENT') %}
+            {{ include('admin/_partials/simple-header.html.twig') }}
+        {% endif %}
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 font-size-18">Enregistrement membre</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="{{path('admin_index')}}"><i class="fa fa-arrow-left"></i>  Revenir à l'accueil</a></li>
+                                        <li class="breadcrumb-item active">Enregistrement</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            {{ include('admin/artisan/_form.html.twig') }}
+                        </div>
+                    </div>
+                </div> <!-- container-fluid -->
+            </div><!-- End Page-content -->
+
+            {{ include('admin/_partials/footer.html.twig') }}
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/frontend/js/vendor/jquery.datetimepicker.full.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/jquery-steps/build/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/jquery.form/jquery.form.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/jquery.validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/jquery.validation/additional-methods.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/inputmask/dist/jquery.inputmask.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/select2/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/toastr/build/toastr.min.js') }}"></script>
+<script>
+      $('document').ready(function() {
+
+           $('#image-block').hide();
+
+           // window.addEventListener('online', () => toastr.success('Vous êtes de nouveau connecté.'));
+           // window.addEventListener('offline', () => toastr.error('Attention!! Vous avez perdu la connexion internet.'));
+           // console.log(window.navigator.onLine);
+
+          $("#stepperform").submit(function(e){
+              // console.log(window.navigator.onLine);
+              //   if(!window.navigator.onLine) {
+              //       toastr.error('Attention!! Vous avez perdu la connexion internet.');
+              //       return false;
+              //   }else{
+                    $("#stepperform").validate().settings.ignore = ":disabled,.ignore";
+                    return $("#stepperform").valid();
+               // }
+          }).validate({
+                errorPlacement: function errorPlacement(error, element) { element.before(error); },
+                rules: {
+                }
+          });
+
+          $("input").keyup(function(e) {
+                   var ss = e.target.selectionStart;
+                   var se = e.target.selectionEnd;
+                   e.target.value = e.target.value.toUpperCase();
+                   e.target.selectionStart = ss;
+                   e.target.selectionEnd = se;
+                //this.value = this.value.toUpperCase();
+          });
+
+          $("input[name='select-format']").on('change.bootstrapSwitch', function(e) {
+                if(!e.target.checked){
+                     $('#pdf-block').show();
+                     $('#image-block').hide();
+                }else{
+                     $('#pdf-block').hide();
+                     $('#image-block').show();
+                }
+          });
+
+          $("input[name='has_child']").on('change.bootstrapSwitch', function(e) {
+                if(!e.target.checked){
+                  $('#child-row').hide();
+                }else{
+                  $('#child-row').show();
+                }
+          });
+
+          let index = {{ artisan.children|length }};
+          $('#newChild').click(function(){
+              let row = `<div class='d-flex justify-content-between w-75'>
+                        <div class='col-md-3'>
+                            <div class='mb-3'>
+                                <label for='artisan_registration_children_${index}_lastName' class='form-label required' aria-required='true'>Nom</label>
+                                <input type='text' id='artisan_registration_children_${index}_lastName' name='artisan_registration[children][${index}][lastName]' required='required' onkeyup='this.value=this.value.toUpperCase();' class='form-control' value='' aria-required='true'>
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class='mb-3'>
+                                <label for='artisan_registration_children_${index}_firstName' class='form-label required' aria-required='true'>Prénoms</label>
+                                <input type='text' id='artisan_registration_children_${index}_firstName' name='artisan_registration[children][${index}][firstName]' required='required' onkeyup='this.value=this.value.toUpperCase();' class='form-control' value='' aria-required='true'>
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class='mb-3'><label class='form-label required' for='artisan_registration_children_${index}_sex' aria-required='true'>Sexe</label>
+                                <select id='artisan_registration_children_${index}_sex' name='artisan_registration[children][${index}][sex]' class='form-select'>
+                                    <option value='HOMME'>HOMME</option>
+                                    <option value='FEMME'>FEMME</option>
+                                </select>
+                            </div>
+                        </div></div>`;
+                $('#children_bock').append(row);
+                index++;
+          });
+
+          jQuery.extend(jQuery.validator.messages, {
+                required: "Ce champ est obligatoire.",
+                remote: "Please fix this field.",
+                email: "Veuillez entrer une adresse email valide.",
+                url: "Please enter a valid URL.",
+                date: "Date invalide.",
+                dateISO: "Please enter a valid date (ISO).",
+                number: "Please enter a valid number.",
+                digits: "Please enter only digits.",
+                creditcard: "Please enter a valid credit card number.",
+                equalTo: "Please enter the same value again.",
+                accept: "Please enter a value with a valid extension.",
+                maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+                minlength: jQuery.validator.format("Please enter at least {0} characters."),
+                rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+                range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+                max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+                min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+          });
+
+          $("#artisan_registration_photo").change(function(data){
+                var imageFile = data.target.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function(evt){
+                  $('#imagePreview').attr('src', evt.target.result);
+                  $('#imagePreview').fadeIn(650);
+                }
+          });
+
+
+          $("#artisan_registration_activity").on('select2:select', function (e) {
+              if(e.params.data.text !== 'CONDUCTEUR VTC'){
+                  $("#artisan_registration_company").val("AUTRE").trigger('change');
+                  $("#registration_company_container").hide();
+              }else{
+                  $("#artisan_registration_company").val(null).trigger('change');
+                  $("#registration_company_container .select2-container").attr("style", "width:97%;");
+                  $("#registration_company_container").show();
+              }
+          });
+
+          $("label[for='artisan_registration_photoPieceFront']").change(function(data){
+                var imageFile = data.target.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function(evt){
+                  $('#artisan_registration_photoPieceFrontPreview').attr('src', evt.target.result);
+                  $('#artisan_registration_photoPieceFrontPreview').attr('width','85%');
+                  $("label[for='artisan_registration_photoPieceFront'] .upload-icon").hide();
+                  $('#artisan_registration_photoPieceFrontPreview').fadeIn(650);
+                }
+          });
+
+          $("label[for='artisan_registration_photoPieceBack']").change(function(data){
+                var imageFile = data.target.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function(evt){
+                  $('#artisan_registration_photoPieceBackPreview').attr('src', evt.target.result);
+                  $('#artisan_registration_photoPieceBackPreview').attr('width','85%');
+                  $("label[for='artisan_registration_photoPieceBack'] .upload-icon").hide();
+                  $('#artisan_registration_photoPieceBackPreview').fadeIn(650);
+                }
+          });
+
+          $("label[for='artisan_registration_photoPermisFront']").change(function(data){
+                var imageFile = data.target.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function(evt){
+                  $('#artisan_registration_photoPermisFrontPreview').attr('src', evt.target.result);
+                  $('#artisan_registration_photoPermisFrontPreview').attr('width','85%');
+                  $("label[for='artisan_registration_photoPermisFront'] .upload-icon").hide();
+                  $('#artisan_registration_photoPermisFrontPreview').fadeIn(650);
+                }
+          });
+
+          $("label[for='artisan_registration_photoPermisBack']").change(function(data){
+                var imageFile = data.target.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function(evt){
+                  $('#artisan_registration_photoPermisBackPreview').attr('src', evt.target.result);
+                  $('#artisan_registration_photoPermisBackPreview').attr('width','85%');
+                  $("label[for='artisan_registration_photoPermisBack'] .upload-icon").hide();
+                  $('#artisan_registration_photoPermisBackPreview').fadeIn(650);
+                }
+          });
+
+          $("label[for='artisan_registration_mobileMoneyReceiptImage']").change(function(data){
+              var imageFile = data.target.files[0];
+              var reader = new FileReader();
+              reader.readAsDataURL(imageFile);
+
+              reader.onload = function(evt){
+                  $('#artisan_registration_mobileMoneyReceiptImagePreview').attr('src', evt.target.result);
+                  $('#artisan_registration_mobileMoneyReceiptImagePreview').attr('width', '85%');
+                  $("label[for='artisan_registration_mobileMoneyReceiptImage'] .upload-icon").hide();
+                  $('#artisan_registration_mobileMoneyReceiptImagePreview').fadeIn(650);
+              }
+          });
+
+          $('.js-datepicker').datetimepicker({
+                timepicker:false,
+                format:  'd/m/Y',
+                scrollMonth : false,
+	            scrollInput : false
+                // mask: true, // '9999/19/39 29:59' - digit is the maximum possible for a cell
+          });
+
+          $(".input-mask").inputmask();
+
+          $(".select2").select2();
+
+          $("#artisan_registration_birth_city_other_container").hide();
+          $('#artisan_registration_birth_city').on('select2:select', function (e) {
+                if(e.params.data.text=== 'AUTRE'){
+                    $("#artisan_registration_birth_city_other_container").show();
+                }else{
+                      $("#artisan_registration_birth_city_other_container").hide();
+                }
+          });
+
+          $(".select2-multiple").select2({
+                multiple: true
+          });
+
+          var companies = [];
+          {% for company in artisan.company  %}
+             companies.push('{{ company }}');
+          {% endfor %}
+          $(".select2-multiple").val(companies);
+          $(".select2-multiple").trigger('change');
+      });
+  </script>
+
+{% endblock %}
+
+

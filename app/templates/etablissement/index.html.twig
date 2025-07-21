@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<title>Etablissement index</title>
+
+{% block body %}
+    <h1>Etablissement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Primaryactivity</th>
+                <th>Activitystartdate</th>
+                <th>Secondaryactivity</th>
+                <th>Companyname</th>
+                <th>Companyacronym</th>
+                <th>Companypurpose</th>
+                <th>Companylegalstatus</th>
+                <th>Numregistremetier</th>
+                <th>Numrea</th>
+                <th>Numrccm</th>
+                <th>Companycapitalsocial</th>
+                <th>Companyregimefiscal</th>
+                <th>Companynumcnps</th>
+                <th>Companynombreassocies</th>
+                <th>Companyduree</th>
+                <th>Companytaxpayernumber</th>
+                <th>Companyadressepostale</th>
+                <th>Companytel</th>
+                <th>Companyfax</th>
+                <th>Companydepartement</th>
+                <th>Companycommune</th>
+                <th>Companysp</th>
+                <th>Companyquartier</th>
+                <th>Companyvillage</th>
+                <th>Companylotnumber</th>
+                <th>Companyilotnumber</th>
+                <th>Companyeffectsalariehomme</th>
+                <th>Companyeffectsalariefemme</th>
+                <th>Companyeffectapprentishomme</th>
+                <th>Companyeffectepprentishomme</th>
+                <th>Companyeffectapprentisfemme</th>
+                <th>Activitylocation</th>
+                <th>ActivityLocation</th>
+                <th>Activitycountry</th>
+                <th>Activitycity</th>
+                <th>Activityquartier</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etablissement in etablissements %}
+            <tr>
+                <td>{{ etablissement.id }}</td>
+                <td>{{ etablissement.primaryactivity }}</td>
+                <td>{{ etablissement.activitystartdate }}</td>
+                <td>{{ etablissement.secondaryactivity }}</td>
+                <td>{{ etablissement.companyname }}</td>
+                <td>{{ etablissement.companyacronym }}</td>
+                <td>{{ etablissement.companypurpose }}</td>
+                <td>{{ etablissement.companylegalstatus }}</td>
+                <td>{{ etablissement.numregistremetier }}</td>
+                <td>{{ etablissement.numrea }}</td>
+                <td>{{ etablissement.numrccm }}</td>
+                <td>{{ etablissement.companycapitalsocial }}</td>
+                <td>{{ etablissement.companyregimefiscal }}</td>
+                <td>{{ etablissement.companynumcnps }}</td>
+                <td>{{ etablissement.companynombreassocies }}</td>
+                <td>{{ etablissement.companyduree }}</td>
+                <td>{{ etablissement.companytaxpayernumber }}</td>
+                <td>{{ etablissement.companyadressepostale }}</td>
+                <td>{{ etablissement.companytel }}</td>
+                <td>{{ etablissement.companyfax }}</td>
+                <td>{{ etablissement.companydepartement }}</td>
+                <td>{{ etablissement.companycommune }}</td>
+                <td>{{ etablissement.companysp }}</td>
+                <td>{{ etablissement.companyquartier }}</td>
+                <td>{{ etablissement.companyvillage }}</td>
+                <td>{{ etablissement.companylotnumber }}</td>
+                <td>{{ etablissement.companyilotnumber }}</td>
+                <td>{{ etablissement.companyeffectsalariehomme }}</td>
+                <td>{{ etablissement.companyeffectsalariefemme }}</td>
+                <td>{{ etablissement.companyeffectapprentishomme }}</td>
+                <td>{{ etablissement.companyeffectepprentishomme }}</td>
+                <td>{{ etablissement.companyeffectapprentisfemme }}</td>
+                <td>{{ etablissement.activitylocation }}</td>
+                <td>{{ etablissement.activityLocation }}</td>
+                <td>{{ etablissement.activitycountry }}</td>
+                <td>{{ etablissement.activitycity }}</td>
+                <td>{{ etablissement.activityquartier }}</td>
+                <td>{{ etablissement.latitude }}</td>
+                <td>{{ etablissement.longitude }}</td>
+                <td>
+                    <a href="{{ path('app_etablissement_show', {'id': etablissement.id}) }}">show</a>
+                    <a href="{{ path('app_etablissement_edit', {'id': etablissement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="40">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etablissement_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<title>Immatriculation</title>
+
+{% block body %}
+    <h1>Immatriculation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ immatriculation.id }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ immatriculation.status }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ immatriculation.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ immatriculation.updatedAt }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ immatriculation.type }}</td>
+            </tr>
+            <tr>
+                <th>Identification_id</th>
+                <td>{{ immatriculation.identificationId }}</td>
+            </tr>
+            <tr>
+                <th>Payment_type</th>
+                <td>{{ immatriculation.paymentType }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ immatriculation.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ immatriculation.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_immatriculation_index') }}">back to list</a>
+
+    <a href="{{ path('app_immatriculation_edit', {'id': immatriculation.id}) }}">edit</a>
+
+    {{ include('immatriculation/_delete_form.html.twig') }}
+{% endblock %}
