@@ -15,8 +15,6 @@
     <!-- Apple Icon -->
     <link rel="apple-touch-icon" href="{{ asset('theme_b/assets/img/apple-icon.png') }}">
 
-    <script src="{{ asset('theme_b/assets/js/theme-script.js') }}" ></script>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('theme_b/assets/css/bootstrap.min.css') }}">
 
@@ -56,15 +54,15 @@
                             <div class="authentication-card w-100">
 								<div class="authen-overlay-item w-100">
                                     <div class="authen-head text-center">
-                                        <h1 class="text-white fs-32 fw-bold mb-2">Seamless healthcare access <br> with smart, modern clinic</h1>
-                                        <p class="text-light fw-normal text-light"> Experience efficient, secure, and user-friendly healthcare management designed for modern clinics and growing practices.  </p>
+                                        <h1 class="text-white fs-32 fw-bold mb-2">SIGACI<br> Système Intégré de Gestion des Artisans de Côte d'Ivoire.</h1>
+                                        <p class="text-light fw-normal text-light">.  </p>
                                     </div>
 									<div class="mt-4 mx-auto authen-overlay-img">
-										<img src="{{ asset('assets/img/logos/cnmci.png') }}" alt="Img">
+{#										<img src="" alt="Img">#}
 									</div>
 								</div>
 							</div>
-                            <img src="" alt="cover-imgs-2" class="img-fluid cover-img">
+                            <img src="{{ asset('assets/img/logos/cnmci.png') }}" alt="cover-imgs-2" class="img-fluid cover-img">
                         </div>
                     </div> <!-- end row-->
 
@@ -74,7 +72,7 @@
                                 <form method="post" action="{{ path('app_login') }}" class="d-flex justify-content-center align-items-center">
                                     <div class="d-flex flex-column justify-content-lg-center p-4 p-lg-0 pb-0 flex-fill">
                                         <div class=" mx-auto mb-4 text-center">
-                                            <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
+                                            <img src="{{ asset('assets/img/logos/cnmci.png') }}" class="img-fluid" alt="Logo">
                                         </div>
 
                                         {% if error %}
@@ -89,7 +87,7 @@
                                         <div class="card border-1 p-lg-3 shadow-md rounded-3 m-0">
                                             <div class="card-body">
                                                 <div class="text-center mb-3">
-                                                    <h5 class="mb-1 fs-20 fw-bold">Sign In</h5>
+                                                    <h5 class="mb-1 fs-20 fw-bold">Bienvenue sur SIGA</h5>
                                                     <p class="mb-0">Veuillez entrer vos accès pour vous connecter</p>
                                                 </div>
                                                 <div class="mb-3">
@@ -161,9 +159,7 @@
 <script src="assets/js/bootstrap.bundle.min.js" type="846c38fe66b4ba639ae4ec5d-text/javascript"></script>
 
 <!-- Main JS -->
-<script src="assets/js/script.js" type="846c38fe66b4ba639ae4ec5d-text/javascript"></script>
 
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="846c38fe66b4ba639ae4ec5d-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9603c633ffe3b7a1","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.7.0","token":"3ca157e612a14eccbb30cf6db6691c29"}' crossorigin="anonymous"></script>
 </body>
 
 </html>
