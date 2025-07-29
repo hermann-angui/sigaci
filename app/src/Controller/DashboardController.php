@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 
+use App\Entity\Artisan;
+use App\Entity\User;
 use App\Helper\DataTableHelper;
 use App\Service\File\FileConverterService;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +19,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     #[Route('', name: 'app_dashboard', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
+
+        $topAgents = $em->getRepository(User::class)->findAll();
+        $stats = $em->getRepository(Artisan::class)->getTotalForEachArtisanCategory();
+        $artisans = $em->getRepository(Artisan::class)->findAll();
+
+        foreach($stats as $stat) {
+            switch ($stat['name']) {
+                case "MAÎTRE ARTISAN":
+                    $viewData['total_maitre_artisan'] = $stat['total'];
+                    break;
+                case "COMPAGNON":
+                    $viewData['total_compagnons'] = $stat['total'];
+                    break;
+                case "APPRENTI":
+                    $viewData['total_apprentis'] = $stat['total'];
+                    break;
+                case "ENTREPRISE ARTISANALE":
+                    $viewData['total_entreprise_artisanale'] = $stat['total'];
+                    break;
+            }
+        }
+        $viewData = [
+            "total_entreprise_artisanale" => 0,
+            "total_maitre_artisan" => 0,
+            "total_compagnons" => 0,
+            "total_apprentis" => 0,
+            "topAgents" => $topAgents,
+            "artisans" => $artisans,
+        ];
+
         //return $this->render('dashboard/index.html.twig');
-        return $this->render('theme_b/dashboard/index.html.twig');
+        return $this->render('theme_b/dashboard/index.html.twig', $viewData);
     }
 
     #[Route('/home', name: 'app_dashboard_a', methods: ['GET'])]
@@ -44,7 +77,6 @@ class DashboardController extends AbstractController
     #[Route('/maps', name: 'app_map', methods: ['GET'])]
     public function mapGeo(Request $request): Response
     {
-
         return $this->render('artisans/maps.html.twig');
     }
 

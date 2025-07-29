@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PaymentRepository::class)]
 #[ORM\Table(name: '`payments`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Payment
 {
     #[ORM\Id]

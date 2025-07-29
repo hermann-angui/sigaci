@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PermissionRepository::class)]
 #[ORM\Table(name: '`permissions`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Permission
 {
     #[ORM\Id]

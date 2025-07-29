@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`corps_metiers`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class CorpsMetiers
 {
     #[ORM\Id]
@@ -23,6 +23,9 @@ class CorpsMetiers
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
 
     #[ORM\Column(type: "string", length: 500, nullable: true)]
     private string $description;
@@ -127,4 +130,24 @@ class CorpsMetiers
     {
         return $this->getName();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     * @return CorpsMetiers
+     */
+    public function setCode(?string $code): CorpsMetiers
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

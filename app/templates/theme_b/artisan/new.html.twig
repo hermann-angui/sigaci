@@ -11,420 +11,861 @@
 
 
 {% block body %}
-    <!-- Content -->
 
-    <div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Start Content -->
+    <div class="content">
 
         <div class="row">
-            <div class="col-6 d-flex">
-                <img src="{{ asset('assets/img/logos/cnmci.png') }}" alt="logo cnmci" style="width:90px; padding:10px 10px;"/>
-                <div class="d-flex flex-column justify-content-center"
-                     style="font-size: 1rem; color:black;width:280px;">
-                    Chambre Nationale de Métiers de Côte d'Ivoire
+            <div class="col-lg-10 mx-auto">
+
+                <!-- Start Page Header -->
+                <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2 mb-3">
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold mb-0 d-flex align-items-center"><a href="{{ path('app_artisan_index') }}"><i class="ti ti-chevron-left me-1 fs-14"></i>Artisan</a></h6>
+                    </div>
                 </div>
+                <!-- End Page Header -->
+
+                <!-- Start Add Doctor -->
+
+                <div class="card">
+                    <!-- <div class="card-header">
+
+                    </div> -->
+                    <div class="card-body">
+                        <div class="border-bottom d-flex align-items-center justify-content-between pb-3 mb-3">
+                            <h5 class="offcanvas-title fs-18 fw-bold">Immatriculation</h5>
+                        </div>
+                        <form action="doctors.html">
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Information</h6>
+                            </div>
+                            <div class="pb-0">
+                                <!-- start row-->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3 d-flex align-items-center">
+                                            <label class="form-label">Photo</label>
+                                            <div class="drag-upload-btn avatar avatar-xxl rounded-circle bg-light text-muted position-relative overflow-hidden z-1 mb-2 ms-4 p-0">
+                                                <i class="ti ti-user-plus fs-16"></i>
+                                                <input type="file" class="form-control image-sign" multiple="">
+                                                <div class="position-absolute bottom-0 end-0 star-0 w-100 h-25 bg-dark d-flex align-items-center justify-content-center z-n1">
+                                                    <a href="javascript:void(0);" class="text-white d-flex align-items-center justify-content-center">
+                                                        <i class="ti ti-photo fs-14"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nom <span class="text-danger">*</span></label>
+                                                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}} ) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Prenoms <span class="text-danger">*</span></label>
+                                                    {{ form_widget(form.prenoms, {'attr': {'class': 'form-control'}} ) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Téléphone <span class="text-danger">*</span></label>
+                                                    {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}} ) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}} ) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Date de naissance <span class="text-danger">*</span></label>
+                                                    <div class="input-icon-end position-relative">
+                                                        {{ form_widget(form.nom, {'attr': {'class': 'form-control datetimepicker', 'placeholder': 'dd/mm/yyyy'}} ) }}
+                                                        <span class="input-icon-addon"><i class="ti ti-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Year Of Experience <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Departement<span class="text-danger ms-1">*</span></label>
+                                                    {{ form_widget(form.crm) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Designation <span class="text-danger ms-1">*</span></label>
+                                                    <select class="select">
+                                                        <option>Select</option>
+                                                        <option>Cardiologist</option>
+                                                        <option>Orthopedic Surgeon</option>
+                                                        <option>Pediatrics</option>
+                                                        <option>Gynecology</option>
+                                                        <option>Psychiatry</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Medical License Number <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Language Spoken</label>
+                                                    <input class="input-tags form-control" id="inputBox" type="text" data-role="tagsinput" name="specialist" value="English,French">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Blood Group<span class="text-danger ms-1">*</span></label>
+                                                    <select class="select">
+                                                        <option>Select</option>
+                                                        <option>O+</option>
+                                                        <option>O-</option>
+                                                        <option>A+</option>
+                                                        <option>A-</option>
+                                                        <option>B+</option>
+                                                        <option>B-</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Gender <span class="text-danger ms-1">*</span></label>
+                                                    <select class="select">
+                                                        <option>Select</option>
+                                                        <option>Male</option>
+                                                        <option>Female</option>
+                                                        <option>Others</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-->
+
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Bio</label>
+                                            <textarea class="form-control" rows="3">About Doctor</textarea>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <label class="form-check-label" for="switchCheckDefault">Feature On Website</label>
+                                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end row-->
+                            </div>
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Address Information</h6>
+                            </div>
+                            <div class="pb-0">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Address 1</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Address 2 </label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Country</label>
+                                            <select class="select">
+                                                <option>Select</option>
+                                                <option>United States</option>
+                                                <option>India</option>
+                                                <option>Canada</option>
+                                                <option>Germany</option>
+                                                <option>Brazil</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">City</label>
+                                            <select class="select">
+                                                <option>Select</option>
+                                                <option>Los Angeles</option>
+                                                <option>San Francisco</option>
+                                                <option>San Francisco</option>
+                                                <option>San Jose</option>
+                                                <option>Fresno</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">State</label>
+                                            <select class="select">
+                                                <option>Select</option>
+                                                <option>California</option>
+                                                <option>Texas</option>
+                                                <option>New York</option>
+                                                <option>Florida</option>
+                                                <option>Illinois</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pincode</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Address Information</h6>
+                            </div>
+                            <div class="p-3">
+                                <ul class="nav nav-pills schedule-tab mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto active" data-bs-toggle="pill" data-bs-target="#schedule-1" type="button" role="tab" aria-selected="true">Monday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-2" type="button" role="tab" aria-selected="false" tabindex="-1">Tuesday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-3" type="button" role="tab" aria-selected="false" tabindex="-1">Wednesday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-4" type="button" role="tab" aria-selected="false" tabindex="-1">Thursday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-5" type="button" role="tab" aria-selected="false" tabindex="-1">Friday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-6" type="button" role="tab" aria-selected="false" tabindex="-1">Saturday</button>
+                                    </li>
+                                    <li class="nav-item me-1" role="presentation">
+                                        <button class="nav-link btn btn-sm btn-icon p-2 d-flex align-items-center justify-content-center w-auto" data-bs-toggle="pill" data-bs-target="#schedule-7" type="button" role="tab" aria-selected="false" tabindex="-1">Sunday</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade active show" id="schedule-1" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-2" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-3" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-4" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-5" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-6" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="schedule-7" role="tabpanel">
+                                        <div class="add-schedule-list">
+                                            <div class="row gx-3">
+                                                <div class="col-lg-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Session</label>
+                                                        <select class="select">
+                                                            <option>Select</option>
+                                                            <option>Morning</option>
+                                                            <option>Noon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <div class="row align-items-end gx-3">
+                                                        <div class="col-lg-9">
+                                                            <div class="row gx-3">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">From</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">To</label>
+                                                                        <div class="input-icon-end position-relative">
+                                                                            <input type="text" class="form-control timepicker" placeholder="03 : 05  AM">
+                                                                            <span class="input-icon-addon">
+                                                                                        <i class="ti ti-clock-hour-10"></i>
+                                                                                    </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="mb-3">
+                                                                <a href="#" class="add-schedule-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-plus fs-16"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <a href="#" class="btn btn-dark">Apply All</a>
+                                </div>
+                            </div>
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Appointment Information</h6>
+                            </div>
+                            <div class="pb-0">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Appointment Type</label>
+                                            <select class="select">
+                                                <option>Select</option>
+                                                <option>Online Consultation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6"></div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Accept bookings (in Advance)</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-text bg-transparent text-dark fs-14">Days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Appointment Duration</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-text bg-transparent text-dark fs-14">Mins</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Consultation Charge</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-text bg-transparent text-dark fs-14">$</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Max Bookings Per Slot</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch mb-3">
+                                            <label class="form-check-label" for="switchCheckDefault2">Display on Booking Page</label>
+                                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Educational Information</h6>
+                            </div>
+                            <div class="pb-0">
+                                <div class="add-education-list">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-11">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Educational Degree</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">University</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">From</label>
+                                                        <div class="input-icon-end position-relative">
+                                                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
+                                                            <span class="input-icon-addon">
+                                                                        <i class="ti ti-calendar"></i>
+                                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">To</label>
+                                                        <div class="input-icon-end position-relative">
+                                                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
+                                                            <span class="input-icon-addon">
+                                                                        <i class="ti ti-calendar"></i>
+                                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <div class="mb-3">
+                                                <a href="#" class="add-education-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                    <i class="ti ti-plus fs-16"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-light px-3 py-2 mb-3">
+                                <h6 class="fw-bold mb-0">Awards & Recognition</h6>
+                            </div>
+                            <div class="pb-0">
+                                <div class="add-award-list">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-11">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Name</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">From</label>
+                                                        <div class="input-icon-end position-relative">
+                                                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
+                                                            <span class="input-icon-addon">
+                                                                        <i class="ti ti-calendar"></i>
+                                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <div class="mb-3">
+                                                <a href="#" class="add-award-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                    <i class="ti ti-plus fs-16"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-light px-3 py-2">
+                                <h6 class="fw-bold mb-0">Certifications</h6>
+                            </div>
+                            <div class="pb-3 mb-3 border-bottom">
+                                <div class="add-certification-list">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-11">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Name</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">From</label>
+                                                        <div class="input-icon-end position-relative">
+                                                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
+                                                            <span class="input-icon-addon">
+                                                                        <i class="ti ti-calendar"></i>
+                                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <div class="mb-3">
+                                                <a href="#" class="add-certification-btn p-2 bg-light btn-icon text-dark rounded d-flex align-items-center justify-content-center">
+                                                    <i class="ti ti-plus fs-16"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" d-flex justify-content-end gap-2">
+                                <a href="javascript:void(0);" class="btn btn-light btm-md" data-bs-dismiss="offcanvas">Cancel</a>
+                                <button class="btn btn-primary btm-md" data-bs-toggle="modal" data-bs-target="#success_modal">Add Doctor</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="card-footer">
+
+                    </div> -->
+                </div>
+
+                <!-- End Add Doctor -->
+
             </div>
-            <div class="col-6"></div>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div
-                style="text-align:center; width:50%; padding:10px; font-weight: bold; font-size:1.2rem; color:black;border-top:3px solid #f58a34; border-bottom:3px solid #f58a34">
-                FORMULAIRE DE DEMANDE DE CARTE DE COMPAGNON ARTISAN
-            </div>
-        </div>
-        <div class="mt-5" style="border:2px solid #ebcaa8">
-            {{ form_start(form, {'method': 'post'}) }}
-                <!-- A. RENSEIGNEMENTS SUR LE COMPAGNON ARTISAN -->
-                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
-                    <div style="font-weight: bold; font-size:1.2rem; color:black">A. RENSEIGNEMENTS SUR LE COMPAGNON
-                        ARTISAN
-                    </div>
-                </div>
-                <div class="row p-4">
-                    <div class="col-sm-12 d-flex justify-content-center">
-                        <div class="d-flex flex-column justify-content-center align-items-center image-upload">
-                            <label for="photo">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-4">
-                        <label class="col-auto me-2" for="{{ field_id(form.nom) }}">{{ field_label(form.nom) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.nom) }}" id="{{ field_id(form.nom) }}" value="{{ field_value(form.nom) }}" />
-                        {{ form_errors(form.nom, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-7">
-                        <label class="col-auto me-2" for="{{ field_id(form.prenoms) }}">{{ field_label(form.prenoms) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.prenoms) }}" id="{{ field_id(form.prenoms) }}" value="{{ field_value(form.prenoms) }}" />
-                        {{ form_errors(form.prenoms, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-3">
-                        <label class="col-auto me-2" for="{{ field_id(form.dateNaissance) }}">{{ field_label(form.dateNaissance) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.dateNaissance) }}" id="{{ field_id(form.dateNaissance) }}" value="{{ field_value(form.dateNaissance) }}" />
-                        {{ form_errors(form.dateNaissance, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-3">
-                        <label class="col-auto me-2" for="{{ field_id(form.lieuNaissance) }}">{{ field_label(form.lieuNaissance) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.lieuNaissance) }}" id="{{ field_id(form.lieuNaissance) }}" value="{{ field_value(form.lieuNaissance) }}" />
-                        {{ form_errors(form.lieuNaissance, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-5">
-                        <label class="col-auto me-2" for="{{ field_id(form.nationalite) }}">{{ field_label(form.nationalite) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.nationalite) }}" id="{{ field_id(form.nationalite) }}" value="{{ field_value(form.nationalite) }}" />
-                        {{ form_errors(form.nationalite, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-3">
-                        <div class="me-2">Sexe :</div>
-                        <div class="form-check form-check-inline">
-                            {% for child in form.sexe %}
-                                <div class="form-check form-check-inline">
-                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="d-flex col-5">
-                        <label class="col-auto me-2" for="{{ field_id(form.domicile) }}">{{ field_label(form.domicile) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.domicile) }}" id="{{ field_id(form.domicile) }}" value="{{ field_value(form.domicile) }}" />
-                        {{ form_errors(form.domicile, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-4">
-                        <label class="col-auto me-2" for="{{ field_id(form.quartier) }}">{{ field_label(form.quartier) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.quartier) }}" id="{{ field_id(form.quartier) }}" value="{{ field_value(form.quartier) }}" />
-                        {{ form_errors(form.quartier, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label class="me-2">Type de Document :</label>
-                        <div class="form-check form-check-inline">
-                            {% for child in form.typePieceIdentite %}
-                                <div class="form-check form-check-inline">
-                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-3">
-                        <label class="col-3" for="{{ field_id(form.numeroPieceIdentite) }}">{{ field_label(form.numeroPieceIdentite) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.numeroPieceIdentite) }}" id="{{ field_id(form.numeroPieceIdentite) }}" value="{{ field_value(form.numeroPieceIdentite) }}" />
-                        {{ form_errors(form.numeroPieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-3">
-                        <label class="col-3" for="{{ field_id(form.lieuDelivrancePieceIdentite) }}">{{ field_label(form.lieuDelivrancePieceIdentite) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.lieuDelivrancePieceIdentite) }}" id="{{ field_id(form.lieuDelivrancePieceIdentite) }}" value="{{ field_value(form.lieuDelivrancePieceIdentite) }}" />
-                        {{ form_errors(form.lieuDelivrancePieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-5">
-                        <label class="col-auto" for="{{ field_id(form.dateDelivrancePieceIdentite) }}">{{ field_label(form.dateDelivrancePieceIdentite) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.dateDelivrancePieceIdentite) }}" id="{{ field_id(form.dateDelivrancePieceIdentite) }}" value="{{ field_value(form.dateDelivrancePieceIdentite) }}" />
-                        {{ form_errors(form.dateDelivrancePieceIdentite, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label>Etat civil : </label>
-                        <div class="form-check form-check-inline">
-                            {% for child in form.etatCivil %}
-                                <div class="form-check form-check-inline">
-                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-12">
-                        <label class="col-auto me-2" for="{{ field_id(form.activiteExercee) }}">{{ field_label(form.activiteExercee) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.activiteExercee) }}" id="{{ field_id(form.activiteExercee) }}" value="{{ field_value(form.activiteExercee) }}"/>
-                        {{ form_errors(form.activiteExercee, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-{#                <div class="row p-3">
-                    <div class="d-flex col-12">
-                        {{ form_label(form.dateDebutActivite, {'attr': {'class': 'col-auto me-2'}}) }}
-                        {{ form_widget(form.dateDebutActivite, {'attr': {'class': 'col-8'}}) }}
-                        {{ form_errors(form.dateDebutActivite, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-12">
-                        {{ form_label(form.dateDebutActivitePro, {'attr': {'class': 'col-auto me-2'}}) }}
-                        {{ form_widget(form.dateDebutActivitePro, {'attr': {'class': 'col-8'}}) }}
-                        {{ form_errors(form.dateDebutActivitePro, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>#}
-                <div class="row p-3">
-                    <div class="d-flex col-5">
-                        <label class="col-auto me-2" for="{{ field_id(form.telephone) }}">{{ field_label(form.telephone) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.telephone) }}" id="{{ field_id(form.telephone) }}" value="{{ field_value(form.telephone) }}" />
-                        {{ form_errors(form.telephone, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto me-2" for="{{ field_id(form.email) }}">{{ field_label(form.email) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.email) }}" id="{{ field_id(form.email) }}" value="{{ field_value(form.email) }}" />
-                        {{ form_errors(form.email, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-4">
-                        <label class="col-auto me-2" for="{{ field_id(form.cnps) }}">{{ field_label(form.cnps) }} : <span class="required">*</span></label>
-                        <input class="col-8" type="text" name="{{ field_name(form.cnps) }}" id="{{ field_id(form.cnps) }}" value="{{ field_value(form.cnps) }}" />
-                        {{ form_errors(form.cnps, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-
-                <!-- B. RENSEIGNEMENTS SUR LA FORMATION PROFESSIONNELLE DU COMPAGNON ARTISAN -->
-                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
-                    <div style="font-weight: bold; font-size:1.2rem; color:black"> B. RENSEIGNEMENTS SUR LA FORMATION
-                        PROFESSIONNELLE DU COMPAGNON ARTISAN
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label>Niveau d'étude : </label>
-                        <div class="form-check form-check-inline">
-                            {% for child in form.formationNiveauEtude %}
-                                <div class="form-check form-check-inline">
-                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto me-2" for="{{ field_id(form.formationClasseEtude) }}">{{ field_label(form.formationClasseEtude) }} : <span class="required">*</span></label>
-                        <input class="col-6" type="text" name="{{ field_name(form.formationClasseEtude) }}" id="{{ field_id(form.formationClasseEtude) }}" value="{{ field_value(form.formationClasseEtude) }}" />
-                        {{ form_errors(form.formationClasseEtude, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto me-2" for="{{ field_id(form.formationDiplomeObtenu) }}">{{ field_label(form.formationDiplomeObtenu) }} : <span class="required">*</span></label>
-                        <input class="col-6" type="text" name="{{ field_name(form.formationDiplomeObtenu) }}" id="{{ field_id(form.formationDiplomeObtenu) }}" value="{{ field_value(form.formationDiplomeObtenu) }}" />
-                        {{ form_errors(form.formationDiplomeObtenu, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetier) }}">{{ field_label(form.formationApprentissageMetier) }} : <span class="required">*</span></label>
-                        <input class="col-6" type="text" name="{{ field_name(form.formationApprentissageMetier) }}" id="{{ field_id(form.formationApprentissageMetier) }}" value="{{ field_value(form.formationApprentissageMetier) }}" />
-                        {{ form_errors(form.formationApprentissageMetier, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetierNiveau) }}">{{ field_label(form.formationApprentissageMetierNiveau) }} : <span class="required">*</span></label>
-                        <input class="col-5" type="text" name="{{ field_name(form.formationApprentissageMetierNiveau) }}" id="{{ field_id(form.formationApprentissageMetierNiveau) }}" value="{{ field_value(form.formationApprentissageMetierNiveau) }}" />
-                        {{ form_errors(form.formationApprentissageMetierNiveau, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto me-2" for="{{ field_id(form.formationApprentissageMetierDiplome) }}">{{ field_label(form.formationApprentissageMetierDiplome) }} : <span class="required">*</span></label>
-                        <input class="col-5" type="text" name="{{ field_name(form.formationApprentissageMetierDiplome) }}" id="{{ field_id(form.formationApprentissageMetierDiplome) }}" value="{{ field_value(form.formationApprentissageMetierNiveau) }}" />
-                        {{ form_errors(form.formationApprentissageMetierDiplome, {'attr': {'class': 'invalid-feedback'}}) }}
-                    </div>
-                </div>
-
-                <!-- C. RENSEIGNEMENTS SUR L’ETABLISSEMENT OÙ TRAVAILLE LE COMPAGNON ARTISAN -->
-                <div class="d-flex justify-content-center" style="background-color: #ebcaa8;">
-                    <div style="font-weight: bold; font-size:1.2rem; color:black"> C. RENSEIGNEMENTS SUR L’ETABLISSEMENT OÙ TRAVAILLE LE COMPAGNON ARTISAN
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Activité principale exercée : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field="etablissement.activitePrincipale"
-                               classappend="activitePrincipale">
-                        <div  class="invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Activités secondaires : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field="activitePrincipale"
-                               classappend="">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Raison social : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field="raisonSociale"
-                               classappend="fields.hasErrors('etablissement.raisonSociale')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.raisonSociale')" class="invalid-feedback"
-                             errors=".raisonSociale"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.sigle">Sigle ou Enseigne :<span
-                                class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".sigle"
-                               classappend="fields.hasErrors('etablissement.sigle')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.sigle')" class="invalid-feedback"
-                             errors=".sigle"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-12">
-                        <label class="col-auto">Objet social :<span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".objetSocial"
-                               classappend="fields.hasErrors('etablissement.objetSocial')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.objetSocial')" class="invalid-feedback"
-                             errors=".objetSocial"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label class="me-2">Type d’entreprise: </label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" field="typeEntreprise">
-                            <label class="form-check-label"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">N° Registre de métiers : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".numRegistreMetier"
-                               classappend="fields.hasErrors('etablissement.numRegistreMetier')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRegistreMetier')" class="invalid-feedback"
-                             errors=".numRegistreMetier"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto">N° REA :<span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".numRea"
-                               classappend="fields.hasErrors('etablissement.numRea')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRea')" class="invalid-feedback"
-                             errors=".numRea"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">N° RCCM : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".numRccm"
-                               classappend="fields.hasErrors('etablissement.numRccm')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRccm')" class="invalid-feedback"
-                             errors=".numRccm"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Capital social : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".capitalSocial"
-                               classappend="fields.hasErrors('etablissement.capitalSocial')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.capitalSocial')" class="invalid-feedback"
-                             errors=".capitalSocial"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex">
-                        <label class="me-2">Régime Fiscal :</label>
-                        <div class="form-check form-check-inline" each="regimeFiscaux">
-                            <input class="form-check-input" type="radio" field="regimeFiscal"
-                                   value="regimeFiscal">
-                            <label class="form-check-label" text="regimeFiscal"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-8">
-                        <label class="col-auto">Identifiant CNPS de l’entreprise : <span
-                                class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".identifiantCNPS"
-                               classappend="fields.hasErrors('etablissement.identifiantCNPS')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.identifiantCNPS')" class="invalid-feedback"
-                             errors=".identifiantCNPS"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Adresse postale : <span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".adressePostale"
-                               classappend="fields.hasErrors('etablissement.adressePostale')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.adressePostale')" class="invalid-feedback"
-                             errors=".adressePostale"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.telephone">Téléphone :<span class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".telephone"
-                               classappend="fields.hasErrors('etablissement.telephone')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.telephone')" class="invalid-feedback"
-                             errors=".telephone"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">Adresse géographique : Département : <span
-                                class="required">*</span></label>
-                        <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field=".departement"
-                               classappend="fields.hasErrors('etablissement.departement')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.departement')" class="invalid-feedback"
-                             errors=".departement"></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.commune">Commune : <span
-                                class="required">*</span></label>
-                        <input class="col-8" type="text"  field=".commune"
-                               classappend="fields.hasErrors('etablissement.commune')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.commune')" class="invalid-feedback"
-                             errors=".commune"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-4">
-                        <label class="col-auto">S/P : <span class="required">*</span></label>
-                        <input class="col-8" type="text" field="sp" >
-                        <div  class="invalid-feedback" errors="sp"></div>
-                    </div>
-                    <div class="d-flex col-4">
-                        <label class="col-auto" for="etablissement.quartier">Quartier : <span class="required">*</span></label>
-                        <input class="col-8" type="text" classappend="etablissement">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex col-4">
-                        <label class="col-auto" for="etablissement.village">Village : <span class="required">*</span></label>
-                        <input class="col-8" type="text" field="village" >
-                        <div class="invalid-feedback" errors="village"></div>
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="d-flex col-6">
-                        <label class="col-auto">LOT N° : <span class="required">*</span></label>
-                        <input class="col-8" type="text">
-                        <div class="invalid-feedback" ></div>
-                    </div>
-                    <div class="d-flex col-6">
-                        <label class="col-auto">ILOT N° : <span class="required">*</span></label>
-                        <input class="col-8" type="text">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center p-8">
-                    <button type="submit" class="btn btn-primary w-25 waves-effect waves-light">Enregistrer</button>
-                </div>
-            </form>
-
         </div>
 
-        <div class="content-backdrop fade"></div>
     </div>
+    <!-- End Content -->
 {% endblock %}
 
 {% block javascript %}

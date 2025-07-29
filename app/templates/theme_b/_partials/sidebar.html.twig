@@ -37,7 +37,6 @@
                 <a href="javascript:void(0);" class="drop-arrow-none" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-offset="0,22" aria-haspopup="false" aria-expanded="false">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <span class="avatar rounded-circle flex-shrink-0 p-2"><img src="{{ asset('theme_b/assets/img/logos/cnmci.png') }}" alt="img"></span>
                             <div class="ms-2">
                                 <h6 class="fs-14 fw-semibold mb-0">SIGA</h6>
                                 <p class="fs-13 mb-0">Système Intégré de Gestion des artisans</p>
@@ -48,13 +47,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg">
                     <div class="p-2">
-                        <label class="dropdown-item d-flex align-items-center justify-content-between p-1">
-                                    <span class="d-flex align-items-center">
-                                        <span class="me-2"><img src="{{ asset('theme_b/assets/img/icons/clinic-01.svg') }}" alt=""></span>
-                                        <span class="fw-semibold text-dark">Abidjan Nord<small class="d-block text-muted fw-normal fs-13"></small></span>
-                                    </span>
-                            <input class="form-check-input m-0 me-2" type="checkbox">
-                        </label>
                         <label class="dropdown-item d-flex align-items-center justify-content-between p-1">
                                     <span class="d-flex align-items-center">
                                         <span class="me-2"><img src="assets/img/icons/clinic-02.svg" alt=""></span>
@@ -80,39 +72,24 @@
                 </div>
             </div>
             <ul>
-                <li class="menu-title"><span>Tableau de bord</span></li>
+
+                <li class="menu-title"><span></span></li>
                 <li>
                     <ul>
                         <li class="submenu">
-                            <a href="{{ path('app_dashboard') }}">
-                                <i class="ti ti-user-plus"></i><span>CRM</span>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user"></i><span>Tableaux de bord</span>
+                                <span class="menu-arrow"></span>
                             </a>
+                            <ul>
+                                <li><a href="{{ path('app_dashboard') }}">CRM</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Immatriculations</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Identifications</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Cartes</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Transaction</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">BMI</a></li>
+                            </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-user-heart"></i><span>Immatriculations</span>
-                            </a>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-calendar-check"></i><span>Identifications</span>
-                            </a>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-calendar-check"></i><span>Finance</span>
-                            </a>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-calendar-check"></i><span>BMI</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-title"><span>CNMCI</span></li>
-                <li>
-                    <ul>
                         <li>
                             <a href="{{ path('app_artisan_index') }}">
                                 <i class="ti ti-user-plus"></i><span>Identifications</span>
@@ -123,31 +100,106 @@
                                 <i class="ti ti-user-heart"></i><span>Immatriculations</span>
                             </a>
                         </li>
+                        <li class="submenu">
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user"></i><span>Impressions</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ path('app_dashboard') }}">Cartes</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Registres</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user"></i><span>Renouvellements</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ path('app_dashboard') }}">Cartes</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Registres</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user"></i><span>Duplicatas</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ path('app_dashboard') }}">Cartes</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Registres</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Entreprises artisanales</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Maîtres artisans</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Compagnons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Apprentis</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Compagnons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user-plus"></i><span>Activités</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ path('app_artisan_index') }}">
                                 <i class="ti ti-calendar-check"></i><span>Contrôles</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-calendar-check"></i><span>Duplicata</span>
+                            </a>
+                        </li>
                         <li class="submenu">
                             <a href="{{ path('app_artisan_index') }}">
-                                <i class="ti ti-user"></i><span>Impression de cartes</span>
+                                <i class="ti ti-user"></i><span>Utilsateurs</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Entreprise artisanale</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Artisan maître</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Compagon</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Apprenti</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Tous</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Agents terrains</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Agents superviseurs</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Conformités</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Administrateurs</a></li>
                             </ul>
                         </li>
-                    </ul>
-                </li>
-                <li class="menu-title"><span>Comptabilité</span></li>
-                <li>
-                    <ul>
+                        <li class="submenu">
+                            <a href="{{ path('app_artisan_index') }}">
+                                <i class="ti ti-user"></i><span>Rapports</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ path('app_dashboard') }}">Cartes</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Registres</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Paiements</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Remboursements</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Duplicatas</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Livraisons</a></li>
+                            </ul>
+                        </li>
                         <li class="submenu">
                             <a href="javascript:void(0);">
-                                <i class="ti ti-credit-card"></i><span>Transactions Mobile Money</span>
+                                <i class="ti ti-credit-card"></i><span>Paiements</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul>
@@ -157,84 +209,9 @@
                                 <li><a href="{{ path('app_dashboard') }}">Moov</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="income.html">
-                                <i class="ti ti-coins"></i><span>Immatriculations</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="payments.html">
-                                <i class="ti ti-cards"></i><span>Impressions cartes</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="transactions.html">
-                                <i class="ti ti-transition-right"></i><span>Duplicata</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="transactions.html">
-                                <i class="ti ti-transition-right"></i><span>Renouvellements</span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
-                <li class="menu-title"><span>Administration</span></li>
-                <li>
-                    <ul>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-user"></i><span>Utilisateurs</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Roles & Permissions</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-report"></i><span>Codifications</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Immatriculations</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Identifications</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-title"><span>Rapports</span></li>
-                <li>
-                    <ul>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-report"></i><span>Mobile Money</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Orange</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Wave</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Mtn</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Moov</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ path('app_dashboard') }}">
-                                <i class="ti ti-ticket"></i><span>Immatriculations</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('app_dashboard') }}">
-                                <i class="ti ti-speakerphone"></i><span>Impression cartes</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('app_dashboard') }}">
-                                <i class="ti ti-mail-bolt"></i><span>Impression registres</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+
                 <li class="menu-title"><span>Assistance & support</span></li>
                 <li>
                     <ul>
@@ -255,7 +232,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="menu-title"><span>Configuration</span></li>
+                <li class="menu-title"><span>Paramètres</span></li>
                 <li>
                     <ul>
                         <li class="submenu">
@@ -264,35 +241,11 @@
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Profile</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Securité</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Codifications</a></li>
+                                <li><a href="{{ path('app_dashboard') }}">Métiers</a></li>
                                 <li><a href="{{ path('app_dashboard') }}">Notifications</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Integrations</a></li>
                             </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-building-hospital"></i><span>Notifications</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="{{ path('app_dashboard') }}">Immatriculations</a></li>
-                                <li><a href="{{ path('app_dashboard') }}">Identification</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-device-desktop-cog"></i><span>Messages</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="email-settings.html">Emai</a></li>
-                                <li><a href="email-templates-settings.html">Email Templates</a></li>
-                                <li><a href="sms-gateways-settings.html">SMS</a></li>
-                            </ul>
-                        </li>
-
-
                     </ul>
                 </li>
             </ul>

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[ORM\Table(name: '`services`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Service
 {
     #[ORM\Id]

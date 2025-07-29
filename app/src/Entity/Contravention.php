@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`contraventions`')]
 #[UniqueEntity(fields: ['contravention_numero', 'code_paiement_mobile_money'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Contravention
 {
     #[ORM\Id]

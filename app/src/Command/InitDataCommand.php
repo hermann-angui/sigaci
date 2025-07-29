@@ -8,7 +8,7 @@ use App\Entity\Communes;
 use App\Entity\CorpsMetiers;
 use App\Entity\Crm;
 use App\Entity\EquipeAgent;
-use App\Entity\Etablissement;
+use App\Entity\Entreprise;
 use App\Entity\Identification;
 use App\Entity\Immatriculation;
 use App\Entity\MediaObject;
@@ -173,7 +173,7 @@ class InitDataCommand extends Command
 
         $metiers = $this->em->getRepository(Metiers::class)->findAll();
       //  $crms = $this->em->getRepository(Crm::class)->findAll();
-        $etablissements = $this->em->getRepository(Etablissement::class)->findAll();
+        $entreprises = $this->em->getRepository(Entreprise::class)->findAll();
         $medias = $this->em->getRepository(MediaObject::class)->findAll();
         $communes = $this->em->getRepository(Communes::class)->findAll();
         $villes = $this->em->getRepository(Villes::class)->findAll();
@@ -226,9 +226,9 @@ class InitDataCommand extends Command
             $artisan->setNumeroRM(mt_rand());
             $artisan->setPaysNaissance($this->faker->randomElement($pays));
 
-            $etablissement = $this->faker->randomElement($etablissements);
-            $artisan->setEtablissement($etablissement);
-            $artisan->setCrm($etablissement->getCrm());
+            $entreprise = $this->faker->randomElement($entreprises);
+            $artisan->setEntreprise($entreprise);
+            $artisan->setCrm($entreprise->getCrm());
 
             $this->em->persist($artisan);
         }

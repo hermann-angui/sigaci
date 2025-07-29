@@ -7,11 +7,12 @@ use App\Repository\SousPrefectureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 #[ORM\Entity(repositoryClass: SousPrefectureRepository::class)]
 #[ORM\Table(name: '`sous_prefecture`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class SousPrefecture
 {
     #[ORM\Id]
@@ -22,15 +23,8 @@ class SousPrefecture
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Etablissement>
-     */
-    #[ORM\OneToMany(targetEntity: Etablissement::class, mappedBy: 'sousPrefecture')]
-    private Collection $etablissements;
-
     public function __construct()
     {
-        $this->etablissements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,36 +40,6 @@ class SousPrefecture
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): static
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements->add($etablissement);
-            $etablissement->setSousPrefecture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): static
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getSousPrefecture() === $this) {
-                $etablissement->setSousPrefecture(null);
-            }
-        }
 
         return $this;
     }

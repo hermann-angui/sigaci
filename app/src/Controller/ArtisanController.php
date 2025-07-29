@@ -46,8 +46,8 @@ class ArtisanController extends AbstractController
                     return $view;
             }])
             ->add('crm', TextColumn::class, ['label' => 'CRM', 'field' => 'crm.name'])
-            ->add('etablissement', TextColumn::class, ['label' => 'Etablissemnt', 'render' => function($value, $context) {
-                $content = $context->getEtablissement()?$context->getEtablissement()->getSigle(): '';
+            ->add('entreprise', TextColumn::class, ['label' => 'Etablissemnt', 'render' => function($value, $context) {
+                $content = $context->getEntreprise()?$context->getEntreprise()->getSigle(): '';
                 return $content;
             }])
             ->add('statut', TextColumn::class, ['label' => 'Patron', 'render' => function($value, $context) {
@@ -201,8 +201,8 @@ class ArtisanController extends AbstractController
                 'dt' => 'numero_rm',
             ],
 //            [
-//                'db' => 'etablissement_id',
-//                'dt' => 'etablissement_id',
+//                'db' => 'entreprise_id',
+//                'dt' => 'entreprise_id',
 //            ],
 //            [
 //                'db' => 'crm_id',

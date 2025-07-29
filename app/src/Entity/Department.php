@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`departments`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Department
 {
     #[ORM\Id]
@@ -25,14 +25,22 @@ class Department
     private ?string $name = null;
 
     /**
-     * @var Collection<int, Etablissement>
+     * @var Collection<int, Entreprise>
      */
-    #[ORM\OneToMany(targetEntity: Etablissement::class, mappedBy: 'department')]
-    private Collection $etablissements;
+    #[ORM\OneToMany(targetEntity: Entreprise::class, mappedBy: 'department')]
+    private Collection $entreprises;
+
+    /**
+     * @var Collection<int, EntrepriseActivite>
+     */
+    #[ORM\OneToMany(targetEntity: EntrepriseActivite::class, mappedBy: 'department')]
+    private Collection $entrepriseActivites;
+
 
     public function __construct()
     {
-        $this->etablissements = new ArrayCollection();
+        $this->entreprises = new ArrayCollection();
+        $this->entrepriseActivites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,38 +60,68 @@ class Department
         return $this;
     }
 
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
+    public function __toString(): string
     {
-        return $this->etablissements;
+        return $this->getName();
     }
 
-    public function addEtablissement(Etablissement $etablissement): static
+    /**
+     * @return Collection<int, Entreprise>
+     */
+    public function getEntreprises(): Collection
     {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements->add($etablissement);
-            $etablissement->setDepartment($this);
+        return $this->entreprises;
+    }
+
+    public function addEntreprise(Entreprise $entreprise): static
+    {
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises->add($entreprise);
+            $entreprise->setDepartment($this);
         }
 
         return $this;
     }
 
-    public function removeEtablissement(Etablissement $etablissement): static
+    public function removeEntreprise(Entreprise $entreprise): static
     {
-        if ($this->etablissements->removeElement($etablissement)) {
+        if ($this->entreprises->removeElement($entreprise)) {
             // set the owning side to null (unless already changed)
-            if ($etablissement->getDepartment() === $this) {
-                $etablissement->setDepartment(null);
+            if ($entreprise->getDepartment() === $this) {
+                $entreprise->setDepartment(null);
             }
         }
 
         return $this;
     }
 
-    public function __toString(): string
+    /**
+     * @return Collection<int, EntrepriseActivite>
+     */
+    public function getEntrepriseActivites(): Collection
     {
-        return $this->getName();
+        return $this->entrepriseActivites;
+    }
+
+    public function addEntrepriseActivite(EntrepriseActivite $entrepriseActivite): static
+    {
+        if (!$this->entrepriseActivites->contains($entrepriseActivite)) {
+            $this->entrepriseActivites->add($entrepriseActivite);
+            $entrepriseActivite->setDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrepriseActivite(EntrepriseActivite $entrepriseActivite): static
+    {
+        if ($this->entrepriseActivites->removeElement($entrepriseActivite)) {
+            // set the owning side to null (unless already changed)
+            if ($entrepriseActivite->getDepartment() === $this) {
+                $entrepriseActivite->setDepartment(null);
+            }
+        }
+
+        return $this;
     }
 }

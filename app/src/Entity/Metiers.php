@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`metiers`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Metiers
 {
     #[ORM\Id]
@@ -31,21 +31,14 @@ class Metiers
     private ?CorpsMetiers $corpsMetiers = null;
 
     /**
-     * @var Collection<int, Artisan>
+     * @var Collection<int, EntrepriseActivite>
      */
-    #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'activitePrincipale')]
-    private Collection $artisanActvitePrincipales;
-
-    /**
-     * @var Collection<int, Etablissement>
-     */
-    #[ORM\OneToMany(targetEntity: Etablissement::class, mappedBy: 'activitePrincipale')]
-    private Collection $etablissements;
+    #[ORM\OneToMany(targetEntity: EntrepriseActivite::class, mappedBy: 'activite')]
+    private Collection $entrepriseActivites;
 
     public function __construct()
     {
-        $this->artisanActvitePrincipales = new ArrayCollection();
-        $this->etablissements = new ArrayCollection();
+        $this->entrepriseActivites = new ArrayCollection();
     }
 
     public function setId(?int $id): self
@@ -109,69 +102,33 @@ class Metiers
     }
 
     /**
-     * @return Collection<int, Artisan>
+     * @return Collection<int, EntrepriseActivite>
      */
-    public function getArtisanActvitePrincipales(): Collection
+    public function getEntrepriseActivites(): Collection
     {
-        return $this->artisanActvitePrincipales;
+        return $this->entrepriseActivites;
     }
 
-    public function addArtisanActvitePrincipale(Artisan $artisanActvitePrincipale): static
+    public function addEntrepriseActivite(EntrepriseActivite $entrepriseActivite): static
     {
-        if (!$this->artisanActvitePrincipales->contains($artisanActvitePrincipale)) {
-            $this->artisanActvitePrincipales->add($artisanActvitePrincipale);
-            $artisanActvitePrincipale->setActivitePrincipale($this);
+        if (!$this->entrepriseActivites->contains($entrepriseActivite)) {
+            $this->entrepriseActivites->add($entrepriseActivite);
+            $entrepriseActivite->setActivite($this);
         }
 
         return $this;
     }
 
-    public function removeArtisanActvitePrincipale(Artisan $artisanActvitePrincipale): static
+    public function removeEntrepriseActivite(EntrepriseActivite $entrepriseActivite): static
     {
-        if ($this->artisanActvitePrincipales->removeElement($artisanActvitePrincipale)) {
+        if ($this->entrepriseActivites->removeElement($entrepriseActivite)) {
             // set the owning side to null (unless already changed)
-            if ($artisanActvitePrincipale->getActivitePrincipale() === $this) {
-                $artisanActvitePrincipale->setActivitePrincipale(null);
+            if ($entrepriseActivite->getActivite() === $this) {
+                $entrepriseActivite->setActivite(null);
             }
         }
 
         return $this;
     }
-
-    public function __toString(): string
-    {
-        return $this->getName();
-    }
-
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): static
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements->add($etablissement);
-            $etablissement->setActivitePrincipale($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): static
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getActivitePrincipale() === $this) {
-                $etablissement->setActivitePrincipale(null);
-            }
-        }
-
-        return $this;
-    }
-
 
 }

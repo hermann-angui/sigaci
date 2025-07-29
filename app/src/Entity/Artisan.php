@@ -4,187 +4,251 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\ArtisanRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ArtisanRepository::class)]
 #[ORM\Table(name: '`artisans`')]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource()]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put()
+//        new GetCollection(
+//            uriTemplate: '/artisans/immatriculation',
+//            output: ArtisanDto::class,
+//            name: 'immatriculation_artisans',
+//            provider: ArtisanDtoStateProvider::class
+//        ),
+    ],
+    normalizationContext: ['groups' => ['artisan:read']],
+    denormalizationContext: ['groups' => ['artisan:create', 'artisan:delete', 'artisan:update']],
+)]
 class Artisan
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups(['artisan:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photo = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $nom;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $sexe;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $prenoms;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $dateNaissance;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $lieuNaissance;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $domicile;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $quartier;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $typePieceIdentite;
 
     #[ORM\Column(length: 255,unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroPieceIdentite;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photoPieceIdentiteRecto;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photoPieceIdentiteVerso;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $lieuDelivrancePieceIdentite;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $dateDelivrancePieceIdentite;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $autoriteDelivrancePieceIdentite;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $etatCivil;
 
-
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $activiteExerceeLieu;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $dateDebutActivite;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $dateDebutActivitePro;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $telephone;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $whatsapp;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $codePostal;
 
     #[ORM\Column(length: 255,unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $cnps;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroRM;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroCarteProfessionnelle;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $nomConjoint;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $prenomsConjoint;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $nomUrgence;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $prenomsUrgence;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $telephoneUrgence;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationNiveauEtude;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationClasseEtude;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationDiplomeObtenu;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationApprentissageMetier;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationApprentissageMetierNiveau;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $formationApprentissageMetierDiplome;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroPermisConduire;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photoPermisVerso;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photoPermisRecto;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $latitude;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $longitude;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $created_at;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?DateTimeInterface $modified_at;
 
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[ORM\ManyToOne]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?Crm $crm = null;
-
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
-    private ?Etablissement $etablissement = null;
 
     #[ORM\OneToOne(targetEntity: self::class)]
     private ?self $patron = null;
 
-
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[ORM\ManyToOne]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?CategoryArtisan $categoryArtisan = null;
 
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[ORM\ManyToOne]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?Villes $villeNaissance = null;
 
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[ORM\ManyToOne]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?Pays $paysNaissance = null;
 
-    #[ORM\ManyToOne(inversedBy: 'artisans')]
+    #[ORM\ManyToOne]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?Pays $nationalite = null;
 
     #[ORM\OneToOne()]
@@ -199,8 +263,14 @@ class Artisan
     #[ORM\ManyToOne]
     private ?Metiers $activiteExercee = null;
 
-    #[ORM\ManyToOne(inversedBy: 'artisanActvitePrincipales')]
+    #[ORM\ManyToOne]
     private ?Metiers $activitePrincipale = null;
+
+    #[ORM\ManyToOne(inversedBy: 'employees')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\ManyToOne(inversedBy: 'e�mployees')]
+    private ?EntrepriseActivite $entrepriseActivite = null;
 
     public function __construct()
     {
@@ -234,14 +304,14 @@ class Artisan
         return $this;
     }
 
-    public function getEtablissement(): ?Etablissement
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->etablissement;
+        return $this->entreprise;
     }
 
-    public function setEtablissement(?Etablissement $etablissement): self
+    public function setEntreprise(?Entreprise $entreprise): self
     {
-        $this->etablissement = $etablissement;
+        $this->entreprise = $entreprise;
         return $this;
     }
 
@@ -508,8 +578,6 @@ class Artisan
         $this->etatCivil = $etatCivil;
         return $this;
     }
-
-
 
     /**
      * @return string|null
@@ -1141,5 +1209,16 @@ class Artisan
         return $this;
     }
 
+    public function getEntrepriseActivite(): ?EntrepriseActivite
+    {
+        return $this->entrepriseActivite;
+    }
+
+    public function setEntrepriseActivite(?EntrepriseActivite $entrepriseActivite): static
+    {
+        $this->entrepriseActivite = $entrepriseActivite;
+
+        return $this;
+    }
 
 }

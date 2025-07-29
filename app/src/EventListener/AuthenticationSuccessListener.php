@@ -25,20 +25,16 @@ class AuthenticationSuccessListener
         }
 
         $user = $this->userRepository->find($user->getId());
-        // $host = $this->requestStack->getCurrentRequest()->getHost();
         $schemeAndHttpPost = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
 
-        $extra = array(
-            'id' => $user->getId(),
-            'nom' => $user->getNom(),
-            'prenoms' => $user->getNom(),
-            'photo' => $user->getPhoto() ? $schemeAndHttpPost . '/media/' . $user->getPhoto()->getFilePath() : null,
-            'is_active' => $user->getIsActive(),
-            'sexe' => $user->getSexe(),
-            'roles' => $user->getRoles(),
-        );
+//      $data['id'] = $user->getId();
+//      $data['nom'] = $user->getNom();
+//      $data['prenoms'] = $user->getNom();
+//      $data['photo'] = $user->getPhoto() ? $schemeAndHttpPost . '/media/' . $user->getPhoto()->getFilePath() : null;
+//      $data['is_active'] = $user->getIsActive();
+//      $data['sexe'] = $user->getSexe();
+//      $data['roles'] = $user->getRoles();
 
-        $data = array_merge($data, $extra);
         $event->setData($data);
     }
 }

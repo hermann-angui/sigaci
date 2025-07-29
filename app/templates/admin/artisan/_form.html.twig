@@ -123,12 +123,11 @@
                         {{ form_row(form.IdDeliveryPlace) }}
                     </div>
                     <div class="col-md-3">
-                        {{ form_row(form.drivingLicenseNumber) }}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="artisan_registration_photoPieceFront" class="form-label">Copie scannée de la pièce (recto)
+{#                        <label for="artisan_registration_photoPieceFront" class="form-label">Copie scannée de la pièce (recto)
                             {% if artisan.photoPieceFront %}
                                 <div class="image-upload-container">
                                     <img id="artisan_registration_photoPieceFrontPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPieceFront|image_path }}" alt="" width="80%" style="width:80%;">
@@ -144,10 +143,10 @@
                                     {{ form_widget(form.photoPieceFront, {'attr': {'class': 'visually-hidden'}}) }}
                                 </div>
                             {% endif %}
-                        </label>
+                        </label>#}
                     </div>
                     <div class="col-md-6">
-                        <label for="artisan_registration_photoPieceBack" class="form-label">Copie scannée de la pièce (verso)
+         {#               <label for="artisan_registration_photoPieceBack" class="form-label">Copie scannée de la pièce (verso)
                             {% if artisan.photoPieceBack %}
                                 <div class="image-upload-container">
                                     <img id="artisan_registration_photoPieceBackPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPieceBack|image_path }}" alt="" width="80%" style="width:80%;">
@@ -163,11 +162,12 @@
                                     {{ form_widget(form.photoPieceBack, {'attr': {'class': 'visually-hidden'}}) }}
                                 </div>
                             {% endif %}
-                        </label>
+                        </label>#}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
+{#
                         <label for="artisan_registration_photoPermisFront" class="form-label">Copie scannée du permis (recto)
                             {% if artisan.photoPermisFront %}
                                 <div class="image-upload-container">
@@ -185,10 +185,11 @@
                                 </div>
                             {% endif %}
                         </label>
+#}
 
                     </div>
                     <div class="col-md-6">
-                        <label for="artisan_registration_photoPermisBack" class="form-label">Copie scannée du permis (verso)
+                        {#<label for="artisan_registration_photoPermisBack" class="form-label">Copie scannée du permis (verso)
                             {% if artisan.photoPermisBack %}
                                 <div class="image-upload-container">
                                     <img id="artisan_registration_photoPermisBackPreview" src="/artisans/{{ artisan.reference }}/{{ artisan.photoPermisBack }}" alt="" width="100" style="width:80%">
@@ -204,7 +205,7 @@
                                     {{ form_widget(form.photoPermisBack, {'attr': {'class': 'visually-hidden'}}) }}
                                 </div>
                             {% endif %}
-                        </label>
+                        </label>#}
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`villes`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Villes
 {
     #[ORM\Id]
@@ -25,21 +25,14 @@ class Villes
     private ?string $name = null;
 
     /**
-     * @var Collection<int, Artisan>
+     * @var Collection<int, Entreprise>
      */
-    #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'villeNaissance')]
-    private Collection $artisans;
-
-    /**
-     * @var Collection<int, Etablissement>
-     */
-    #[ORM\OneToMany(targetEntity: Etablissement::class, mappedBy: 'ville')]
-    private Collection $etablissements;
+    #[ORM\OneToMany(targetEntity: Entreprise::class, mappedBy: 'ville')]
+    private Collection $entreprises;
 
     public function __construct()
     {
-        $this->artisans = new ArrayCollection();
-        $this->etablissements = new ArrayCollection();
+        $this->entreprises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,68 +52,38 @@ class Villes
         return $this;
     }
 
-    /**
-     * @return Collection<int, Artisan>
-     */
-    public function getArtisans(): Collection
-    {
-        return $this->artisans;
-    }
-
-    public function addArtisan(Artisan $artisan): static
-    {
-        if (!$this->artisans->contains($artisan)) {
-            $this->artisans->add($artisan);
-            $artisan->setVilleNaissance($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArtisan(Artisan $artisan): static
-    {
-        if ($this->artisans->removeElement($artisan)) {
-            // set the owning side to null (unless already changed)
-            if ($artisan->getVilleNaissance() === $this) {
-                $artisan->setVilleNaissance(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): static
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements->add($etablissement);
-            $etablissement->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): static
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getVille() === $this) {
-                $etablissement->setVille(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, Entreprise>
+     */
+    public function getEntreprises(): Collection
+    {
+        return $this->entreprises;
+    }
+
+    public function addEntreprise(Entreprise $entreprise): static
+    {
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises->add($entreprise);
+            $entreprise->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprise $entreprise): static
+    {
+        if ($this->entreprises->removeElement($entreprise)) {
+            // set the owning side to null (unless already changed)
+            if ($entreprise->getVille() === $this) {
+                $entreprise->setVille(null);
+            }
+        }
+
+        return $this;
     }
 }

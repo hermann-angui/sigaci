@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Artisan;
+use App\Entity\CategoryArtisan;
 use App\Entity\Crm;
 use App\Entity\MediaObject;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -951,40 +952,32 @@ class ArtisanFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $photos = [];
-        $crms = [];
-
         $this->faker = Factory::create();
 
+        $photos = $manager->getRepository(MediaObject::class)->findAll();
         $mediaObjects = $manager->getRepository(MediaObject::class)->findAll();
-        foreach ($mediaObjects as $photoArtisan) {
-            $photos[] = $photoArtisan;
-        }
-
-        $crmObjects = $manager->getRepository(Crm::class)->findAll();
-        foreach ($crmObjects as $crm) {
-            $crms[] = $crm;
-        }
+        $crms = $manager->getRepository(Crm::class)->findAll();
+        $categoryArtisan = $manager->getRepository(CategoryArtisan::class)->findAll();
 
         for ($i = 0; $i < 2; $i++) {
             $artisan = new Artisan();
-            $artisan->setPhoto('/artisans/' . $this->faker->randomElement($photos));
+            $artisan->setPhoto($this->faker->randomElement($photos));
             $artisan->setNom($this->faker->lastName());
             $artisan->setPrenoms($this->faker->firstName);
             $artisan->setPrenoms($this->faker->randomElement(self::$sexe));
             $artisan->setEmail($this->faker->email);
-            $artisan->setCategory($this->faker->word);
+            $artisan->setCategoryArtisan($this->faker->randomElement($categoryArtisan));
             $artisan->setDomicile($this->faker->randomElement(self::$communes));
             $artisan->setEtatCivil($this->faker->randomElement(self::$maritalStatus));
 
             $artisan->setDateNaissance(new \DateTime($this->faker->date('Y-m-d')));
-            $artisan->setDrivingLicenseNumber(new \DateTime($this->faker->date('Y-m-d')));
+            $artisan->setNumeroPermisConduire($this->faker->randomNumber());
             $artisan->setDateNaissance(new \DateTime($this->faker->date('Y-m-d')));
 
-            $artisan->setActiviteExercee($this->faker->word);
+            $artisan->setActiviteExercee($this->faker->randomElement(self::$metiers));
             $artisan->setActiviteExerceeLieu($this->faker->city());
-            $artisan->setActivitePrincipale($this->faker->name);
-            $artisan->setActiviteSecondaire($this->faker->name);
+            $artisan->setActivitePrincipale($this->faker->randomElement(self::$metiers));
+            $artisan->setActiviteSecondaire($this->faker->randomElement(self::$metiers));
 
             $artisan->setNumeroPieceIdentite($this->faker->randomNumber(10));
             $artisan->setAutoriteDelivrancePieceIdentite('ONECI');
@@ -1001,7 +994,7 @@ class ArtisanFixtures extends Fixture
             $artisan->setFormationApprentissageMetierNiveau($this->faker->numberBetween(0,3));
             $artisan->setFormationApprentissageMetierDiplome($this->faker->word);
 
-            $artisan->setNationalite($this->faker->randomElement(self::$nationalites));
+            $artisan->setNationalite($this->faker->randomElement(self::$pays));
             $artisan->setNumeroRM($this->faker->randomNumber(10));
             $artisan->setPaysNaissance($this->faker->randomElement(self::$pays));
 

@@ -2,11 +2,13 @@ api_platform:
     title: Documentation API SIGA - Système intégré de Gestion des Artisans de Côte d'Ivoire
     version: 1.0.0
     defaults:
+        pagination_enabled: false
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         normalization_context:
             skip_null_values: false
+    show_webby: false
     formats:
         json: ["application/json"]
         jsonld: ["application/ld+json"]

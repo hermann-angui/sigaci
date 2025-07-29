@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BranchMetierRepository::class)]
 #[ORM\Table(name: '`branche_metiers`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class BrancheMetier
 {
     #[ORM\Id]
@@ -21,6 +21,9 @@ class BrancheMetier
 
     #[ORM\Column(type: "string", length: 255)]
     private string $name;
+
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
 
     #[ORM\Column(type: "string", length: 500, nullable: true)]
     private ?string $description;
@@ -115,4 +118,24 @@ class BrancheMetier
     {
         return $this->getName();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     * @return BrancheMetier
+     */
+    public function setCode(?string $code): BrancheMetier
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

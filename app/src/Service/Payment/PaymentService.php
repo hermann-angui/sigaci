@@ -4,7 +4,6 @@ namespace App\Service\Payment;
 
 use App\Entity\Artisan;
 use App\Entity\Contravention;
-use App\Entity\Enrolement;
 use App\Entity\Payment;
 use App\Entity\User;
 use App\Helper\ArtisanAssetHelper;

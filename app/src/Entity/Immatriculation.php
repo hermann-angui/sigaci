@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: ImmatriculationRepository::class)]
 #[ORM\Table(name: '`immatriculations`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Immatriculation
 {
     #[ORM\Id]
@@ -54,13 +54,6 @@ class Immatriculation
 
     #[ORM\ManyToOne(inversedBy: 'immatriculations')]
     private ?User $agent = null;
-
-
-    #[ORM\OneToOne]
-    private ?Identification $identification = null;
-
-    #[ORM\OneToOne]
-    private ?Artisan $artisan = null;
 
     public function __construct()
     {
@@ -157,24 +150,6 @@ class Immatriculation
     }
 
     /**
-     * @return Artisan|null
-     */
-    public function getArtisan(): ?Artisan
-    {
-        return $this->artisan;
-    }
-
-    /**
-     * @param Artisan|null $artisan
-     * @return Immatriculation
-     */
-    public function setArtisan(?Artisan $artisan): Immatriculation
-    {
-        $this->artisan = $artisan;
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getCode(): ?string
@@ -189,24 +164,6 @@ class Immatriculation
     public function setCode(?string $code): Immatriculation
     {
         $this->code = $code;
-        return $this;
-    }
-
-    /**
-     * @return Identification|null
-     */
-    public function getIdentification(): ?Identification
-    {
-        return $this->identification;
-    }
-
-    /**
-     * @param Identification|null $identification
-     * @return Immatriculation
-     */
-    public function setIdentification(?Identification $identification): Immatriculation
-    {
-        $this->identification = $identification;
         return $this;
     }
 
@@ -263,6 +220,5 @@ class Immatriculation
         $this->reference = $reference;
         return $this;
     }
-
 
 }

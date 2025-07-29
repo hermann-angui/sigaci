@@ -52,9 +52,6 @@ class Identification
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?User $agent = null;
 
-    #[ORM\OneToOne]
-    private ?Artisan $artisan = null;
-
     public function __construct()
     {
         $this->internal_code = Uuid::v4()->toRfc4122();
@@ -116,8 +113,6 @@ class Identification
         $this->modified_at = $modified_at;
     }
 
-
-
     public function getType(): ?string
     {
         return $this->type;
@@ -156,18 +151,6 @@ class Identification
     public function setAgent(?User $agent): self
     {
         $this->agent = $agent;
-
-        return $this;
-    }
-
-    public function getArtisan(): ?Artisan
-    {
-        return $this->artisan;
-    }
-
-    public function setArtisan(?Artisan $artisan): self
-    {
-        $this->artisan = $artisan;
 
         return $this;
     }

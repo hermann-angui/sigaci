@@ -46,7 +46,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ],
     outputFormats: ['jsonld' => ['application/ld+json']],
-    normalizationContext: ['groups' => ['media_object:read','user:read']]
+    normalizationContext: ['groups' => ['media_object:read','user:read', 'artisan']],
+    denormalizationContext: ['groups' => ['media_object:create','media_object:update', 'artisan:create', 'artisan:update']]
 )]
 #[Post(processor: MediaObjectProcessor::class)]
 class MediaObject
@@ -65,7 +66,7 @@ class MediaObject
 
     #[ApiProperty(writable: false)]
     #[ORM\Column(nullable: true)]
-    #[Groups(['media_object:read', 'user:read'])]
+    #[Groups(['media_object:read', 'user:read', 'artisan:read', 'artisan:create', 'artisan:update'])]
     public ?string $filePath = null;
 
     #[ORM\Column(nullable: true)]

@@ -7,20 +7,26 @@ use App\Repository\CategoryArtisanRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryArtisanRepository::class)]
 #[ORM\Table(name: '`category_artisans`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['artisan:read', 'categoryartisan:read']],
+    denormalizationContext: ['groups' => ['artisan:create', 'categoryartisan:create', 'categoryartisan:delete', 'categoryartisan:update']]
+)]
 class CategoryArtisan
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['artisan:read', 'categoryartisan:read', 'categoryartisan:update', 'categoryartisan:delete'])]
     private ?int $id = null;
 
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['artisan:read', 'categoryartisan:read', 'categoryartisan:update', 'categoryartisan:delete'])]
     private ?string $name = null;
 
     /**

@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Artisan;
 use App\Entity\CategoryArtisan;
 use App\Entity\Crm;
-use App\Entity\Etablissement;
+use App\Entity\Entreprise;
 use App\Entity\MediaObject;
 use App\Entity\Metiers;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -178,9 +178,22 @@ class ArtisanCompagnonType extends AbstractType
             ->add('formationApprentissageMetier')
             ->add('formationApprentissageMetierNiveau')
             ->add('formationApprentissageMetierDiplome')
-            ->add('drivingLicenseNumber')
-            ->add('drivingLicensePhotoFront')
-            ->add('drivingLicensePhotoBack')
+            ->add('photoPermisVerso', EntityType::class, [
+                'class' => MediaObject::class,
+                'choice_label' => 'id',
+            ])
+            ->add('photoPermisRecto', EntityType::class, [
+                'class' => MediaObject::class,
+                'choice_label' => 'id',
+            ])
+            ->add('photoPieceIdentiteRecto', EntityType::class, [
+                'class' => MediaObject::class,
+                'choice_label' => 'id',
+            ])
+            ->add('photoPieceIdentiteVerso', EntityType::class, [
+                'class' => MediaObject::class,
+                'choice_label' => 'id',
+            ])
             ->add('latitude')
             ->add('longitude')
             ->add('categoryArtisan', EntityType::class, [
@@ -195,8 +208,8 @@ class ArtisanCompagnonType extends AbstractType
                 'class' => Crm::class,
                 'choice_label' => 'name',
             ])
-            ->add('etablissement', EntityType::class, [
-                'class' => Etablissement::class,
+            ->add('entreprise', EntityType::class, [
+                'class' => Entreprise::class,
                 'choice_label' => 'id',
             ])
             ->add('patron', EntityType::class, [

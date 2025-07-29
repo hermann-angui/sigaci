@@ -30,7 +30,13 @@ services:
     App\EventSubscriber\IdentificationSubscriber:
         tags: ['kernel.event_subscriber']
 
+    App\OpenApi\OpenApiFactory:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@App\OpenApi\OpenApiFactory.inner', '@security.helper']
+        public: false
 
+    App\Serializer\MultipartDecoder:
+        tags: ['serializer.encoder']
 
 #    gesdinet.jwtrefreshtoken.refresh_token_manager:
 #        class: Gesdinet\JWTRefreshTokenBundle\Doctrine\RefreshTokenManager

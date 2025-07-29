@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ asset('theme_b/assets/plugins/select2/css/select2.min.css') }}">
     <!-- Datatable CSS -->
     <link rel="stylesheet" href="{{ asset('theme_b/assets/css/dataTables.bootstrap5.min.css') }}">
+{#    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">#}
+{#    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.4/css/fixedColumns.dataTables.css">#}
+{#    <link rel="stylesheet" href="https://cdn.datatables.net/select/3.0.1/css/select.dataTables.css">#}
+
 
 {% endblock %}
 
@@ -34,11 +38,11 @@
                     </ul>
                 </div>
                 <div class="bg-white border shadow-sm rounded px-1 pb-0 text-center d-flex align-items-center justify-content-center">
-                    <a href="patients.html" class="bg-light rounded p-1 d-flex align-items-center justify-content-center"> <i class="ti ti-list fs-14 text-dark"></i></a>
-                    <a href="patients-grid.html" class="bg-white rounded p-1 d-flex align-items-center justify-content-center"> <i class="ti ti-layout-grid fs-14 text-body"></i> </a>
+                    <a href="" class="bg-light rounded p-1 d-flex align-items-center justify-content-center"> <i class="ti ti-list fs-14 text-dark"></i></a>
+                    <a href="" class="bg-white rounded p-1 d-flex align-items-center justify-content-center"> <i class="ti ti-layout-grid fs-14 text-body"></i> </a>
                 </div>
 
-                <a href="create-patient.html" class="btn btn-primary ms-2 fs-13 btn-md"><i class="ti ti-plus me-1"></i></a>
+                <a href="{{ path('app_artisan_new') }}" class="btn btn-primary ms-2 fs-13 btn-md"><i class="ti ti-plus me-1"></i></a>
             </div>
         </div>
         <!-- End Page Header -->
@@ -436,6 +440,13 @@
 
 {% block javascript %}
     <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+{#    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>#}
+{#    <script src="https://cdn.datatables.net/fixedcolumns/5.0.4/js/dataTables.fixedColumns.js"></script>#}
+{#    <script src="https://cdn.datatables.net/fixedcolumns/5.0.4/js/fixedColumns.dataTables.js"></script>#}
+{#    <script src="https://cdn.datatables.net/select/3.0.1/js/dataTables.select.js"></script>#}
+{#
+    <script src="https://cdn.datatables.net/select/3.0.1/js/select.dataTables.js"></script>
+#}
     <script>
          jQuery(document).ready(function ($) {
            var datatable = null;
@@ -444,6 +455,13 @@
                     "bFilter": true,
                     "sDom": 'fBtlpi',
                     "ordering": false,
+                    "columnDefs": [
+                        {
+                            orderable: false,
+                            render: DataTable.render.select(),
+                            targets: 0
+                        }
+                    ],
                     "language": {
                         search: ' ',
                         sLengthMenu: '_MENU_',
@@ -455,6 +473,10 @@
                             previous: '<i class="ti ti-arrow-left"></i> '
                         },
                     },
+                    // "select": {
+                    //     style: 'os',
+                    //     selector: 'td:first-child'
+                    // },
                     // "scrollX": true,         // Enable horizontal scrolling
                     // "scrollCollapse": true,  // Adjust table size when the scroll is used
                     "responsive": true,

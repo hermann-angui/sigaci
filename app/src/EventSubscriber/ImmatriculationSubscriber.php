@@ -23,7 +23,6 @@ class ImmatriculationSubscriber implements EventSubscriberInterface
             KernelEvents::VIEW => ['postPersist', EventPriorities::POST_WRITE],
         ];
     }
-   // public function postPersist(LifecycleEventArgs $args): void
     public function postPersist(ViewEvent $event): void
     {
        // $entity = $args->getObject();

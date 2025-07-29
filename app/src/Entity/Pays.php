@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: '`pays`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Pays
 {
     #[ORM\Id]
@@ -24,22 +24,8 @@ class Pays
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Artisan>
-     */
-    #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'paysNaissance')]
-    private Collection $artisans;
-
-    /**
-     * @var Collection<int, Etablissement>
-     */
-    #[ORM\OneToMany(targetEntity: Etablissement::class, mappedBy: 'pays')]
-    private Collection $etablissements;
-
     public function __construct()
     {
-        $this->artisans = new ArrayCollection();
-        $this->etablissements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -64,63 +50,4 @@ class Pays
         return $this;
     }
 
-    /**
-     * @return Collection<int, Artisan>
-     */
-    public function getArtisans(): Collection
-    {
-        return $this->artisans;
-    }
-
-    public function addArtisan(Artisan $artisan): static
-    {
-        if (!$this->artisans->contains($artisan)) {
-            $this->artisans->add($artisan);
-            $artisan->setPaysNaissance($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArtisan(Artisan $artisan): static
-    {
-        if ($this->artisans->removeElement($artisan)) {
-            // set the owning side to null (unless already changed)
-            if ($artisan->getPaysNaissance() === $this) {
-                $artisan->setPaysNaissance(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): static
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements->add($etablissement);
-            $etablissement->setPays($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): static
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getPays() === $this) {
-                $etablissement->setPays(null);
-            }
-        }
-
-        return $this;
-    }
 }

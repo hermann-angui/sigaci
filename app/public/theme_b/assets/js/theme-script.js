@@ -1,3 +1,5 @@
+
+
 ! function() {
     var t = sessionStorage.getItem("__THEME_CONFIG__"),
         e = document.getElementsByTagName("html")[0],
@@ -177,14 +179,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
     </div>
 	<div class="sidebar-themesettings offcanvas offcanvas-end" tabindex="-1" id="theme-settings-offcanvas">
         <div class="d-flex align-items-center gap-2 px-3 py-3 offcanvas-header border-bottom bg-primary">
-            <h5 class="flex-grow-1 mb-0">Theme Customizer</h5>
+            <h5 class="flex-grow-1 mb-0">Personnaliser l'interface</h5>
 
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <div class="offcanvas-body h-100" data-simplebar>
-			
-            <div class="accordion accordion-bordered">  
+
+            <div class="accordion accordion-bordered">
 
 				<div class="accordion-item">
                     <h2 class="accordion-header">
@@ -215,11 +217,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
 						</div>
 					</div>
 				</div>
-                
+
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold fs-16" type="button" data-bs-toggle="collapse" data-bs-target="#layoutsetting" aria-expanded="true" aria-controls="collapsecustomicon1One">
-                            Select Layouts
+                            Disposition
                         </button>
                     </h2>
                     <div id="layoutsetting" class="accordion-collapse collapse show">
@@ -232,9 +234,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                             <label for="defaultLayout">
                                                 <span class="d-block mb-2 layout-img">
                                                     <span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
-                                                    <img src="assets/img/theme/default.svg" alt="img">
-                                                </span>                                     
-                                                <span class="layout-type">Default</span>
+                                                    <img src="theme_b/assets/img/theme/default.svg" alt="img">
+                                                </span>
+                                                <span class="layout-type">Defaut</span>
                                             </label>
                                         </div>
                                     </div>
@@ -244,8 +246,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                             <label for="miniLayout">
                                                 <span class="d-block mb-2 layout-img">
                                                 <span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
-                                                    <img src="assets/img/theme/mini.svg" alt="img">
-                                                </span>                                    
+                                                    <img src="theme_b/assets/img/theme/mini.svg" alt="img">
+                                                </span>
                                                 <span class="layout-type">Mini</span>
                                             </label>
                                         </div>
@@ -256,8 +258,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                             <label for="hoverviewLayout">
                                                 <span class="d-block mb-2 layout-img">
                                                 <span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
-                                                    <img src="assets/img/theme/mini.svg" alt="img">
-                                                </span>                                    
+                                                    <img src="theme_b/assets/img/theme/mini.svg" alt="img">
+                                                </span>
                                                 <span class="layout-type">Hover View</span>
                                             </label>
                                         </div>
@@ -268,9 +270,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                             <label for="hiddenLayout">
                                                 <span class="d-block mb-2 layout-img">
                                                 <span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
-                                                    <img src="assets/img/theme/full-width.svg" alt="img">
-                                                </span>                                    
-                                                <span class="layout-type">Hidden</span>
+                                                    <img src="theme_b/assets/img/theme/full-width.svg" alt="img">
+                                                </span>
+                                                <span class="layout-type">Caché</span>
                                             </label>
                                         </div>
                                     </div>
@@ -280,9 +282,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                             <label for="full-widthLayout">
                                                 <span class="d-block mb-2 layout-img">
                                                 <span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
-                                                    <img src="assets/img/theme/full-width.svg" alt="img">
-                                                </span>                                    
-                                                <span class="layout-type">Full Width</span>
+                                                    <img src="theme_b/assets/img/theme/full-width.svg" alt="img">
+                                                </span>
+                                                <span class="layout-type">Large</span>
                                             </label>
                                         </div>
                                     </div>
@@ -290,17 +292,17 @@ document.addEventListener("DOMContentLoaded", function(e) {
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold fs-16" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarcolorsetting" aria-expanded="true">
-                            Sidebar Color
+                            Barre de gauche
                         </button>
                     </h2>
                     <div id="sidebarcolorsetting" class="accordion-collapse collapse show">
                         <div class="accordion-body">
                         	<div class="theme-content">
-								<h6 class="fs-14 fw-medium mb-2">Solid Colors</h6>
+								<h6 class="fs-14 fw-medium mb-2">Couleurs</h6>
 								<div class="d-flex align-items-center flex-wrap mb-1">
 									<div class="theme-colorselect m-1 me-2">
 										<input type="radio" name="data-sidebar" id="lightSidebar" value="light" checked>
@@ -337,15 +339,15 @@ document.addEventListener("DOMContentLoaded", function(e) {
 										<label for="sidebar6Sidebar" class="d-block rounded bg-info mb-2">
 											<span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
 										</label>
-									</div>    
+									</div>
 									<div class="theme-colorselect m-1 me-2">
 										<input type="radio" name="data-sidebar" id="sidebar7Sidebar" value="sidebar7">
 										<label for="sidebar7Sidebar" class="d-block rounded bg-indigo mb-2">
 											<span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
 										</label>
-									</div>      
+									</div>
 								</div>
-								<h6 class="fs-14 fw-medium mb-2">Gradient Colors</h6>
+								<h6 class="fs-14 fw-medium mb-2">Gradient de couleurs</h6>
 								<div class="d-flex align-items-center flex-wrap">
 									<div class="theme-colorselect m-1 me-2">
 										<input type="radio" name="data-sidebar" id="gradientsidebar1Sidebar" value="gradientsidebar1">
@@ -382,29 +384,29 @@ document.addEventListener("DOMContentLoaded", function(e) {
 										<label for="gradientsidebar6Sidebar" class="d-block rounded bg-orange-gradient">
 											<span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
 										</label>
-									</div>    
+									</div>
 									<div class="theme-colorselect m-1">
 										<input type="radio" name="data-sidebar" id="gradientsidebar7Sidebar" value="gradientsidebar7">
 										<label for="gradientsidebar7Sidebar" class="d-block rounded bg-info-gradient">
 											<span class="theme-check rounded-circle"><i class="ti ti-check"></i></span>
 										</label>
-									</div>    
+									</div>
 								</div>
 							</div>
                         </div>
                     </div>
-                </div>   
+                </div>
 
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold fs-16" type="button" data-bs-toggle="collapse" data-bs-target="#colorsetting" aria-expanded="true">
-                            Top Bar Color
+                            Entêtes
                         </button>
                     </h2>
                     <div id="colorsetting" class="accordion-collapse collapse show">
                         <div class="accordion-body pb-1">
                             <div class="theme-content">
-                                <h6 class="fs-14 fw-medium mb-2">Solid Colors</h6>
+                                <h6 class="fs-14 fw-medium mb-2">Couleur</h6>
                                 <div class="d-flex align-items-center flex-wrap topbar-background mb-1">
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="whiteTopbar" value="white" checked>
@@ -427,17 +429,17 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="topbar4Topbar" value="topbar4">
                                         <label for="topbar4Topbar" class="bg-secondary"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div>                   
+                                    </div>
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="topbar5Topbar" value="topbar5">
                                         <label for="topbar5Topbar" class="bg-info"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div>                   
+                                    </div>
                                     <div class="theme-colorselect mb-3">
                                         <input type="radio" name="data-topbar" id="topbar6Topbar" value="topbar6">
                                         <label for="topbar6Topbar" class="bg-indigo"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div> 
+                                    </div>
                                 </div>
-                                <h6 class="fs-14 fw-medium mb-2">Gradient Colors</h6>
+                                <h6 class="fs-14 fw-medium mb-2">Gradients</h6>
                                 <div class="d-flex align-items-center flex-wrap topbar-background">
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="gradienttopbar1Topbar" value="gradienttopbar1">
@@ -460,21 +462,21 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="gradienttopbar5Topbar" value="gradienttopbar5">
                                         <label for="gradienttopbar5Topbar" class="bg-purple-gradient"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div>                   
+                                    </div>
                                     <div class="theme-colorselect mb-3 me-3">
                                         <input type="radio" name="data-topbar" id="gradienttopbar6Topbar" value="gradienttopbar6">
                                         <label for="gradienttopbar6Topbar" class="bg-orange-gradient"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div>                    
+                                    </div>
                                     <div class="theme-colorselect mb-3 me-0">
                                         <input type="radio" name="data-topbar" id="gradienttopbar7Topbar" value="gradienttopbar7">
                                         <label for="gradienttopbar7Topbar" class="bg-info-gradient"><span class="theme-check rounded-circle"><i class="ti ti-check"></i></span></label>
-                                    </div>                 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>    
-                
+                </div>
+
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold fs-16" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarcolor" aria-expanded="true">
@@ -492,7 +494,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                     <div class="theme-colorsset me-2 mb-2">
                                         <input type="radio" name="data-color" id="secondaryColor" value="secondary">
                                         <label for="secondaryColor" class="secondary-clr"></label>
-                                    </div>  
+                                    </div>
                                     <div class="theme-colorsset me-2 mb-2">
                                         <input type="radio" name="data-color" id="orangeColor" value="orange">
                                         <label for="orangeColor" class="orange-clr"></label>
@@ -500,7 +502,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                                     <div class="theme-colorsset me-2 mb-2">
                                         <input type="radio" name="data-color" id="tealColor" value="teal">
                                         <label for="tealColor" class="teal-clr"></label>
-                                    </div>  
+                                    </div>
                                     <div class="theme-colorsset me-2 mb-2">
                                         <input type="radio" name="data-color" id="purpleColor" value="purple">
                                         <label for="purpleColor" class="purple-clr"></label>
@@ -517,14 +519,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
 
         </div>
 
         <div class="d-flex align-items-center gap-2 px-3 py-2 offcanvas-header border-top">
-            <button type="button" class="btn w-50 btn-light" id="reset-layout"><i class="ti ti-restore me-1"></i>Reset</button>
-            <button type="button" class="btn w-50 btn-primary">Buy Product</button>
+            <button type="button" class="btn w-50 btn-light" id="reset-layout"><i class="ti ti-restore me-1"></i>Réinitialiser</button>
         </div>
 
     </div>`

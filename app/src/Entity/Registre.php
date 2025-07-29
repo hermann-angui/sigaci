@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: RegistreRepository::class)]
 #[ORM\Table(name: '`registres`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Registre
 {
     #[ORM\Id]
@@ -33,8 +33,12 @@ class Registre
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image_recto = null;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private ?bool $statut = false;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $statut = null;             // PENDING, P
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $type = null;    // "REA" ou "RM"
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $is_expired = false;
@@ -54,10 +58,6 @@ class Registre
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modified_at;
 
-    #[ORM\ManyToOne(inversedBy: 'carte')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Artisan $artisan = null;
-
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -72,19 +72,6 @@ class Registre
     public function setId(?int $id): self
     {
         $this->id = $id;
-        return $this;
-    }
-
-
-    public function getArtisan(): ?Artisan
-    {
-        return $this->artisan;
-    }
-
-    public function setArtisan(?Artisan $artisan): self
-    {
-        $this->artisan = $artisan;
-
         return $this;
     }
 
@@ -169,22 +156,77 @@ class Registre
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function getStatut(): ?bool
+    public function getStatut(): ?string
     {
         return $this->statut;
     }
 
     /**
-     * @param bool|null $statut
-     * @return Carte
+     * @param string|null $statut
+     * @return Registre
      */
-    public function setStatut(?bool $statut): Registre
+    public function setStatut(?string $statut): Registre
     {
         $this->statut = $statut;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     * @return Registre
+     */
+    public function setType(?string $type): Registre
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsExpired(): ?bool
+    {
+        return $this->is_expired;
+    }
+
+    /**
+     * @param bool|null $is_expired
+     * @return Registre
+     */
+    public function setIsExpired(?bool $is_expired): Registre
+    {
+        $this->is_expired = $is_expired;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNumeroCarteProfessionnelle(): ?string
+    {
+        return $this->numero_carte_professionnelle;
+    }
+
+    /**
+     * @param string|null $numero_carte_professionnelle
+     * @return Registre
+     */
+    public function setNumeroCarteProfessionnelle(?string $numero_carte_professionnelle): Registre
+    {
+        $this->numero_carte_professionnelle = $numero_carte_professionnelle;
+        return $this;
+    }
+
 
     /**
      * @return MediaObject|null

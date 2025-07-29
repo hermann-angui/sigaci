@@ -14,7 +14,7 @@ use DateTime;
 #[ORM\Entity(repositoryClass: ActivityLogsRepository::class)]
 #[ORM\Table(name: '`equipe_agents`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class EquipeAgent
 {
     #[ORM\Id]

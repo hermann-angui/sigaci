@@ -8,36 +8,45 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CrmRepository::class)]
 #[ORM\Table(name: '`crms`')]
 #[UniqueEntity(fields: ['name'])]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['artisan:read', 'crm:read']],
+    denormalizationContext: ['groups' => ['artisan:create', 'crm:create', 'crm:delete', 'crm:update']]
+)]
 class Crm
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups(['artisan:read', 'crm:read', 'crm:update', 'crm:delete'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['artisan:read', 'crm:read', 'crm:update', 'crm:update'])]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'crm', targetEntity: Artisan::class)]
-    private Collection $artisans;
+    #[ORM\Column(length: 255)]
+    #[Groups(['artisan:read', 'crm:read', 'crm:update'])]
+    private ?string $code = null;
 
-    #[ORM\OneToMany(mappedBy: 'crm', targetEntity: User::class)]
-    private Collection $agents;
+    #[ORM\Column(length: 255)]
+    #[Groups(['artisan:read', 'crm:read', 'crm:update', 'crm:update'])]
+    private ?string $abbr = null;
 
-    #[ORM\OneToMany(mappedBy: 'crm', targetEntity: Etablissement::class)]
-    private Collection $etablissements;
+    /**
+     * @var Collection<int, Entreprise>
+     */
+    #[ORM\OneToMany(targetEntity: Entreprise::class, mappedBy: 'crm')]
+    private Collection $entreprises;
 
     public function __construct()
     {
-        $this->artisans = new ArrayCollection();
-        $this->agents = new ArrayCollection();
-        $this->etablissements = new ArrayCollection();
+        $this->entreprises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,97 +71,76 @@ class Crm
         return $this;
     }
 
-    /**
-     * @return Collection<int, Artisan>
-     */
-    public function getArtisans(): Collection
-    {
-        return $this->artisans;
-    }
-
-    public function addArtisan(Artisan $artisan): self
-    {
-        if (!$this->artisans->contains($artisan)) {
-            $this->artisans[] = $artisan;
-            $artisan->setCrm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArtisan(Artisan $artisan): self
-    {
-        if ($this->artisans->removeElement($artisan)) {
-            // set the owning side to null (unless already changed)
-            if ($artisan->getCrm() === $this) {
-                $artisan->setCrm(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getAgents(): Collection
-    {
-        return $this->agents;
-    }
-
-    public function addAgent(User $agent): self
-    {
-        if (!$this->agents->contains($agent)) {
-            $this->agents[] = $agent;
-            $agent->setCrm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgent(User $agent): self
-    {
-        if ($this->agents->removeElement($agent)) {
-            // set the owning side to null (unless already changed)
-            if ($agent->getCrm() === $this) {
-                $agent->setCrm(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Etablissement>
-     */
-    public function getEtablissements(): Collection
-    {
-        return $this->etablissements;
-    }
-
-    public function addEtablissement(Etablissement $etablissement): self
-    {
-        if (!$this->etablissements->contains($etablissement)) {
-            $this->etablissements[] = $etablissement;
-            $etablissement->setCrm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtablissement(Etablissement $etablissement): self
-    {
-        if ($this->etablissements->removeElement($etablissement)) {
-            // set the owning side to null (unless already changed)
-            if ($etablissement->getCrm() === $this) {
-                $etablissement->setCrm(null);
-            }
-        }
-
-        return $this;
-    }
     public function __toString(): string
     {
         return $this->getName();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     * @return Crm
+     */
+    public function setCode(?string $code): Crm
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAbbr(): ?string
+    {
+        return $this->abbr;
+    }
+
+    /**
+     * @param string|null $abbr
+     * @return Crm
+     */
+    public function setAbbr(?string $abbr): Crm
+    {
+        $this->abbr = $abbr;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entreprise>
+     */
+    public function getEntreprises(): Collection
+    {
+        return $this->entreprises;
+    }
+
+    public function addEntreprise(Entreprise $entreprise): static
+    {
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises->add($entreprise);
+            $entreprise->setCrm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprise $entreprise): static
+    {
+        if ($this->entreprises->removeElement($entreprise)) {
+            // set the owning side to null (unless already changed)
+            if ($entreprise->getCrm() === $this) {
+                $entreprise->setCrm(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReceiptRepository::class)]
 #[ORM\Table(name: '`receipt`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
+#[ApiResource()]
 class Receipt
 {
     #[ORM\Id]
@@ -41,10 +41,11 @@ class Receipt
         return $this->id;
     }
 
-    public function setId(?int $id): Crm
+    public function setId(?int $id): Receipt
     {
         $this->id = $id;
         return $this;
     }
+
 
 }

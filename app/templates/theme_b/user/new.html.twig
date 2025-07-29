@@ -261,7 +261,7 @@
                     <div class="d-flex col-6">
                         <label class="col-auto">Activité principale exercée : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
-                               field="etablissement.activitePrincipale"
+                               field="entreprise.activitePrincipale"
                                classappend="activitePrincipale">
                         <div  class="invalid-feedback"></div>
                     </div>
@@ -278,17 +278,17 @@
                         <label class="col-auto">Raison social : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field="raisonSociale"
-                               classappend="fields.hasErrors('etablissement.raisonSociale')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.raisonSociale')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.raisonSociale')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.raisonSociale')" class="invalid-feedback"
                              errors=".raisonSociale"></div>
                     </div>
                     <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.sigle">Sigle ou Enseigne :<span
+                        <label class="col-auto" for="entreprise.sigle">Sigle ou Enseigne :<span
                                 class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".sigle"
-                               classappend="fields.hasErrors('etablissement.sigle')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.sigle')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.sigle')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.sigle')" class="invalid-feedback"
                              errors=".sigle"></div>
                     </div>
                 </div>
@@ -297,8 +297,8 @@
                         <label class="col-auto">Objet social :<span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".objetSocial"
-                               classappend="fields.hasErrors('etablissement.objetSocial')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.objetSocial')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.objetSocial')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.objetSocial')" class="invalid-feedback"
                              errors=".objetSocial"></div>
                     </div>
                 </div>
@@ -316,16 +316,16 @@
                         <label class="col-auto">N° Registre de métiers : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".numRegistreMetier"
-                               classappend="fields.hasErrors('etablissement.numRegistreMetier')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRegistreMetier')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.numRegistreMetier')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.numRegistreMetier')" class="invalid-feedback"
                              errors=".numRegistreMetier"></div>
                     </div>
                     <div class="d-flex col-6">
                         <label class="col-auto">N° REA :<span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".numRea"
-                               classappend="fields.hasErrors('etablissement.numRea')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRea')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.numRea')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.numRea')" class="invalid-feedback"
                              errors=".numRea"></div>
                     </div>
                 </div>
@@ -334,16 +334,16 @@
                         <label class="col-auto">N° RCCM : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".numRccm"
-                               classappend="fields.hasErrors('etablissement.numRccm')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.numRccm')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.numRccm')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.numRccm')" class="invalid-feedback"
                              errors=".numRccm"></div>
                     </div>
                     <div class="d-flex col-6">
                         <label class="col-auto">Capital social : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".capitalSocial"
-                               classappend="fields.hasErrors('etablissement.capitalSocial')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.capitalSocial')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.capitalSocial')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.capitalSocial')" class="invalid-feedback"
                              errors=".capitalSocial"></div>
                     </div>
                 </div>
@@ -363,8 +363,8 @@
                                 class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".identifiantCNPS"
-                               classappend="fields.hasErrors('etablissement.identifiantCNPS')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.identifiantCNPS')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.identifiantCNPS')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.identifiantCNPS')" class="invalid-feedback"
                              errors=".identifiantCNPS"></div>
                     </div>
                 </div>
@@ -373,16 +373,16 @@
                         <label class="col-auto">Adresse postale : <span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".adressePostale"
-                               classappend="fields.hasErrors('etablissement.adressePostale')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.adressePostale')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.adressePostale')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.adressePostale')" class="invalid-feedback"
                              errors=".adressePostale"></div>
                     </div>
                     <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.telephone">Téléphone :<span class="required">*</span></label>
+                        <label class="col-auto" for="entreprise.telephone">Téléphone :<span class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".telephone"
-                               classappend="fields.hasErrors('etablissement.telephone')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.telephone')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.telephone')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.telephone')" class="invalid-feedback"
                              errors=".telephone"></div>
                     </div>
                 </div>
@@ -392,16 +392,16 @@
                                 class="required">*</span></label>
                         <input class="col-8" type="text" style="border:none;border-bottom:1px dashed #000000"
                                field=".departement"
-                               classappend="fields.hasErrors('etablissement.departement')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.departement')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.departement')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.departement')" class="invalid-feedback"
                              errors=".departement"></div>
                     </div>
                     <div class="d-flex col-6">
-                        <label class="col-auto" for="etablissement.commune">Commune : <span
+                        <label class="col-auto" for="entreprise.commune">Commune : <span
                                 class="required">*</span></label>
                         <input class="col-8" type="text"  field=".commune"
-                               classappend="fields.hasErrors('etablissement.commune')} ? 'is-invalid'">
-                        <div if="fields.hasErrors('etablissement.commune')" class="invalid-feedback"
+                               classappend="fields.hasErrors('entreprise.commune')} ? 'is-invalid'">
+                        <div if="fields.hasErrors('entreprise.commune')" class="invalid-feedback"
                              errors=".commune"></div>
                     </div>
                 </div>
@@ -412,12 +412,12 @@
                         <div  class="invalid-feedback" errors="sp"></div>
                     </div>
                     <div class="d-flex col-4">
-                        <label class="col-auto" for="etablissement.quartier">Quartier : <span class="required">*</span></label>
-                        <input class="col-8" type="text" classappend="etablissement">
+                        <label class="col-auto" for="entreprise.quartier">Quartier : <span class="required">*</span></label>
+                        <input class="col-8" type="text" classappend="entreprise">
                         <div class="invalid-feedback" errors="quartier"></div>
                     </div>
                     <div class="d-flex col-4">
-                        <label class="col-auto" for="etablissement.village">Village : <span class="required">*</span></label>
+                        <label class="col-auto" for="entreprise.village">Village : <span class="required">*</span></label>
                         <input class="col-8" type="text" field="village" >
                         <div class="invalid-feedback" errors="village"></div>
                     </div>

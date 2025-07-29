@@ -1199,7 +1199,7 @@ $(document).ready(function () {
                 }
             ],
             xaxis: {
-                categories: ['Cardiology', 'Urology', 'Pediatrics', 'Gynecology', 'Psychiatrist', 'General'],
+                categories: ['Entreprise', 'Maitre Artisan', 'Compagnon', 'Apprenti', 'Chauffeur VTC', 'Orpailleur'],
                 max: 100,
                 position: 'top',
                 labels: {
@@ -1887,7 +1887,7 @@ $(document).ready(function () {
                 width: '100%'
             },
             series: [219, 200, 219],  // Replace with your values
-            labels: ['214 Cardiology', '121 Neurolgy',  '150 Dental'],
+            labels: ['214 Entreprise', '121 Apprenti',  '150 Compagnon'],
             colors: ['#6DA6F2', '#5C60CC', '#9B51B6'], // Match to your image colors
             legend: {
                 show: false
@@ -1921,7 +1921,7 @@ $(document).ready(function () {
                             },
                             total: {
                                 show: true,
-                                label: 'Total Patient',
+                                label: 'Total artisans',
                                 fontSize: '14px',
                                 color: '#0A1B39',
                                 formatter: function (w) {

@@ -7,7 +7,7 @@ use App\Repository\ImpressionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImpressionRepository::class)]
-#[ApiResource]
+#[ApiResource()]
 class Impression
 {
     #[ORM\Id]

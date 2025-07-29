@@ -3,18 +3,17 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\EtablissementRepository;
+use App\Repository\EntrepriseRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EtablissementRepository::class)]
-#[ORM\Table(name: '`etablissements`')]
+#[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
+#[ORM\Table(name: '`entreprises`')]
 #[ORM\HasLifecycleCallbacks()]
-#[ApiResource]
-class Etablissement
+#[ApiResource()]
+class Entreprise
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,59 +22,68 @@ class Etablissement
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $raisonSocial;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sigle;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $objetSocial;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTime $dateDebutActivite;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $typeEntreprise;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $numeroRCCM;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $capitalSocial;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $regimeFiscal;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nombreAssocie;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $dureePersonne;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $identifiantCnps;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $numeroContribuable;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adressPostale;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telephone;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fax;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $quartier;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $village;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lot;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ilot;
 
-    #[ORM\GeneratedValue]
-    #[ORM\Column()]
-    private ?int $effectifSalarieHomme;
+    #[ORM\Column(nullable: true)]
+    private ?int $effectifSalarieHomme = null;
 
-    #[ORM\GeneratedValue]
-    #[ORM\Column()]
+    #[ORM\Column(nullable: true)]
     private ?int $effectifSalarieFemme;
 
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $effectifApprentiHomme;
 
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $effectifApprentiFemme;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -84,83 +92,35 @@ class Etablissement
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $longitude;
 
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
-    private ?Crm $crm = null;
+    /**
+     * @var Collection<int, Artisan>
+     */
+    #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'entreprise')]
+    private Collection $employees;
 
-    #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Artisan::class)]
-    private Collection $artisans;
-
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
     private ?Department $department = null;
 
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    #[ORM\ManyToOne]
     private ?Communes $commune = null;
 
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
+    private ?Crm $crm = null;
+
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
     private ?SousPrefecture $sousPrefecture = null;
 
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
-    private ?Pays $pays = null;
-
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
     private ?Villes $ville = null;
-
-    #[ORM\ManyToOne(inversedBy: 'etablissements')]
-    private ?Metiers $activitePrincipale = null;
-
-    #[ORM\ManyToOne]
-    private ?Metiers $activiteSecondaire = null;
 
     public function __construct()
     {
-        $this->artisans = new ArrayCollection();
+        $this->employees = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCrm(): ?Crm
-    {
-        return $this->crm;
-    }
-
-    public function setCrm(?Crm $crm): self
-    {
-        $this->crm = $crm;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Artisan>
-     */
-    public function getArtisans(): Collection
-    {
-        return $this->artisans;
-    }
-
-    public function addArtisans(Artisan $artisan): self
-    {
-        if (!$this->artisans->contains($artisan)) {
-            $this->artisans[] = $artisan;
-            $artisan->setEtablissement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArtisans(Artisan $artisan): self
-    {
-        if ($this->artisans->removeElement($artisan)) {
-            // set the owning side to null (unless already changed)
-            if ($artisan->getEtablissement() === $this) {
-                $artisan->setEtablissement(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getLatitude(): ?string
@@ -193,9 +153,9 @@ class Etablissement
 
     /**
      * @param string|null $raisonSocial
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setRaisonSocial(?string $raisonSocial): Etablissement
+    public function setRaisonSocial(?string $raisonSocial): Entreprise
     {
         $this->raisonSocial = $raisonSocial;
         return $this;
@@ -211,9 +171,9 @@ class Etablissement
 
     /**
      * @param string|null $sigle
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setSigle(?string $sigle): Etablissement
+    public function setSigle(?string $sigle): Entreprise
     {
         $this->sigle = $sigle;
         return $this;
@@ -229,9 +189,9 @@ class Etablissement
 
     /**
      * @param string|null $objetSocial
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setObjetSocial(?string $objetSocial): Etablissement
+    public function setObjetSocial(?string $objetSocial): Entreprise
     {
         $this->objetSocial = $objetSocial;
         return $this;
@@ -247,9 +207,9 @@ class Etablissement
 
     /**
      * @param DateTime|null $dateDebutActivite
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setDateDebutActivite(?DateTime $dateDebutActivite): Etablissement
+    public function setDateDebutActivite(?DateTime $dateDebutActivite): Entreprise
     {
         $this->dateDebutActivite = $dateDebutActivite;
         return $this;
@@ -265,9 +225,9 @@ class Etablissement
 
     /**
      * @param string|null $typeEntreprise
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setTypeEntreprise(?string $typeEntreprise): Etablissement
+    public function setTypeEntreprise(?string $typeEntreprise): Entreprise
     {
         $this->typeEntreprise = $typeEntreprise;
         return $this;
@@ -283,9 +243,9 @@ class Etablissement
 
     /**
      * @param string|null $numeroRCCM
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setNumeroRCCM(?string $numeroRCCM): Etablissement
+    public function setNumeroRCCM(?string $numeroRCCM): Entreprise
     {
         $this->numeroRCCM = $numeroRCCM;
         return $this;
@@ -301,9 +261,9 @@ class Etablissement
 
     /**
      * @param string|null $capitalSocial
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setCapitalSocial(?string $capitalSocial): Etablissement
+    public function setCapitalSocial(?string $capitalSocial): Entreprise
     {
         $this->capitalSocial = $capitalSocial;
         return $this;
@@ -319,9 +279,9 @@ class Etablissement
 
     /**
      * @param string|null $regimeFiscal
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setRegimeFiscal(?string $regimeFiscal): Etablissement
+    public function setRegimeFiscal(?string $regimeFiscal): Entreprise
     {
         $this->regimeFiscal = $regimeFiscal;
         return $this;
@@ -337,9 +297,9 @@ class Etablissement
 
     /**
      * @param string|null $nombreAssocie
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setNombreAssocie(?string $nombreAssocie): Etablissement
+    public function setNombreAssocie(?string $nombreAssocie): Entreprise
     {
         $this->nombreAssocie = $nombreAssocie;
         return $this;
@@ -355,9 +315,9 @@ class Etablissement
 
     /**
      * @param string|null $dureePersonne
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setDureePersonne(?string $dureePersonne): Etablissement
+    public function setDureePersonne(?string $dureePersonne): Entreprise
     {
         $this->dureePersonne = $dureePersonne;
         return $this;
@@ -373,9 +333,9 @@ class Etablissement
 
     /**
      * @param string|null $identifiantCnps
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setIdentifiantCnps(?string $identifiantCnps): Etablissement
+    public function setIdentifiantCnps(?string $identifiantCnps): Entreprise
     {
         $this->identifiantCnps = $identifiantCnps;
         return $this;
@@ -391,9 +351,9 @@ class Etablissement
 
     /**
      * @param string|null $numeroContribuable
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setNumeroContribuable(?string $numeroContribuable): Etablissement
+    public function setNumeroContribuable(?string $numeroContribuable): Entreprise
     {
         $this->numeroContribuable = $numeroContribuable;
         return $this;
@@ -409,9 +369,9 @@ class Etablissement
 
     /**
      * @param string|null $adressPostale
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setAdressPostale(?string $adressPostale): Etablissement
+    public function setAdressPostale(?string $adressPostale): Entreprise
     {
         $this->adressPostale = $adressPostale;
         return $this;
@@ -427,9 +387,9 @@ class Etablissement
 
     /**
      * @param string|null $telephone
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setTelephone(?string $telephone): Etablissement
+    public function setTelephone(?string $telephone): Entreprise
     {
         $this->telephone = $telephone;
         return $this;
@@ -445,47 +405,11 @@ class Etablissement
 
     /**
      * @param string|null $fax
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setFax(?string $fax): Etablissement
+    public function setFax(?string $fax): Entreprise
     {
         $this->fax = $fax;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getQuartier(): ?string
-    {
-        return $this->quartier;
-    }
-
-    /**
-     * @param string|null $quartier
-     * @return Etablissement
-     */
-    public function setQuartier(?string $quartier): Etablissement
-    {
-        $this->quartier = $quartier;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getVillage(): ?string
-    {
-        return $this->village;
-    }
-
-    /**
-     * @param string|null $village
-     * @return Etablissement
-     */
-    public function setVillage(?string $village): Etablissement
-    {
-        $this->village = $village;
         return $this;
     }
 
@@ -499,9 +423,9 @@ class Etablissement
 
     /**
      * @param string|null $lot
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setLot(?string $lot): Etablissement
+    public function setLot(?string $lot): Entreprise
     {
         $this->lot = $lot;
         return $this;
@@ -517,9 +441,9 @@ class Etablissement
 
     /**
      * @param string|null $ilot
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setIlot(?string $ilot): Etablissement
+    public function setIlot(?string $ilot): Entreprise
     {
         $this->ilot = $ilot;
         return $this;
@@ -535,9 +459,9 @@ class Etablissement
 
     /**
      * @param int|null $effectifSalarieHomme
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setEffectifSalarieHomme(?int $effectifSalarieHomme): Etablissement
+    public function setEffectifSalarieHomme(?int $effectifSalarieHomme): Entreprise
     {
         $this->effectifSalarieHomme = $effectifSalarieHomme;
         return $this;
@@ -553,9 +477,9 @@ class Etablissement
 
     /**
      * @param int|null $effectifSalarieFemme
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setEffectifSalarieFemme(?int $effectifSalarieFemme): Etablissement
+    public function setEffectifSalarieFemme(?int $effectifSalarieFemme): Entreprise
     {
         $this->effectifSalarieFemme = $effectifSalarieFemme;
         return $this;
@@ -571,9 +495,9 @@ class Etablissement
 
     /**
      * @param int|null $effectifApprentiHomme
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setEffectifApprentiHomme(?int $effectifApprentiHomme): Etablissement
+    public function setEffectifApprentiHomme(?int $effectifApprentiHomme): Entreprise
     {
         $this->effectifApprentiHomme = $effectifApprentiHomme;
         return $this;
@@ -589,11 +513,82 @@ class Etablissement
 
     /**
      * @param int|null $effectifApprentiFemme
-     * @return Etablissement
+     * @return Entreprise
      */
-    public function setEffectifApprentiFemme(?int $effectifApprentiFemme): Etablissement
+    public function setEffectifApprentiFemme(?int $effectifApprentiFemme): Entreprise
     {
         $this->effectifApprentiFemme = $effectifApprentiFemme;
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSigle();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuartier(): ?string
+    {
+        return $this->quartier;
+    }
+
+    /**
+     * @param string|null $quartier
+     * @return Entreprise
+     */
+    public function setQuartier(?string $quartier): Entreprise
+    {
+        $this->quartier = $quartier;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVillage(): ?string
+    {
+        return $this->village;
+    }
+
+    /**
+     * @param string|null $village
+     * @return Entreprise
+     */
+    public function setVillage(?string $village): Entreprise
+    {
+        $this->village = $village;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artisan>
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function addEmployee(Artisan $employee): static
+    {
+        if (!$this->employees->contains($employee)) {
+            $this->employees->add($employee);
+            $employee->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployee(Artisan $employee): static
+    {
+        if ($this->employees->removeElement($employee)) {
+            // set the owning side to null (unless already changed)
+            if ($employee->getEntreprise() === $this) {
+                $employee->setEntreprise(null);
+            }
+        }
+
         return $this;
     }
 
@@ -621,6 +616,18 @@ class Etablissement
         return $this;
     }
 
+    public function getCrm(): ?Crm
+    {
+        return $this->crm;
+    }
+
+    public function setCrm(?Crm $crm): static
+    {
+        $this->crm = $crm;
+
+        return $this;
+    }
+
     public function getSousPrefecture(): ?SousPrefecture
     {
         return $this->sousPrefecture;
@@ -629,18 +636,6 @@ class Etablissement
     public function setSousPrefecture(?SousPrefecture $sousPrefecture): static
     {
         $this->sousPrefecture = $sousPrefecture;
-
-        return $this;
-    }
-
-    public function getPays(): ?Pays
-    {
-        return $this->pays;
-    }
-
-    public function setPays(?Pays $pays): static
-    {
-        $this->pays = $pays;
 
         return $this;
     }
@@ -657,32 +652,5 @@ class Etablissement
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getSigle();
-    }
 
-    public function getActivitePrincipale(): ?Metiers
-    {
-        return $this->activitePrincipale;
-    }
-
-    public function setActivitePrincipale(?Metiers $activitePrincipale): static
-    {
-        $this->activitePrincipale = $activitePrincipale;
-
-        return $this;
-    }
-
-    public function getActiviteSecondaire(): ?Metiers
-    {
-        return $this->activiteSecondaire;
-    }
-
-    public function setActiviteSecondaire(?Metiers $activiteSecondaire): static
-    {
-        $this->activiteSecondaire = $activiteSecondaire;
-
-        return $this;
-    }
 }
