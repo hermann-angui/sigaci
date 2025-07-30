@@ -29,6 +29,9 @@ class CategoryArtisan
     #[Groups(['artisan:read', 'categoryartisan:read', 'categoryartisan:update', 'categoryartisan:delete'])]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private string $code;
+
     /**
      * @var Collection<int, Artisan>
      */
@@ -38,6 +41,7 @@ class CategoryArtisan
     public function __construct()
     {
         $this->artisans = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int
@@ -107,4 +111,24 @@ class CategoryArtisan
     {
         return $this->getName();
     }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return CategoryArtisan
+     */
+    public function setCode(string $code): CategoryArtisan
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

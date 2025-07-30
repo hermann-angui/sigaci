@@ -2,10 +2,12 @@
 
 namespace App\State;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\DTO\ArtisanRequestDto;
 use App\Entity\Artisan;
-use App\Entity\ArtisanDto;
 use App\Repository\ArtisanRepository;
 
 class ArtisanDtoStateProvider implements ProviderInterface
@@ -16,11 +18,11 @@ class ArtisanDtoStateProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if ($operation instanceof \ApiPlatform\Metadata\GetCollection) {
+        if ($operation instanceof GetCollection) {
             return $this->getCollection();
         }
 
-        if ($operation instanceof \ApiPlatform\Metadata\Get) {
+        if ($operation instanceof Get) {
             return $this->getItem($uriVariables['id'] ?? null);
         }
 
@@ -36,7 +38,7 @@ class ArtisanDtoStateProvider implements ProviderInterface
         }, $artisans);
     }
 
-    private function getItem(mixed $id): ?ArtisanDto
+    private function getItem(mixed $id): ?ArtisanRequestDto
     {
         $artisan = $this->artisanRepository->find($id);
 
@@ -47,14 +49,10 @@ class ArtisanDtoStateProvider implements ProviderInterface
         return $this->mapEntityToDto($artisan);
     }
 
-    private function mapEntityToDto(Artisan $artisan): ArtisanDto
+    private function mapEntityToDto(Artisan $artisan): ArtisanRequestDto
     {
-        $dto = new ArtisanDto();
+        $dto = new ArtisanRequestDto();
         $dto->setId((string) $artisan->getId());
-        $dto->setName($artisan->getName());
-        $dto->setEmail($artisan->getEmail());
-        $dto->setSpecialty($artisan->getSpecialty());
-        $dto->setCreatedAt($artisan->getCreatedAt());
 
         return $dto;
     }

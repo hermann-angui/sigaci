@@ -7,6 +7,7 @@ use App\Repository\VillesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Random\RandomException;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: VillesRepository::class)]
@@ -24,15 +25,22 @@ class Villes
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 10)]
+    private ?string $code;
+
     /**
      * @var Collection<int, Entreprise>
      */
     #[ORM\OneToMany(targetEntity: Entreprise::class, mappedBy: 'ville')]
     private Collection $entreprises;
 
+    /**
+     * @throws RandomException
+     */
     public function __construct()
     {
         $this->entreprises = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int
@@ -86,4 +94,24 @@ class Villes
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return Villes
+     */
+    public function setCode(string $code): Villes
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

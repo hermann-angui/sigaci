@@ -23,8 +23,12 @@ class SousPrefecture
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 10)]
+    private string $code;
+
     public function __construct()
     {
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int
@@ -48,4 +52,24 @@ class SousPrefecture
     {
         return $this->getName();
     }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return SousPrefecture
+     */
+    public function setCode(string $code): SousPrefecture
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

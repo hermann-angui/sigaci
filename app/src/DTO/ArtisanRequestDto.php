@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\DTO;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
@@ -18,15 +18,15 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Get(
             uriTemplate: '/artisan/{numeroImmatriculation}/immatriculation',
-            input: ArtisanDto::class,
-            output: ArtisanDto::class,
+            input: ArtisanRequestDto::class,
+            output: ArtisanRequestDto::class,
             provider: ArtisanDtoStateProvider::class,
             processor: ArtisanDtoStateProcessor::class,
         ),
         new Put(
             uriTemplate: '/artisan/{numeroImmatriculation}/immatriculation',
-            input: ArtisanDto::class,
-            output: ArtisanDto::class,
+            input: ArtisanRequestDto::class,
+            output: ArtisanRequestDto::class,
             provider: ArtisanDtoStateProvider::class,
             processor: ArtisanDtoStateProcessor::class,
         ),
@@ -34,15 +34,14 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: '/artisan/immatriculation',
             inputFormats: ['multipart' => ['multipart/form-data']],
             controller: ArtisanImmatriculationController::class,
-            input: ArtisanDto::class,
-            output: ArtisanDto::class,
-            read: false,
-            deserialize: false,
-            validate: true,
-            write: false,
+            input: ArtisanRequestDto::class,
+            output: ArtisanResponseDto::class,
+//            read: false,
+//            deserialize: false,
+//            validate: true,
+//            write: false,
             provider: ArtisanDtoStateProvider::class,
             processor: ArtisanDtoStateProcessor::class,
-            // processor: DocumentProcessor::class,
             extraProperties: [
                 'multipart' => true,
                 'standard_put' => false,
@@ -50,42 +49,42 @@ use Symfony\Component\Validator\Constraints as Assert;
             ]
         ),
     ],
-   // normalizationContext: ['groups' => ['artisan_dto:read']],
-   // denormalizationContext: ['groups' => ['artisan_dto:create', 'artisan_dto:update']],
+    //normalizationContext: ['groups' => ['artisan_dto:read']],
+    //denormalizationContext: ['groups' => ['artisan_dto:create', 'artisan_dto:update']],
 )]
-class ArtisanDto
+class ArtisanRequestDto
 {
 
-    public ?string $id = null; // Peut être un string UUID ou int
+    public ?string $id = null;                      // Peut être un string UUID ou int
 
-   // #[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $email;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $nom;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $sexe;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $prenoms;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?DateTimeInterface $dateNaissance;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $lieuNaissance;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $domicile;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $quartier;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $typePieceIdentite;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $numeroPieceIdentite;
 
     #[Assert\NotNull()]
@@ -93,109 +92,110 @@ class ArtisanDto
         maxSize: '10M',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
+    //#[Groups(['artisan_dto:create'])]
     private ?File $photo = null;
 
-    #[Assert\NotNull()]
     #[Assert\File(
         maxSize: '10M',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
+    //#[Groups(['artisan_dto:create'])]
     private ?File $photoPieceIdentiteRecto = null;
 
 
-    #[Assert\NotNull()]
     #[Assert\File(
         maxSize: '10M',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
+    //#[Groups(['artisan_dto:create'])]
     private ?File $photoPieceIdentiteVerso = null;
 
-    #[Assert\NotNull()]
     #[Assert\File(
         maxSize: '10M',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
+    //#[Groups(['artisan_dto:create'])]
     private ?File $photoDocumentRecto = null;
 
-    #[Assert\NotNull()]
     #[Assert\File(
         maxSize: '10M',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
+    //#[Groups(['artisan_dto:create'])]
     private ?File $photoDocumentVerso = null;
 
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $lieuDelivrancePieceIdentite;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?DateTimeInterface $dateDelivrancePieceIdentite;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $autoriteDelivrancePieceIdentite;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $etatCivil;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $activiteExerceeLieu;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?DateTimeInterface $dateDebutActivite;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?DateTimeInterface $dateDebutActivitePro;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $telephone;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $whatsapp;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $codePostal;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $cnps;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $numeroRM;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $numeroCarteProfessionnelle;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationNiveauEtude;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationClasseEtude;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationDiplomeObtenu;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationApprentissageMetier;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationApprentissageMetierNiveau;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $formationApprentissageMetierDiplome;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $numeroPermisConduire;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $latitude;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $longitude;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?DateTimeInterface $created_at;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $crmId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $crmCode;
 
     private ?int $montant;
 
@@ -203,40 +203,41 @@ class ArtisanDto
 
     private ?string $reference_externe;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $categoryArtisan;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $villeNaissanceId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $villeNaissanceCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $paysNaissanceId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $paysNaissanceCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $nationaliteId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $nationaliteCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $codeImmatriculation;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $codeIdentification;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $activiteSecondaireId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $activiteSecondaireCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $activiteExerceeId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $activiteExerceeCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $activitePrincipaleId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $activitePrincipaleCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $entrepriseNumeroIdentification;
 
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $entrepriseNumeroImmatriculation;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:write'])]
-    private ?string $activiteId;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $activiteCode;
 
 
     public function __construct(?string $id = null)
@@ -266,9 +267,9 @@ class ArtisanDto
 
     /**
      * @param string|null $email
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setEmail(?string $email): ArtisanDto
+    public function setEmail(?string $email): ArtisanRequestDto
     {
         $this->email = $email;
         return $this;
@@ -284,9 +285,9 @@ class ArtisanDto
 
     /**
      * @param string|null $nom
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setNom(?string $nom): ArtisanDto
+    public function setNom(?string $nom): ArtisanRequestDto
     {
         $this->nom = $nom;
         return $this;
@@ -302,9 +303,9 @@ class ArtisanDto
 
     /**
      * @param string|null $sexe
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setSexe(?string $sexe): ArtisanDto
+    public function setSexe(?string $sexe): ArtisanRequestDto
     {
         $this->sexe = $sexe;
         return $this;
@@ -320,9 +321,9 @@ class ArtisanDto
 
     /**
      * @param string|null $prenoms
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPrenoms(?string $prenoms): ArtisanDto
+    public function setPrenoms(?string $prenoms): ArtisanRequestDto
     {
         $this->prenoms = $prenoms;
         return $this;
@@ -338,9 +339,9 @@ class ArtisanDto
 
     /**
      * @param DateTimeInterface|null $dateNaissance
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setDateNaissance(?DateTimeInterface $dateNaissance): ArtisanDto
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): ArtisanRequestDto
     {
         $this->dateNaissance = $dateNaissance;
         return $this;
@@ -356,9 +357,9 @@ class ArtisanDto
 
     /**
      * @param string|null $lieuNaissance
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setLieuNaissance(?string $lieuNaissance): ArtisanDto
+    public function setLieuNaissance(?string $lieuNaissance): ArtisanRequestDto
     {
         $this->lieuNaissance = $lieuNaissance;
         return $this;
@@ -374,9 +375,9 @@ class ArtisanDto
 
     /**
      * @param string|null $domicile
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setDomicile(?string $domicile): ArtisanDto
+    public function setDomicile(?string $domicile): ArtisanRequestDto
     {
         $this->domicile = $domicile;
         return $this;
@@ -392,9 +393,9 @@ class ArtisanDto
 
     /**
      * @param string|null $quartier
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setQuartier(?string $quartier): ArtisanDto
+    public function setQuartier(?string $quartier): ArtisanRequestDto
     {
         $this->quartier = $quartier;
         return $this;
@@ -410,9 +411,9 @@ class ArtisanDto
 
     /**
      * @param string|null $typePieceIdentite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setTypePieceIdentite(?string $typePieceIdentite): ArtisanDto
+    public function setTypePieceIdentite(?string $typePieceIdentite): ArtisanRequestDto
     {
         $this->typePieceIdentite = $typePieceIdentite;
         return $this;
@@ -428,9 +429,9 @@ class ArtisanDto
 
     /**
      * @param string|null $numeroPieceIdentite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setNumeroPieceIdentite(?string $numeroPieceIdentite): ArtisanDto
+    public function setNumeroPieceIdentite(?string $numeroPieceIdentite): ArtisanRequestDto
     {
         $this->numeroPieceIdentite = $numeroPieceIdentite;
         return $this;
@@ -446,9 +447,9 @@ class ArtisanDto
 
     /**
      * @param string|null $lieuDelivrancePieceIdentite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setLieuDelivrancePieceIdentite(?string $lieuDelivrancePieceIdentite): ArtisanDto
+    public function setLieuDelivrancePieceIdentite(?string $lieuDelivrancePieceIdentite): ArtisanRequestDto
     {
         $this->lieuDelivrancePieceIdentite = $lieuDelivrancePieceIdentite;
         return $this;
@@ -464,9 +465,9 @@ class ArtisanDto
 
     /**
      * @param DateTimeInterface|null $dateDelivrancePieceIdentite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setDateDelivrancePieceIdentite(?DateTimeInterface $dateDelivrancePieceIdentite): ArtisanDto
+    public function setDateDelivrancePieceIdentite(?DateTimeInterface $dateDelivrancePieceIdentite): ArtisanRequestDto
     {
         $this->dateDelivrancePieceIdentite = $dateDelivrancePieceIdentite;
         return $this;
@@ -482,9 +483,9 @@ class ArtisanDto
 
     /**
      * @param string|null $autoriteDelivrancePieceIdentite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setAutoriteDelivrancePieceIdentite(?string $autoriteDelivrancePieceIdentite): ArtisanDto
+    public function setAutoriteDelivrancePieceIdentite(?string $autoriteDelivrancePieceIdentite): ArtisanRequestDto
     {
         $this->autoriteDelivrancePieceIdentite = $autoriteDelivrancePieceIdentite;
         return $this;
@@ -500,9 +501,9 @@ class ArtisanDto
 
     /**
      * @param string|null $etatCivil
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setEtatCivil(?string $etatCivil): ArtisanDto
+    public function setEtatCivil(?string $etatCivil): ArtisanRequestDto
     {
         $this->etatCivil = $etatCivil;
         return $this;
@@ -518,9 +519,9 @@ class ArtisanDto
 
     /**
      * @param string|null $activiteExerceeLieu
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setActiviteExerceeLieu(?string $activiteExerceeLieu): ArtisanDto
+    public function setActiviteExerceeLieu(?string $activiteExerceeLieu): ArtisanRequestDto
     {
         $this->activiteExerceeLieu = $activiteExerceeLieu;
         return $this;
@@ -536,9 +537,9 @@ class ArtisanDto
 
     /**
      * @param DateTimeInterface|null $dateDebutActivite
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setDateDebutActivite(?DateTimeInterface $dateDebutActivite): ArtisanDto
+    public function setDateDebutActivite(?DateTimeInterface $dateDebutActivite): ArtisanRequestDto
     {
         $this->dateDebutActivite = $dateDebutActivite;
         return $this;
@@ -554,9 +555,9 @@ class ArtisanDto
 
     /**
      * @param DateTimeInterface|null $dateDebutActivitePro
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setDateDebutActivitePro(?DateTimeInterface $dateDebutActivitePro): ArtisanDto
+    public function setDateDebutActivitePro(?DateTimeInterface $dateDebutActivitePro): ArtisanRequestDto
     {
         $this->dateDebutActivitePro = $dateDebutActivitePro;
         return $this;
@@ -572,9 +573,9 @@ class ArtisanDto
 
     /**
      * @param string|null $telephone
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setTelephone(?string $telephone): ArtisanDto
+    public function setTelephone(?string $telephone): ArtisanRequestDto
     {
         $this->telephone = $telephone;
         return $this;
@@ -590,9 +591,9 @@ class ArtisanDto
 
     /**
      * @param string|null $whatsapp
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setWhatsapp(?string $whatsapp): ArtisanDto
+    public function setWhatsapp(?string $whatsapp): ArtisanRequestDto
     {
         $this->whatsapp = $whatsapp;
         return $this;
@@ -608,9 +609,9 @@ class ArtisanDto
 
     /**
      * @param string|null $codePostal
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCodePostal(?string $codePostal): ArtisanDto
+    public function setCodePostal(?string $codePostal): ArtisanRequestDto
     {
         $this->codePostal = $codePostal;
         return $this;
@@ -626,9 +627,9 @@ class ArtisanDto
 
     /**
      * @param string|null $cnps
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCnps(?string $cnps): ArtisanDto
+    public function setCnps(?string $cnps): ArtisanRequestDto
     {
         $this->cnps = $cnps;
         return $this;
@@ -644,9 +645,9 @@ class ArtisanDto
 
     /**
      * @param string|null $numeroRM
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setNumeroRM(?string $numeroRM): ArtisanDto
+    public function setNumeroRM(?string $numeroRM): ArtisanRequestDto
     {
         $this->numeroRM = $numeroRM;
         return $this;
@@ -662,9 +663,9 @@ class ArtisanDto
 
     /**
      * @param string|null $numeroCarteProfessionnelle
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setNumeroCarteProfessionnelle(?string $numeroCarteProfessionnelle): ArtisanDto
+    public function setNumeroCarteProfessionnelle(?string $numeroCarteProfessionnelle): ArtisanRequestDto
     {
         $this->numeroCarteProfessionnelle = $numeroCarteProfessionnelle;
         return $this;
@@ -680,9 +681,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationNiveauEtude
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationNiveauEtude(?string $formationNiveauEtude): ArtisanDto
+    public function setFormationNiveauEtude(?string $formationNiveauEtude): ArtisanRequestDto
     {
         $this->formationNiveauEtude = $formationNiveauEtude;
         return $this;
@@ -698,9 +699,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationClasseEtude
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationClasseEtude(?string $formationClasseEtude): ArtisanDto
+    public function setFormationClasseEtude(?string $formationClasseEtude): ArtisanRequestDto
     {
         $this->formationClasseEtude = $formationClasseEtude;
         return $this;
@@ -716,9 +717,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationDiplomeObtenu
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationDiplomeObtenu(?string $formationDiplomeObtenu): ArtisanDto
+    public function setFormationDiplomeObtenu(?string $formationDiplomeObtenu): ArtisanRequestDto
     {
         $this->formationDiplomeObtenu = $formationDiplomeObtenu;
         return $this;
@@ -734,9 +735,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationApprentissageMetier
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationApprentissageMetier(?string $formationApprentissageMetier): ArtisanDto
+    public function setFormationApprentissageMetier(?string $formationApprentissageMetier): ArtisanRequestDto
     {
         $this->formationApprentissageMetier = $formationApprentissageMetier;
         return $this;
@@ -752,9 +753,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationApprentissageMetierNiveau
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationApprentissageMetierNiveau(?string $formationApprentissageMetierNiveau): ArtisanDto
+    public function setFormationApprentissageMetierNiveau(?string $formationApprentissageMetierNiveau): ArtisanRequestDto
     {
         $this->formationApprentissageMetierNiveau = $formationApprentissageMetierNiveau;
         return $this;
@@ -770,9 +771,9 @@ class ArtisanDto
 
     /**
      * @param string|null $formationApprentissageMetierDiplome
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setFormationApprentissageMetierDiplome(?string $formationApprentissageMetierDiplome): ArtisanDto
+    public function setFormationApprentissageMetierDiplome(?string $formationApprentissageMetierDiplome): ArtisanRequestDto
     {
         $this->formationApprentissageMetierDiplome = $formationApprentissageMetierDiplome;
         return $this;
@@ -788,9 +789,9 @@ class ArtisanDto
 
     /**
      * @param string|null $numeroPermisConduire
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setNumeroPermisConduire(?string $numeroPermisConduire): ArtisanDto
+    public function setNumeroPermisConduire(?string $numeroPermisConduire): ArtisanRequestDto
     {
         $this->numeroPermisConduire = $numeroPermisConduire;
         return $this;
@@ -806,9 +807,9 @@ class ArtisanDto
 
     /**
      * @param string|null $latitude
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setLatitude(?string $latitude): ArtisanDto
+    public function setLatitude(?string $latitude): ArtisanRequestDto
     {
         $this->latitude = $latitude;
         return $this;
@@ -824,9 +825,9 @@ class ArtisanDto
 
     /**
      * @param string|null $longitude
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setLongitude(?string $longitude): ArtisanDto
+    public function setLongitude(?string $longitude): ArtisanRequestDto
     {
         $this->longitude = $longitude;
         return $this;
@@ -842,9 +843,9 @@ class ArtisanDto
 
     /**
      * @param DateTimeInterface|null $created_at
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCreatedAt(?DateTimeInterface $created_at): ArtisanDto
+    public function setCreatedAt(?DateTimeInterface $created_at): ArtisanRequestDto
     {
         $this->created_at = $created_at;
         return $this;
@@ -853,18 +854,18 @@ class ArtisanDto
     /**
      * @return string|null
      */
-    public function getCrmId(): ?string
+    public function getCrmCode(): ?string
     {
-        return $this->crmId;
+        return $this->crmCode;
     }
 
     /**
-     * @param string|null $crmId
-     * @return ArtisanDto
+     * @param string|null $crmCode
+     * @return ArtisanRequestDto
      */
-    public function setCrmId(?string $crmId): ArtisanDto
+    public function setCrmCode(?string $crmCode): ArtisanRequestDto
     {
-        $this->crmId = $crmId;
+        $this->crmCode = $crmCode;
         return $this;
     }
 
@@ -878,9 +879,9 @@ class ArtisanDto
 
     /**
      * @param int|null $montant
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setMontant(?int $montant): ArtisanDto
+    public function setMontant(?int $montant): ArtisanRequestDto
     {
         $this->montant = $montant;
         return $this;
@@ -896,9 +897,9 @@ class ArtisanDto
 
     /**
      * @param int|null $code_paiement
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCodePaiement(?int $code_paiement): ArtisanDto
+    public function setCodePaiement(?int $code_paiement): ArtisanRequestDto
     {
         $this->code_paiement = $code_paiement;
         return $this;
@@ -914,9 +915,9 @@ class ArtisanDto
 
     /**
      * @param string|null $reference_externe
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setReferenceExterne(?string $reference_externe): ArtisanDto
+    public function setReferenceExterne(?string $reference_externe): ArtisanRequestDto
     {
         $this->reference_externe = $reference_externe;
         return $this;
@@ -932,9 +933,9 @@ class ArtisanDto
 
     /**
      * @param string|null $categoryArtisan
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCategoryArtisan(?string $categoryArtisan): ArtisanDto
+    public function setCategoryArtisan(?string $categoryArtisan): ArtisanRequestDto
     {
         $this->categoryArtisan = $categoryArtisan;
         return $this;
@@ -943,54 +944,54 @@ class ArtisanDto
     /**
      * @return string|null
      */
-    public function getVilleNaissanceId(): ?string
+    public function getVilleNaissanceCode(): ?string
     {
-        return $this->villeNaissanceId;
+        return $this->villeNaissanceCode;
     }
 
     /**
-     * @param string|null $villeNaissanceId
-     * @return ArtisanDto
+     * @param string|null $villeNaissanceCode
+     * @return ArtisanRequestDto
      */
-    public function setVilleNaissanceId(?string $villeNaissanceId): ArtisanDto
+    public function setVilleNaissanceCode(?string $villeNaissanceCode): ArtisanRequestDto
     {
-        $this->villeNaissanceId = $villeNaissanceId;
+        $this->villeNaissanceCode = $villeNaissanceCode;
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getPaysNaissanceId(): ?string
+    public function getPaysNaissanceCode(): ?string
     {
-        return $this->paysNaissanceId;
+        return $this->paysNaissanceCode;
     }
 
     /**
-     * @param string|null $paysNaissanceId
-     * @return ArtisanDto
+     * @param string|null $paysNaissanceCode
+     * @return ArtisanRequestDto
      */
-    public function setPaysNaissanceId(?string $paysNaissanceId): ArtisanDto
+    public function setPaysNaissanceCode(?string $paysNaissanceCode): ArtisanRequestDto
     {
-        $this->paysNaissanceId = $paysNaissanceId;
+        $this->paysNaissanceCode = $paysNaissanceCode;
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getNationaliteId(): ?string
+    public function getNationaliteCode(): ?string
     {
-        return $this->nationaliteId;
+        return $this->nationaliteCode;
     }
 
     /**
-     * @param string|null $nationaliteId
-     * @return ArtisanDto
+     * @param string|null $nationaliteCode
+     * @return ArtisanRequestDto
      */
-    public function setNationaliteId(?string $nationaliteId): ArtisanDto
+    public function setNationaliteCode(?string $nationaliteCode): ArtisanRequestDto
     {
-        $this->nationaliteId = $nationaliteId;
+        $this->nationaliteCode = $nationaliteCode;
         return $this;
     }
 
@@ -1004,9 +1005,9 @@ class ArtisanDto
 
     /**
      * @param string|null $codeImmatriculation
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCodeImmatriculation(?string $codeImmatriculation): ArtisanDto
+    public function setCodeImmatriculation(?string $codeImmatriculation): ArtisanRequestDto
     {
         $this->codeImmatriculation = $codeImmatriculation;
         return $this;
@@ -1022,9 +1023,9 @@ class ArtisanDto
 
     /**
      * @param string|null $codeIdentification
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setCodeIdentification(?string $codeIdentification): ArtisanDto
+    public function setCodeIdentification(?string $codeIdentification): ArtisanRequestDto
     {
         $this->codeIdentification = $codeIdentification;
         return $this;
@@ -1033,54 +1034,54 @@ class ArtisanDto
     /**
      * @return string|null
      */
-    public function getActiviteSecondaireId(): ?string
+    public function getActiviteSecondaireCode(): ?string
     {
-        return $this->activiteSecondaireId;
+        return $this->activiteSecondaireCode;
     }
 
     /**
-     * @param string|null $activiteSecondaireId
-     * @return ArtisanDto
+     * @param string|null $activiteSecondaireCode
+     * @return ArtisanRequestDto
      */
-    public function setActiviteSecondaireId(?string $activiteSecondaireId): ArtisanDto
+    public function setActiviteSecondaireCode(?string $activiteSecondaireCode): ArtisanRequestDto
     {
-        $this->activiteSecondaireId = $activiteSecondaireId;
+        $this->activiteSecondaireCode = $activiteSecondaireCode;
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getActiviteExerceeId(): ?string
+    public function getActiviteExerceeCode(): ?string
     {
-        return $this->activiteExerceeId;
+        return $this->activiteExerceeCode;
     }
 
     /**
-     * @param string|null $activiteExerceeId
-     * @return ArtisanDto
+     * @param string|null $activiteExerceeCode
+     * @return ArtisanRequestDto
      */
-    public function setActiviteExerceeId(?string $activiteExerceeId): ArtisanDto
+    public function setActiviteExerceeCode(?string $activiteExerceeCode): ArtisanRequestDto
     {
-        $this->activiteExerceeId = $activiteExerceeId;
+        $this->activiteExerceeCode = $activiteExerceeCode;
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getActivitePrincipaleId(): ?string
+    public function getActivitePrincipaleCode(): ?string
     {
-        return $this->activitePrincipaleId;
+        return $this->activitePrincipaleCode;
     }
 
     /**
-     * @param string|null $activitePrincipaleId
-     * @return ArtisanDto
+     * @param string|null $activitePrincipaleCode
+     * @return ArtisanRequestDto
      */
-    public function setActivitePrincipaleId(?string $activitePrincipaleId): ArtisanDto
+    public function setActivitePrincipaleCode(?string $activitePrincipaleCode): ArtisanRequestDto
     {
-        $this->activitePrincipaleId = $activitePrincipaleId;
+        $this->activitePrincipaleCode = $activitePrincipaleCode;
         return $this;
     }
 
@@ -1094,9 +1095,9 @@ class ArtisanDto
 
     /**
      * @param string|null $entrepriseNumeroIdentification
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setEntrepriseNumeroIdentification(?string $entrepriseNumeroIdentification): ArtisanDto
+    public function setEntrepriseNumeroIdentification(?string $entrepriseNumeroIdentification): ArtisanRequestDto
     {
         $this->entrepriseNumeroIdentification = $entrepriseNumeroIdentification;
         return $this;
@@ -1112,9 +1113,9 @@ class ArtisanDto
 
     /**
      * @param string|null $entrepriseNumeroImmatriculation
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setEntrepriseNumeroImmatriculation(?string $entrepriseNumeroImmatriculation): ArtisanDto
+    public function setEntrepriseNumeroImmatriculation(?string $entrepriseNumeroImmatriculation): ArtisanRequestDto
     {
         $this->entrepriseNumeroImmatriculation = $entrepriseNumeroImmatriculation;
         return $this;
@@ -1123,18 +1124,18 @@ class ArtisanDto
     /**
      * @return string|null
      */
-    public function getActiviteId(): ?string
+    public function getActiviteCode(): ?string
     {
-        return $this->activiteId;
+        return $this->activiteCode;
     }
 
     /**
-     * @param string|null $activiteId
-     * @return ArtisanDto
+     * @param string|null $activiteCode
+     * @return ArtisanRequestDto
      */
-    public function setActiviteId(?string $activiteId): ArtisanDto
+    public function setActiviteCode(?string $activiteCode): ArtisanRequestDto
     {
-        $this->activiteId = $activiteId;
+        $this->activiteCode = $activiteCode;
         return $this;
     }
 
@@ -1148,9 +1149,9 @@ class ArtisanDto
 
     /**
      * @param File|null $photo
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPhoto(?File $photo): ArtisanDto
+    public function setPhoto(?File $photo): ArtisanRequestDto
     {
         $this->photo = $photo;
         return $this;
@@ -1166,9 +1167,9 @@ class ArtisanDto
 
     /**
      * @param File|null $photoPieceIdentiteRecto
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPhotoPieceIdentiteRecto(?File $photoPieceIdentiteRecto): ArtisanDto
+    public function setPhotoPieceIdentiteRecto(?File $photoPieceIdentiteRecto): ArtisanRequestDto
     {
         $this->photoPieceIdentiteRecto = $photoPieceIdentiteRecto;
         return $this;
@@ -1184,9 +1185,9 @@ class ArtisanDto
 
     /**
      * @param File|null $photoPieceIdentiteVerso
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPhotoPieceIdentiteVerso(?File $photoPieceIdentiteVerso): ArtisanDto
+    public function setPhotoPieceIdentiteVerso(?File $photoPieceIdentiteVerso): ArtisanRequestDto
     {
         $this->photoPieceIdentiteVerso = $photoPieceIdentiteVerso;
         return $this;
@@ -1202,9 +1203,9 @@ class ArtisanDto
 
     /**
      * @param File|null $photoDocumentRecto
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPhotoDocumentRecto(?File $photoDocumentRecto): ArtisanDto
+    public function setPhotoDocumentRecto(?File $photoDocumentRecto): ArtisanRequestDto
     {
         $this->photoDocumentRecto = $photoDocumentRecto;
         return $this;
@@ -1220,9 +1221,9 @@ class ArtisanDto
 
     /**
      * @param File|null $photoDocumentVerso
-     * @return ArtisanDto
+     * @return ArtisanRequestDto
      */
-    public function setPhotoDocumentVerso(?File $photoDocumentVerso): ArtisanDto
+    public function setPhotoDocumentVerso(?File $photoDocumentVerso): ArtisanRequestDto
     {
         $this->photoDocumentVerso = $photoDocumentVerso;
         return $this;

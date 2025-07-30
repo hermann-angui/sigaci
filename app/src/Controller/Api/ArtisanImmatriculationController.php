@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\ArtisanDto;
+use App\DTO\ArtisanRequestDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 #[AsController]
 class ArtisanImmatriculationController extends AbstractController
 {
-    public function __invoke(Request $request): ArtisanDto
+    public function __invoke(Request $request): ArtisanRequestDto
     {
         $photoFile = $request->files->get('photo');
 //        $photoPieceIdentiteRectoFile = $request->files->get('photoPieceIdentiteRecto');
@@ -34,7 +34,8 @@ class ArtisanImmatriculationController extends AbstractController
 //            throw new BadRequestHttpException('File is required');
 //        }
 
-        $artisan = new ArtisanDto();
+        $artisan = new ArtisanRequestDto();
+
         $artisan->setPhoto($photoFile);
         $artisan->setPhotoPieceIdentiteRecto($request->request->get('photoPieceIdentiteRecto'));
         $artisan->setPhotoPieceIdentiteVerso($request->request->get('photoPieceIdentiteVerso'));
@@ -43,6 +44,7 @@ class ArtisanImmatriculationController extends AbstractController
         $artisan->setPhotoDocumentVerso($request->request->get('photoPieceDocumentVerso'));
 
         $artisan->setCategoryArtisan($request->request->get('categoryArtisan'));
+
         $artisan->setEmail($request->request->get('email'));
         $artisan->setSexe($request->request->get('sexe'));
         $artisan->setMontant($request->request->get('montant'));

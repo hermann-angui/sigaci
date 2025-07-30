@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: DepartmentRepository::class)]
 #[ORM\Table(name: '`departments`')]
@@ -23,6 +24,9 @@ class Department
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 10)]
+    private string $code;
 
     /**
      * @var Collection<int, Entreprise>
@@ -41,6 +45,8 @@ class Department
     {
         $this->entreprises = new ArrayCollection();
         $this->entrepriseActivites = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
+
     }
 
     public function getId(): ?int
@@ -124,4 +130,24 @@ class Department
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return Department
+     */
+    public function setCode(string $code): Department
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+
 }

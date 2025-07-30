@@ -24,8 +24,12 @@ class Pays
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 10)]
+    private ?string $code;
+
     public function __construct()
     {
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int
@@ -47,6 +51,24 @@ class Pays
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     * @return Pays
+     */
+    public function setCode(?string $code): Pays
+    {
+        $this->code = $code;
         return $this;
     }
 

@@ -24,6 +24,9 @@ class Metiers
     #[ORM\Column(type: "string", length: 255)]
     private string $name;
 
+    #[ORM\Column(length: 10)]
+    private string $code;
+
     #[ORM\Column(type: "string", length: 500, nullable: true)]
     private ?string $description;
 
@@ -39,6 +42,7 @@ class Metiers
     public function __construct()
     {
         $this->entrepriseActivites = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function setId(?int $id): self
@@ -128,6 +132,24 @@ class Metiers
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return Metiers
+     */
+    public function setCode(string $code): Metiers
+    {
+        $this->code = $code;
         return $this;
     }
 

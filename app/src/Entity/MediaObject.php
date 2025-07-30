@@ -42,22 +42,21 @@ use Symfony\Component\Serializer\Attribute\Groups;
                         ]
                     ])
                 )
-            )
+            ),
+           // processor: MediaObjectProcessor::class
         )
     ],
-    outputFormats: ['jsonld' => ['application/ld+json']],
-    normalizationContext: ['groups' => ['media_object:read','user:read', 'artisan']],
-    denormalizationContext: ['groups' => ['media_object:create','media_object:update', 'artisan:create', 'artisan:update']]
+   // outputFormats: ['jsonld' => ['application/ld+json']],
+    normalizationContext: ['groups' => ['media_object:read']],
+    // denormalizationContext: ['groups' => ['media_object:create','media_object:update', 'artisan:create', 'artisan:update']]
 )]
-#[Post(processor: MediaObjectProcessor::class)]
 class MediaObject
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
-    #[Groups(['media_object:read', 'user:read'])]
     private ?int $id = null;
 
-    #[ApiProperty(types: ['https://schema.org/contentUrl'], writable: false)]
-    #[Groups(['media_object:read', 'user:read'])]
+    #[ApiProperty(writable: false, types: ['https://schema.org/contentUrl'])]
+    #[Groups(['media_object:read'])]
     public ?string $contentUrl = null;
 
     #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
@@ -66,19 +65,19 @@ class MediaObject
 
     #[ApiProperty(writable: false)]
     #[ORM\Column(nullable: true)]
-    #[Groups(['media_object:read', 'user:read', 'artisan:read', 'artisan:create', 'artisan:update'])]
+   // #[Groups(['media_object:read', 'user:read', 'artisan:read', 'artisan:create', 'artisan:update'])]
     public ?string $filePath = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['media_object:read'])]
+   // #[Groups(['media_object:read'])]
     public ?string $mimeType = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['media_object:read'])]
+   // #[Groups(['media_object:read'])]
     public ?string $type = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['media_object:read'])]
+   // #[Groups(['media_object:read'])]
     public ?int $size = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -218,5 +217,22 @@ class MediaObject
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getContentUrl(): ?string
+    {
+        return $this->contentUrl;
+    }
+
+    /**
+     * @param string|null $contentUrl
+     * @return MediaObject
+     */
+    public function setContentUrl(?string $contentUrl): MediaObject
+    {
+        $this->contentUrl = $contentUrl;
+        return $this;
+    }
 
 }

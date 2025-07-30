@@ -30,9 +30,9 @@ class Crm
     #[Groups(['artisan:read', 'crm:read', 'crm:update', 'crm:update'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 10)]
     #[Groups(['artisan:read', 'crm:read', 'crm:update'])]
-    private ?string $code = null;
+    private string $code;
 
     #[ORM\Column(length: 255)]
     #[Groups(['artisan:read', 'crm:read', 'crm:update', 'crm:update'])]
@@ -47,6 +47,7 @@ class Crm
     public function __construct()
     {
         $this->entreprises = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int

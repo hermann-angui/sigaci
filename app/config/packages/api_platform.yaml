@@ -1,6 +1,8 @@
 api_platform:
     title: Documentation API SIGA - Système intégré de Gestion des Artisans de Côte d'Ivoire
     version: 1.0.0
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity','%kernel.project_dir%/src/DTO']
     defaults:
         pagination_enabled: false
         stateless: true

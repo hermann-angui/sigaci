@@ -24,8 +24,8 @@ class CorpsMetiers
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $code = null;
+    #[ORM\Column(length: 10)]
+    private string $code;
 
     #[ORM\Column(type: "string", length: 500, nullable: true)]
     private string $description;
@@ -40,6 +40,7 @@ class CorpsMetiers
     public function __construct()
     {
         $this->metiers = new ArrayCollection();
+        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function setId(?int $id): self
@@ -132,18 +133,18 @@ class CorpsMetiers
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
     /**
-     * @param string|null $code
+     * @param string $code
      * @return CorpsMetiers
      */
-    public function setCode(?string $code): CorpsMetiers
+    public function setCode(string $code): CorpsMetiers
     {
         $this->code = $code;
         return $this;

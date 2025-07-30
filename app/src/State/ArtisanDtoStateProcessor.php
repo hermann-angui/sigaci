@@ -4,8 +4,8 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use App\DTO\ArtisanRequestDto;
 use App\Entity\Artisan;
-use App\Entity\ArtisanDto;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ArtisanDtoStateProcessor implements ProcessorInterface
@@ -14,9 +14,9 @@ class ArtisanDtoStateProcessor implements ProcessorInterface
         private readonly EntityManagerInterface $entityManager
     ) {}
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): ArtisanDto
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): ArtisanRequestDto
     {
-        if (!$data instanceof ArtisanDto) {
+        if (!$data instanceof ArtisanRequestDto) {
             throw new \InvalidArgumentException('Expected ArtisanDto');
         }
 
