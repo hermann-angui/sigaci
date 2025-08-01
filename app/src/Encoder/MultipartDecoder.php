@@ -26,7 +26,6 @@ final class MultipartDecoder implements DecoderInterface
                 try {
                     return json_decode($element, true, flags: \JSON_THROW_ON_ERROR);
                 }catch (\JsonException $e) {
-                    echo $e->getMessage();
                     return $element;
                 }
 

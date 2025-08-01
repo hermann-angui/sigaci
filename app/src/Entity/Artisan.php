@@ -48,6 +48,12 @@ class Artisan
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     public ?MediaObject $photo = null;
 
+    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
+    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
+    public ?MediaObject $scanDocument = null;
+
     #[ORM\Column(length: 255, unique: true, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $email = null;
@@ -87,18 +93,6 @@ class Artisan
     #[ORM\Column(length: 255,unique: true, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroPieceIdentite;
-
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    public ?MediaObject $photoPieceIdentiteRecto;
-
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    public ?MediaObject $photoPieceIdentiteVerso;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
@@ -200,17 +194,6 @@ class Artisan
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $numeroPermisConduire;
 
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    public ?MediaObject $photoPermisVerso;
-
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ApiProperty(types: ['https://schema.org/image'], writable: false)]
-    #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
-    public ?MediaObject $photoPermisRecto;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
@@ -1101,41 +1084,6 @@ class Artisan
         return $this;
     }
 
-    /**
-     * @return MediaObject|null
-     */
-    public function getPhotoPieceIdentiteRecto(): ?MediaObject
-    {
-        return $this->photoPieceIdentiteRecto;
-    }
-
-    /**
-     * @param MediaObject|null $photoPieceIdentiteRecto
-     * @return Artisan
-     */
-    public function setPhotoPieceIdentiteRecto(?MediaObject $photoPieceIdentiteRecto): Artisan
-    {
-        $this->photoPieceIdentiteRecto = $photoPieceIdentiteRecto;
-        return $this;
-    }
-
-    /**
-     * @return MediaObject|null
-     */
-    public function getPhotoPieceIdentiteVerso(): ?MediaObject
-    {
-        return $this->photoPieceIdentiteVerso;
-    }
-
-    /**
-     * @param MediaObject|null $photoPieceIdentiteVerso
-     * @return Artisan
-     */
-    public function setPhotoPieceIdentiteVerso(?MediaObject $photoPieceIdentiteVerso): Artisan
-    {
-        $this->photoPieceIdentiteVerso = $photoPieceIdentiteVerso;
-        return $this;
-    }
 
     /**
      * @return string|null
@@ -1155,41 +1103,6 @@ class Artisan
         return $this;
     }
 
-    /**
-     * @return MediaObject|null
-     */
-    public function getPhotoPermisVerso(): ?MediaObject
-    {
-        return $this->photoPermisVerso;
-    }
-
-    /**
-     * @param MediaObject|null $photoPermisVerso
-     * @return Artisan
-     */
-    public function setPhotoPermisVerso(?MediaObject $photoPermisVerso): Artisan
-    {
-        $this->photoPermisVerso = $photoPermisVerso;
-        return $this;
-    }
-
-    /**
-     * @return MediaObject|null
-     */
-    public function getPhotoPermisRecto(): ?MediaObject
-    {
-        return $this->photoPermisRecto;
-    }
-
-    /**
-     * @param MediaObject|null $photoPermisRecto
-     * @return Artisan
-     */
-    public function setPhotoPermisRecto(?MediaObject $photoPermisRecto): Artisan
-    {
-        $this->photoPermisRecto = $photoPermisRecto;
-        return $this;
-    }
 
     /**
      * @return string|null
@@ -1220,5 +1133,24 @@ class Artisan
 
         return $this;
     }
+
+    /**
+     * @return MediaObject|null
+     */
+    public function getScanDocument(): ?MediaObject
+    {
+        return $this->scanDocument;
+    }
+
+    /**
+     * @param MediaObject|null $scanDocument
+     * @return Artisan
+     */
+    public function setScanDocument(?MediaObject $scanDocument): Artisan
+    {
+        $this->scanDocument = $scanDocument;
+        return $this;
+    }
+
 
 }

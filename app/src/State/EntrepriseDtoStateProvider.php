@@ -4,8 +4,6 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\DTO\ArtisanRequestDto;
-use App\Entity\Artisan;
 use App\Entity\Entreprise;
 
 class EntrepriseDtoStateProvider implements ProviderInterface

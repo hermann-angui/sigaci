@@ -36,10 +36,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             controller: ArtisanImmatriculationController::class,
             input: ArtisanRequestDto::class,
             output: ArtisanResponseDto::class,
-//            read: false,
-//            deserialize: false,
-//            validate: true,
-//            write: false,
+//          read: false,
+//          deserialize: false,
+//          validate: true,
+//          write: false,
             provider: ArtisanDtoStateProvider::class,
             processor: ArtisanDtoStateProcessor::class,
             extraProperties: [
@@ -70,7 +70,7 @@ class ArtisanRequestDto
     private ?string $prenoms;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $dateNaissance;
+    private ?DateTimeInterface $dateNaissance ;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $lieuNaissance;
@@ -100,29 +100,7 @@ class ArtisanRequestDto
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
     )]
     //#[Groups(['artisan_dto:create'])]
-    private ?File $photoPieceIdentiteRecto = null;
-
-
-    #[Assert\File(
-        maxSize: '10M',
-        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
-    )]
-    //#[Groups(['artisan_dto:create'])]
-    private ?File $photoPieceIdentiteVerso = null;
-
-    #[Assert\File(
-        maxSize: '10M',
-        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
-    )]
-    //#[Groups(['artisan_dto:create'])]
-    private ?File $photoDocumentRecto = null;
-
-    #[Assert\File(
-        maxSize: '10M',
-        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
-    )]
-    //#[Groups(['artisan_dto:create'])]
-    private ?File $photoDocumentVerso = null;
+    private ?File $scanDocument = null;
 
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
@@ -192,19 +170,19 @@ class ArtisanRequestDto
     private ?string $longitude;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $created_at;
+    private ?DateTimeInterface $createdAt;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $crmCode;
 
     private ?int $montant;
 
-    private ?int $code_paiement;
+    private ?string $numeroReferencePaiement;
 
     private ?string $reference_externe;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $categoryArtisan;
+    private ?string $categoryArtisanCode;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $villeNaissanceCode;
@@ -227,20 +205,13 @@ class ArtisanRequestDto
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $activiteExerceeCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $activitePrincipaleCode;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $entrepriseNumeroIdentification;
+    private ?string $typeEnrolement;
 
-    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $entrepriseNumeroImmatriculation;
-
-    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $activiteCode;
 
-
-    public function __construct(?string $id = null)
+    public function __construct()
     {
         $this->id = $this->id ?? 'artisan_' . uniqid();
     }
@@ -274,6 +245,7 @@ class ArtisanRequestDto
         $this->email = $email;
         return $this;
     }
+
 
     /**
      * @return string|null
@@ -434,6 +406,42 @@ class ArtisanRequestDto
     public function setNumeroPieceIdentite(?string $numeroPieceIdentite): ArtisanRequestDto
     {
         $this->numeroPieceIdentite = $numeroPieceIdentite;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getPhoto(): ?File
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param File|null $photo
+     * @return ArtisanRequestDto
+     */
+    public function setPhoto(?File $photo): ArtisanRequestDto
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getScanDocument(): ?File
+    {
+        return $this->scanDocument;
+    }
+
+    /**
+     * @param File|null $scanDocument
+     * @return ArtisanRequestDto
+     */
+    public function setScanDocument(?File $scanDocument): ArtisanRequestDto
+    {
+        $this->scanDocument = $scanDocument;
         return $this;
     }
 
@@ -838,16 +846,16 @@ class ArtisanRequestDto
      */
     public function getCreatedAt(): ?DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeInterface|null $created_at
+     * @param DateTimeInterface|null $createdAt
      * @return ArtisanRequestDto
      */
-    public function setCreatedAt(?DateTimeInterface $created_at): ArtisanRequestDto
+    public function setCreatedAt(?DateTimeInterface $createdAt): ArtisanRequestDto
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
@@ -888,20 +896,20 @@ class ArtisanRequestDto
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getCodePaiement(): ?int
+    public function getNumeroReferencePaiement(): ?string
     {
-        return $this->code_paiement;
+        return $this->numeroReferencePaiement;
     }
 
     /**
-     * @param int|null $code_paiement
+     * @param string|null $numeroReferencePaiement
      * @return ArtisanRequestDto
      */
-    public function setCodePaiement(?int $code_paiement): ArtisanRequestDto
+    public function setNumeroReferencePaiement(?string $numeroReferencePaiement): ArtisanRequestDto
     {
-        $this->code_paiement = $code_paiement;
+        $this->numeroReferencePaiement = $numeroReferencePaiement;
         return $this;
     }
 
@@ -926,18 +934,18 @@ class ArtisanRequestDto
     /**
      * @return string|null
      */
-    public function getCategoryArtisan(): ?string
+    public function getCategoryArtisanCode(): ?string
     {
-        return $this->categoryArtisan;
+        return $this->categoryArtisanCode;
     }
 
     /**
-     * @param string|null $categoryArtisan
+     * @param string|null $categoryArtisanCode
      * @return ArtisanRequestDto
      */
-    public function setCategoryArtisan(?string $categoryArtisan): ArtisanRequestDto
+    public function setCategoryArtisanCode(?string $categoryArtisanCode): ArtisanRequestDto
     {
-        $this->categoryArtisan = $categoryArtisan;
+        $this->categoryArtisanCode = $categoryArtisanCode;
         return $this;
     }
 
@@ -1088,36 +1096,18 @@ class ArtisanRequestDto
     /**
      * @return string|null
      */
-    public function getEntrepriseNumeroIdentification(): ?string
+    public function getTypeEnrolement(): ?string
     {
-        return $this->entrepriseNumeroIdentification;
+        return $this->typeEnrolement;
     }
 
     /**
-     * @param string|null $entrepriseNumeroIdentification
+     * @param string|null $typeEnrolement
      * @return ArtisanRequestDto
      */
-    public function setEntrepriseNumeroIdentification(?string $entrepriseNumeroIdentification): ArtisanRequestDto
+    public function setTypeEnrolement(?string $typeEnrolement): ArtisanRequestDto
     {
-        $this->entrepriseNumeroIdentification = $entrepriseNumeroIdentification;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEntrepriseNumeroImmatriculation(): ?string
-    {
-        return $this->entrepriseNumeroImmatriculation;
-    }
-
-    /**
-     * @param string|null $entrepriseNumeroImmatriculation
-     * @return ArtisanRequestDto
-     */
-    public function setEntrepriseNumeroImmatriculation(?string $entrepriseNumeroImmatriculation): ArtisanRequestDto
-    {
-        $this->entrepriseNumeroImmatriculation = $entrepriseNumeroImmatriculation;
+        $this->typeEnrolement = $typeEnrolement;
         return $this;
     }
 
@@ -1139,94 +1129,5 @@ class ArtisanRequestDto
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getPhoto(): ?File
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @param File|null $photo
-     * @return ArtisanRequestDto
-     */
-    public function setPhoto(?File $photo): ArtisanRequestDto
-    {
-        $this->photo = $photo;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getPhotoPieceIdentiteRecto(): ?File
-    {
-        return $this->photoPieceIdentiteRecto;
-    }
-
-    /**
-     * @param File|null $photoPieceIdentiteRecto
-     * @return ArtisanRequestDto
-     */
-    public function setPhotoPieceIdentiteRecto(?File $photoPieceIdentiteRecto): ArtisanRequestDto
-    {
-        $this->photoPieceIdentiteRecto = $photoPieceIdentiteRecto;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getPhotoPieceIdentiteVerso(): ?File
-    {
-        return $this->photoPieceIdentiteVerso;
-    }
-
-    /**
-     * @param File|null $photoPieceIdentiteVerso
-     * @return ArtisanRequestDto
-     */
-    public function setPhotoPieceIdentiteVerso(?File $photoPieceIdentiteVerso): ArtisanRequestDto
-    {
-        $this->photoPieceIdentiteVerso = $photoPieceIdentiteVerso;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getPhotoDocumentRecto(): ?File
-    {
-        return $this->photoDocumentRecto;
-    }
-
-    /**
-     * @param File|null $photoDocumentRecto
-     * @return ArtisanRequestDto
-     */
-    public function setPhotoDocumentRecto(?File $photoDocumentRecto): ArtisanRequestDto
-    {
-        $this->photoDocumentRecto = $photoDocumentRecto;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getPhotoDocumentVerso(): ?File
-    {
-        return $this->photoDocumentVerso;
-    }
-
-    /**
-     * @param File|null $photoDocumentVerso
-     * @return ArtisanRequestDto
-     */
-    public function setPhotoDocumentVerso(?File $photoDocumentVerso): ArtisanRequestDto
-    {
-        $this->photoDocumentVerso = $photoDocumentVerso;
-        return $this;
-    }
 
 }

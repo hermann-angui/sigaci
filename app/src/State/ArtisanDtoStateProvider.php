@@ -6,7 +6,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\DTO\ArtisanRequestDto;
+use App\DTO\ArtisanResponseDto;
 use App\Entity\Artisan;
 use App\Repository\ArtisanRepository;
 
@@ -38,7 +38,7 @@ class ArtisanDtoStateProvider implements ProviderInterface
         }, $artisans);
     }
 
-    private function getItem(mixed $id): ?ArtisanRequestDto
+    private function getItem(mixed $id): ?ArtisanResponseDto
     {
         $artisan = $this->artisanRepository->find($id);
 
@@ -49,10 +49,11 @@ class ArtisanDtoStateProvider implements ProviderInterface
         return $this->mapEntityToDto($artisan);
     }
 
-    private function mapEntityToDto(Artisan $artisan): ArtisanRequestDto
+    private function mapEntityToDto(Artisan $artisan): ArtisanResponseDto
     {
-        $dto = new ArtisanRequestDto();
+        $dto = new ArtisanResponseDto();
         $dto->setId((string) $artisan->getId());
+        $dto->setSexe((string) $artisan->getSexe());
 
         return $dto;
     }
