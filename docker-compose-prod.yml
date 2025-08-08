@@ -68,23 +68,23 @@ services:
       - traefik_public # phpMyAdmin needs to be accessible by Traefik
 
   # phpMyAdmin Service
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    environment:
-#      PMA_HOST: db # Connect to the 'mysql' service
-#      MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # Use the same root password as your MySQL service
-#      PMA_PORT: 3306 # The port MySQL is listening on
-#      UPLOAD_LIMIT: 64M # Increase upload limit if needed
-#      MEMORY_LIMIT: 256M # Increase memory limit if needed
-#    depends_on:
-#      - db # phpMyAdmin depends on MySQL being ready
-#    networks:
-#      - default # phpMyAdmin needs to communicate with MySQL on the default network
-#      - traefik_public # phpMyAdmin needs to be accessible by Traefik
-#    ports:
-#      - "83:80"
-#    labels:
-#      - "traefik.enable=true"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db # Connect to the 'mysql' service
+      MYSQL_ROOT_PASSWORD: QT6e5APtSYaU # Use the same root password as your MySQL service
+      PMA_PORT: 3306 # The port MySQL is listening on
+      UPLOAD_LIMIT: 64M # Increase upload limit if needed
+      MEMORY_LIMIT: 256M # Increase memory limit if needed
+    depends_on:
+      - db # phpMyAdmin depends on MySQL being ready
+    networks:
+      - default # phpMyAdmin needs to communicate with MySQL on the default network
+      - traefik_public # phpMyAdmin needs to be accessible by Traefik
+    ports:
+      - "83:80"
+    labels:
+      - "traefik.enable=false"
 #      - "traefik.http.routers.phpmyadmin-http.entrypoints=web"
 #      - "traefik.http.routers.phpmyadmin-http.rule=Host(`db-cnmci.sfpci.com`)" # IMPORTANT: Change to your actual subdomain
 #      - "traefik.http.routers.phpmyadmin-http.middlewares=redirect-to-https"
