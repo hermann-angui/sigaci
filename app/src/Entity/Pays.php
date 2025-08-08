@@ -29,12 +29,24 @@ class Pays
 
     public function __construct()
     {
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return Pays
+     */
+    public function setId(?int $id): Pays
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function __toString(): string

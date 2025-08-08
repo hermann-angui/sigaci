@@ -39,6 +39,16 @@ class SousPrefectureRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('sp')
+            ->select('sp.name as Nom', 'sp.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 //    /**
 //     * @return SousPrefecture[] Returns an array of SousPrefecture objects
 //     */

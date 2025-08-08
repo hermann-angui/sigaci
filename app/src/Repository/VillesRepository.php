@@ -55,6 +55,15 @@ class VillesRepository extends ServiceEntityRepository
         return array_combine($d, $d);
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v.name as Nom', 'v.code as Code')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Villes[] Returns an array of Villes objects
 //     */

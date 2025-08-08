@@ -3,9 +3,10 @@
 namespace App\Helper;
 
 use App\Entity\Artisan;
+use App\Entity\Entreprise;
 use Symfony\Component\HttpFoundation\File\File;
 
-class ArtisanAssetHelper implements AssetHelperInterface
+class EntrepriseAssetHelper implements AssetHelperInterface
 {
     /**
      * @var FileUploadHelper
@@ -33,9 +34,9 @@ class ArtisanAssetHelper implements AssetHelperInterface
     {
         try {
             if (!$destDirectory) return null;
-           // $path = $this->uploadDirectory . "/public/artisans/" . $destDirectory . "/";
-            if (!file_exists($destDirectory)) mkdir($destDirectory, 0777, true);
-            return $destDirectory;
+            $path = $this->uploadDirectory . "/public/medias/entreprises/" . $destDirectory . "/";
+            if (!file_exists($path)) mkdir($path, 0777, true);
+            return $path;
         } catch (\Exception $e) {
             return null;
         }
@@ -51,11 +52,12 @@ class ArtisanAssetHelper implements AssetHelperInterface
         return $this->fileUploadHelper->remove($file);
     }
 
-    public function createThumbnail(File $file, ?string $destDirectory, $width, $height): ?string {
-       // $filePath = new File($this->getUploadDirectory($destDirectory) . $file);
+
+    public function createThumbnail(String $file, ?string $destDirectory, $width, $height): ?string{
+        $filePath = new File($this->getUploadDirectory($destDirectory) . $file);
         return $this->imageHelper->createThumbnail(
-            $file->getRealPath(),
-            $file->getBasename('.' . $file->getExtension()),
+            $filePath->getRealPath(),
+            $filePath->getBasename('.' . $filePath->getExtension()),
             $this->getUploadDirectory($destDirectory),
             $width,
             $height
@@ -63,11 +65,11 @@ class ArtisanAssetHelper implements AssetHelperInterface
     }
 
     /**
-     * @param Artisan $artisan
+     * @param Entreprise $entreprise
      * @return string
      */
-    public function getDir(Artisan $artisan): ?string {
-        $folder = $this->uploadDirectory . "/public/artisans/" . $artisan->getReference() . "/";
+    public function getDir(Entreprise $artisan): ?string {
+        $folder = $this->uploadDirectory . "/public/medias/entreprises/" . $artisan->getReference() . "/";
         if(!file_exists($folder)) mkdir($folder, 0777, true);
         return $folder;
     }

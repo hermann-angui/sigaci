@@ -3,10 +3,12 @@
 namespace App\Command;
 
 use App\Entity\Artisan;
+use App\Entity\BrancheMetier;
 use App\Entity\CategoryArtisan;
 use App\Entity\Communes;
 use App\Entity\CorpsMetiers;
 use App\Entity\Crm;
+use App\Entity\Department;
 use App\Entity\EquipeAgent;
 use App\Entity\Entreprise;
 use App\Entity\Identification;
@@ -16,6 +18,7 @@ use App\Entity\Metiers;
 use App\Entity\Nationalities;
 use App\Entity\Payment;
 use App\Entity\Pays;
+use App\Entity\SousPrefecture;
 use App\Entity\User;
 use App\Entity\Villes;
 use DateTime;
@@ -42,36 +45,75 @@ class InitDataCommand extends Command
     const EQUIPE_COUNT = 10;
     const ARTISAN_COUNT = 200;
 
-    public function __construct(
-        private EntityManagerInterface $em,
-        private UserPasswordHasherInterface $hasher,
-    ) {
+    const FILE_PREFIX = "siga_db_table_";
+    const PATH = "/var/www/html/var/media/initdata/";
+
+    public function __construct(private readonly EntityManagerInterface  $em, private readonly UserPasswordHasherInterface $hasher,) {
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
+    protected function configure(): void {
         $this
-            ->addOption('mediaobjects', null, InputOption::VALUE_REQUIRED, "Media", 0)
-            ->addOption('departements', null, InputOption::VALUE_OPTIONAL, "Departements", 0)
-            ->addOption('metiers', null, InputOption::VALUE_OPTIONAL, "Metiers", 0)
+            ->addOption('mediaobjects', null, InputOption::VALUE_REQUIRED, "mediaobjects", 0)
+            ->addOption('departements', null, InputOption::VALUE_OPTIONAL, "departements", 0)
+            ->addOption('metiers', null, InputOption::VALUE_OPTIONAL, "metiers", 0)
+            ->addOption('pays', null, InputOption::VALUE_OPTIONAL, "pays", 0)
+            ->addOption('villes', null, InputOption::VALUE_OPTIONAL, "villes", 0)
+            ->addOption('communes', null, InputOption::VALUE_OPTIONAL, "communes", 0)
+            ->addOption('sous_prefectures', null, InputOption::VALUE_OPTIONAL, "sous_prefectures", 0)
+            ->addOption('corps_metiers', null, InputOption::VALUE_OPTIONAL, "corps_metiers", 0)
             ->addOption('crms', null, InputOption::VALUE_OPTIONAL, "crms", 0)
-            ->addOption('equipes', null, InputOption::VALUE_OPTIONAL, "Equipes", 0)
-            ->addOption('users', null, InputOption::VALUE_REQUIRED, "Users", 0)
-            ->addOption('artisans', null, InputOption::VALUE_REQUIRED, "Users", 0)
-            ->addOption('category_artisans', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
-            ->addOption('immatriculations', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
-            ->addOption('identifications', null, InputOption::VALUE_OPTIONAL, "Villes", 0)
+            ->addOption('branche_metiers', null, InputOption::VALUE_OPTIONAL, "branche_metiers", 0)
+            ->addOption('equipes', null, InputOption::VALUE_OPTIONAL, "equipes", 0)
+            ->addOption('departements', null, InputOption::VALUE_OPTIONAL, "departements", 0)
+            ->addOption('users', null, InputOption::VALUE_REQUIRED, "users", 0)
+            ->addOption('artisans', null, InputOption::VALUE_REQUIRED, "artisans", 0)
+            ->addOption('category_artisans', null, InputOption::VALUE_OPTIONAL, "category_artisans", 0)
+            ->addOption('immatriculations', null, InputOption::VALUE_OPTIONAL, "immatriculations", 0)
+            ->addOption('identifications', null, InputOption::VALUE_OPTIONAL, "identifications", 0)
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+
+    // php bin/console InitDataCommand  --pays=1 --communes=1 --sous_prefectures=1 --villes=1 --departements=1 --crms=1 --branche_metiers=1 --corps_metiers=1 --metiers=1 --mediaobjects=1
+    protected function execute(InputInterface $input, OutputInterface $output): int {
         $io = new SymfonyStyle($input, $output);
         $this->faker = Factory::create();
 
+        if ($input->getOption('pays')) {
+            $this->loadPaysData();
+        }
+
+        if ($input->getOption('communes')) {
+            $this->loadCommunesData();
+        }
+
+        if($input->getOption('sous_prefectures')){
+            $this->loadSousPrefecturesData();
+        }
+
+        if ($input->getOption('villes')) {
+            $this->loadVillesData();
+        }
+
+        if ($input->getOption('departements')) {
+            $this->loadDepartementsData();
+        }
+
+        if ($input->getOption('branche_metiers')) {
+            $this->loadBrancheMetiersData();
+        }
+
+        if ($input->getOption('corps_metiers')) {
+            $this->loadCorpsMetiersData();
+        }
+
+        if ($input->getOption('metiers')) {
+            $this->loadMetiersData();
+        }
+
         if ($input->getOption('crms')) {
-             $this->loadCrmsData();
+            $this->loadCrmsData();
         }
 
         if ($input->getOption('mediaobjects')) {
@@ -98,37 +140,155 @@ class InitDataCommand extends Command
             $this->loadImmatriculationsData();
         }
 
-
         $output->writeln('Utilisateur créé avec succès!');
+
         return Command::SUCCESS;
     }
 
-    private function loadCrmsData(): void {
-        $crms = [
-            "lagunes nord",
-            "lagunes sud",
-            "lagunes est",
-            "abengourou",
-            "bondoukou",
-            "bouake",
-            "daloa",
-            "korhogo",
-            "man",
-            "odienne",
-            "san-pedro",
-            "yamoussoukro"
-        ];
+    private function  loadDepartementsData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "departments.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')) {
+            $data = array_combine($header, $row);
+            $department = new Department();
+            $department->setCode($data['code']);
+            $crm = $this->em->getRepository(Crm::class)->find($data['crm_id']);
+            $department->setCrm($crm);
+            $department->setName(trim($data['name']));
+            $department->setId((int)$data['id']);
+            $this->em->persist($department);
+        }
+        $this->em->flush();
+    }
 
-        foreach ($crms as $crm) {
-            $crmNew = new Crm();
-            $crmNew->setName($crm);
-            $this->em->persist($crmNew);
+    private function loadSousPrefecturesData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "sous_prefecture.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        $count = 1;
+        while($row = fgetcsv($fp, 1000, ';')){
+            $data = array_combine($header, $row);
+            if(!empty($data['name'])) {
+                $names = explode("," , $data['name']);
+                foreach ($names as $name){
+                    $sousPrefecture = new SousPrefecture();
+                    $sousPrefecture->setCode("SP_" . $count++);
+                    $department = $this->em->getRepository(Department::class)->find($data['departement_id']);
+                    if($department) $sousPrefecture->setDepartment($department);
+                    $sousPrefecture->setName($name);
+                    $this->em->persist($sousPrefecture);
+                }
+            }
+        }
+        $this->em->flush();
+    }
+
+    private function loadCrmsData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "crms.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $crm = new Crm();
+            $crm->setCode($data['code']);
+            $crm->setName(trim($data['name']));
+            $crm->setAbbr($data["abbr"]);
+            $crm->setId((int)$data['id']);
+            $this->em->persist($crm);
+        }
+        $this->em->flush();
+    }
+
+    private function  loadVillesData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "villes.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 1000, ';')){
+            $data = array_combine($header, $row);
+            $ville = new Villes();
+            $ville->setCode($data['code']);
+            $ville->setName(trim($data['name']));
+            $ville->setId((int)$data['id']);
+            $this->em->persist($ville);
+        }
+        $this->em->flush();
+
+    }
+
+    private function  loadPaysData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "pays.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $pays = new Pays();
+            $pays->setCode($data['code']);
+            $pays->setName(trim($data['name']));
+            $pays->setId((int)$data['id']);
+            $this->em->persist($pays);
+        }
+        $this->em->flush();
+    }
+
+    private function  loadCommunesData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "communes.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $commune = new Communes();
+            $commune->setCode($data['code']);
+            $commune->setName(trim($data['name']));
+            $commune->setId((int)$data['id']);
+            $this->em->persist($commune);
+        }
+        $this->em->flush();
+    }
+
+    private function  loadBrancheMetiersData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "branche_metiers.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $brancheMetier = new BrancheMetier();
+            $brancheMetier->setCode($data['code']);
+            $brancheMetier->setName(trim($data['name']));
+            $brancheMetier->setId((int)$data['id']);
+            $this->em->persist($brancheMetier);
+        }
+        $this->em->flush();
+    }
+
+    private function  loadCorpsMetiersData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "corps_metiers.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $corpsMetier = new CorpsMetiers();
+            $corpsMetier->setCode($data['code']);
+
+            $brancheMetier = $this->em->getRepository(BrancheMetier::class)->find($data['branche_metier_id']);
+            $corpsMetier->setBrancheMetier($brancheMetier);
+            $corpsMetier->setName(trim($data['name']));
+            $corpsMetier->setId((int)$data['id']);
+            $this->em->persist($corpsMetier);
+        }
+        $this->em->flush();
+    }
+
+    private function  loadMetiersData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "metiers.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $metier = new Metiers();
+            $metier->setCode($data['code']);
+            $corpsMetier = $this->em->getRepository(CorpsMetiers::class)->find($data['corps_metiers_id']);
+            $metier->setCorpsMetiers($corpsMetier);
+            $metier->setName(trim($data['name']));
+            $metier->setId((int)$data['id']);
+            $this->em->persist($metier);
         }
         $this->em->flush();
     }
 
     private function loadMediaObjectData(): void {
-        $folder = '/var/www/html/public/artisans'; // Example: 'uploads/images'
+        $folder = '/var/www/html/public/media'; // Example: 'uploads/images'
 
         // Get all files (excluding directories and hidden files)
         $files = array_filter(glob($folder . '/*.jpg'), 'is_file');
@@ -141,6 +301,20 @@ class InitDataCommand extends Command
             $this->em->persist($media);
         }
 
+        $this->em->flush();
+    }
+
+    private function loadCategoryArtisanData(): void {
+        $fp = fopen(self::PATH . self::FILE_PREFIX . "category_artisans.csv", 'r');
+        $header = fgetcsv($fp, 1000, ';');
+        while($row = fgetcsv($fp, 2000, ';')){
+            $data = array_combine($header, $row);
+            $categoryArtisan = new CategoryArtisan();
+            $categoryArtisan->setCode($data['code']);
+            $categoryArtisan->setName(trim($data['name']));
+            $categoryArtisan->setId((int)$data['id']);
+            $this->em->persist($categoryArtisan);
+        }
         $this->em->flush();
     }
 
@@ -172,7 +346,7 @@ class InitDataCommand extends Command
         $this->faker = Factory::create();
 
         $metiers = $this->em->getRepository(Metiers::class)->findAll();
-      //  $crms = $this->em->getRepository(Crm::class)->findAll();
+        $crms = $this->em->getRepository(Crm::class)->findAll();
         $entreprises = $this->em->getRepository(Entreprise::class)->findAll();
         $medias = $this->em->getRepository(MediaObject::class)->findAll();
         $communes = $this->em->getRepository(Communes::class)->findAll();
@@ -180,7 +354,6 @@ class InitDataCommand extends Command
         $pays = $this->em->getRepository(Pays::class)->findAll();
         $nationalites = $this->em->getRepository(Nationalities::class)->findAll();
         $categoryArtisans = $this->em->getRepository(CategoryArtisan::class)->findAll();
-
 
         for ($i = 0; $i < self::ARTISAN_COUNT; $i++) {
             $artisan = new Artisan();
@@ -196,7 +369,7 @@ class InitDataCommand extends Command
             $artisan->setEtatCivil($this->faker->randomElement($maritalStatus));
 
             $artisan->setDateNaissance(new DateTime($this->faker->date('Y-m-d')));
-            $artisan->setDrivingLicenseNumber(mt_rand());
+           // $artisan->setCategoryArtisan();
             $artisan->setDateNaissance(new DateTime($this->faker->date('Y-m-d')));
 
             $artisan->setActiviteExercee($this->faker->randomElement($metiers));
@@ -226,9 +399,8 @@ class InitDataCommand extends Command
             $artisan->setNumeroRM(mt_rand());
             $artisan->setPaysNaissance($this->faker->randomElement($pays));
 
-            $entreprise = $this->faker->randomElement($entreprises);
-            $artisan->setEntreprise($entreprise);
-            $artisan->setCrm($entreprise->getCrm());
+            $artisan->setEntreprise( $this->faker->randomElement($entreprises));
+            $artisan->setCrm($this->faker->randomElement($crms));
 
             $this->em->persist($artisan);
         }
@@ -238,14 +410,8 @@ class InitDataCommand extends Command
 
     private function loadUsersData(): void {
 
-        $mediaObjects = $this->em->getRepository(MediaObject::class)->findAll();
-        $medias = [];
-        foreach ($mediaObjects as $mediaObject) {
-            $medias[] = $mediaObject;
-        }
-
+        $medias = $this->em->getRepository(MediaObject::class)->findAll();
         $user = new User();
-        $user->setEmail("anguidev@gmail.com");
         $user->setEmail("anguidev@gmail.com");
         $user->setUsername("anguidev");
         $user->setPassword($this->hasher->hashPassword($user,"scawfield"));
@@ -255,6 +421,17 @@ class InitDataCommand extends Command
         $user->setPrenoms("HERMANN");
         $user->setRoles(['ROLE_ADMIN']);
         $this->em->persist($user);
+
+        $user6 = new User();
+        $user6->setEmail("mbambi4@gmail.com");
+        $user6->setUsername("mbambi");
+        $user6->setPassword($this->hasher->hashPassword($user6,"Lazarus01!"));
+        $user6->setPhoto($this->faker->randomElement($medias));
+        $user6->setPlainPassword("Lazarus01!");
+        $user6->setNom("Mbambi");
+        $user6->setPrenoms("junior");
+        $user6->setRoles(['ROLE_ADMIN']);
+        $this->em->persist($user6);
 
         $user2 = new User();
         $user2->setEmail("superviseur@gmail.com");
@@ -292,6 +469,18 @@ class InitDataCommand extends Command
         $user4->setRoles(['ROLE_AGENT_CNMCI']);
         $this->em->persist($user4);
 
+        $user5 = new User();
+        $user5->setEmail("dossmeno@bmi.ci");
+        $user5->setSexe("H");
+        $user5->setPhoto($this->faker->randomElement($medias));
+        $user5->setUsername("bmi");
+        $user5->setPassword($this->hasher->hashPassword($user5,"bmi"));
+        $user5->setPlainPassword("recenseur");
+        $user5->setNom("dosso");
+        $user5->setPrenoms("dosso");
+        $user5->setRoles(['ROLE_AGENT_BMI']);
+        $this->em->persist($user5);
+
         $roles = [
             "ROLE_ADMIN",
             "ROLE_SUPERVISEUR",
@@ -316,43 +505,21 @@ class InitDataCommand extends Command
         $this->em->flush();
     }
 
-    private function loadCategoryArtisanData(): void {
-        $categories = [
-            "MAÎTRE ARTISAN",
-            "COMPAGNON",
-            "APPRENTI",
-            "ENTREPRISE ARTISANALE",
-        ];
-        foreach ($categories as $category) {
-            $categoryNew = new CategoryArtisan();
-            $categoryNew->setName($category);
-            $this->em->persist($categoryNew);
-        }
-        $this->em->flush();
-    }
-
     private function loadIdentificationsData(): void {
-
-        $artisanObjects = $this->em->getRepository(Artisan::class)->findAll();
-        $artisans = [];
-        foreach ($artisanObjects as $artisanObject) {
-            $artisans[] = $artisanObject;
-        }
-
-        $userObjects = $this->em->getRepository(User::class)->findAll();
-        $users = [];
-        foreach ($userObjects as $userObject) {
-            $users[] = $userObject;
-        }
-
+        $artisans = $this->em->getRepository(Artisan::class)->findAll();
+        $users = $this->em->getRepository(User::class)->findAll();
 
         for ($i = 0; $i < self::ARTISAN_COUNT; $i++){
             $identification = new Identification();
             $identification->setType("DIRECT");
             $identification->setLongitude(null);
-            $identification->setLongitude(null);
+            $identification->setLatitude(null);
+            $identification->setReference("PENDING");
+            $identification->setNumeroReferenceExterne(Uuid::v4()->toString());
+            $identification->setAgent($this->faker->randomElement($users));
             $identification->setStatus("PENDING");
-            $identification->setArtisan($this->faker->randomElement($artisans));
+            $identification->setSource("BMI");
+            $identification->setCode($this->faker->randomElement($artisans));
             $identification->setAgent($this->faker->randomElement($users));
             $this->em->persist($identification);
             $this->em->flush();
@@ -360,7 +527,6 @@ class InitDataCommand extends Command
     }
 
     private function loadImmatriculationsData(): void {
-
         $paymentTypes = [
             "ORANGE",
             "MTN",
@@ -368,7 +534,7 @@ class InitDataCommand extends Command
             "MOOV"
         ];
         $artisans = $this->em->getRepository(Artisan::class)->findAll();
-        $identifications = $this->em->getRepository(Artisan::class)->findAll();
+        // $identifications = $this->em->getRepository(Artisan::class)->findAll();
         $users = $this->em->getRepository(User::class)->findBy([
             "roles" => ["ROLE_RECENSEUR"],
         ]);
@@ -379,13 +545,11 @@ class InitDataCommand extends Command
             $artisan = $this->faker->randomElement($artisans);
 
             $immatriculation = new Immatriculation();
-            $immatriculation->setType("DIRECT");
+            $immatriculation->setType("EA");
             $immatriculation->setAgent($this->faker->randomElement($users));
-            $immatriculation->setIdentification($this->faker->randomElement($identifications));
             $immatriculation->setLongitude(null);
             $immatriculation->setLongitude(null);
             $immatriculation->setStatus("PENDING");
-            $immatriculation->setArtisan($artisan);
             $immatriculation->setCode(Uuid::v4()->toRfc4122());
             $immatriculation->setPaymentType($paymentType);
             $this->em->persist($immatriculation);
@@ -400,28 +564,25 @@ class InitDataCommand extends Command
             $payment->setOperateur("WAVE");
             $payment->setReceiptNumber(mt_rand());
             $payment->setTarget("IMMATRICULATION");
+            $payment->setPaymentFor();
             $payment->setUser($this->faker->randomElement($users));
         }
     }
 
     private function EquipeLoadData(): void {
         $userObjects = $this->em->getRepository(User::class)->findAll();
-        $users = [];
-        foreach ($userObjects as $userObject) {
-            $users[] = $userObject;
-        }
-
         for($i = 0; $i < self::EQUIPE_COUNT ; $i++){
             $equipeNew = new EquipeAgent();
-            $equipeNew->addMembre($this->faker->randomElement($users));
-            $equipeNew->setSuperviseur($this->faker->randomElement($users));
+            $equipeNew->addMembre($this->faker->randomElement($userObjects));
+            $equipeNew->setSuperviseur($this->faker->randomElement($userObjects));
             $this->em->persist($equipeNew);
             $this->em->flush();
         }
     }
 
     // Generate random coordinates
-    function generateRandomCoordinates($count, $minLat, $maxLat, $minLng, $maxLng) {
+    function generateRandomCoordinates($count, $minLat, $maxLat, $minLng, $maxLng): array
+    {
         $coordinates = [];
         for ($i = 0; $i < $count; $i++) {
             $lat = mt_rand($minLat * 1000000, $maxLat * 1000000) / 1000000;

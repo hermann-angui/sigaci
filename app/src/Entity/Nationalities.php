@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\NationalitiesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: NationalitiesRepository::class)]
 #[ORM\Table(name: '`nationalites`')]
@@ -27,7 +28,6 @@ class Nationalities
 
     public function __construct()
     {
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function getId(): ?int

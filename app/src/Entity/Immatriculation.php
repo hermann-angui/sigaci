@@ -29,7 +29,7 @@ class Immatriculation
     private ?string $status;
 
     #[ORM\Column(type:"string", unique:true)]
-    private ?string $internal_code;
+    private ?string $numeroReferenceExterne;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $created_at;
@@ -57,7 +57,7 @@ class Immatriculation
 
     public function __construct()
     {
-        $this->internal_code = Uuid::v4()->toRfc4122();
+        $this->reference = Uuid::v4()->toRfc4122();
         $this->created_at = new DateTime();
         $this->modified_at = new DateTime();
     }
@@ -77,25 +77,24 @@ class Immatriculation
         $this->status = $status;
     }
 
-    public function getCreatedAt(): ?string
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(?string $created_at): void
+    /**
+     * @param DateTimeInterface|null $created_at
+     * @return Immatriculation
+     */
+    public function setCreatedAt(?DateTimeInterface $created_at): Immatriculation
     {
         $this->created_at = $created_at;
+        return $this;
     }
 
-    public function getUpdatedAt(): ?string
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(?string $updated_at): void
-    {
-        $this->updated_at = $updated_at;
-    }
 
     public function getType(): ?string
     {
@@ -167,23 +166,7 @@ class Immatriculation
         return $this;
     }
 
-    /**
-     * @return ?string|null
-     */
-    public function getInternalCode(): ?string
-    {
-        return $this->internal_code;
-    }
 
-    /**
-     * @param ?string|null $internal_code
-     * @return Immatriculation
-     */
-    public function setInternalCode(?string $internal_code): Immatriculation
-    {
-        $this->internal_code = $internal_code;
-        return $this;
-    }
 
     /**
      * @return DateTimeInterface|null
@@ -220,5 +203,24 @@ class Immatriculation
         $this->reference = $reference;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getNumeroReferenceExterne(): ?string
+    {
+        return $this->numeroReferenceExterne;
+    }
+
+    /**
+     * @param string|null $numeroReferenceExterne
+     * @return Immatriculation
+     */
+    public function setNumeroReferenceExterne(?string $numeroReferenceExterne): Immatriculation
+    {
+        $this->numeroReferenceExterne = $numeroReferenceExterne;
+        return $this;
+    }
+
 
 }

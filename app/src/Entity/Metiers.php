@@ -42,7 +42,6 @@ class Metiers
     public function __construct()
     {
         $this->entrepriseActivites = new ArrayCollection();
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
     public function setId(?int $id): self

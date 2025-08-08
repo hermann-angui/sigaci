@@ -39,6 +39,15 @@ class MetiersRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.name as Nom', 'm.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Metiers[] Returns an array of Metiers objects
 //     */

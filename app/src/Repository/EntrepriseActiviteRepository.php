@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Entreprise;
+use App\Entity\EntrepriseActivite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Entreprise>
+ * @extends ServiceEntityRepository<EntrepriseActivite>
  *
- * @method Entreprise|null find($id, $lockMode = null, $lockVersion = null)
- * @method Entreprise|null findOneBy(array $criteria, array $orderBy = null)
- * @method Entreprise[]    findAll()
- * @method Entreprise[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method EntrepriseActivite|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EntrepriseActivite|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EntrepriseActivite[]    findAll()
+ * @method EntrepriseActivite[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EntrepriseRepository extends ServiceEntityRepository
+class EntrepriseActiviteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Entreprise::class);
+        parent::__construct($registry, EntrepriseActivite::class);
     }
 
-    public function add(Entreprise $entity, bool $flush = false): void
+    public function add(EntrepriseActivite $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -31,7 +31,7 @@ class EntrepriseRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Entreprise $entity, bool $flush = false): void
+    public function remove(EntrepriseActivite $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -42,7 +42,7 @@ class EntrepriseRepository extends ServiceEntityRepository
 
     public function getLastRowId(): ?int
     {
-        return $this->createQueryBuilder('m')
+        return $this->createQueryBuilder('ea')
             ->select('MAX(m.id)')
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
@@ -50,7 +50,7 @@ class EntrepriseRepository extends ServiceEntityRepository
 
 
 //    /**
-//     * @return Entreprise[] Returns an array of Entreprise objects
+//     * @return EntrepriseActivite[] Returns an array of EntrepriseActivite objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -64,7 +64,7 @@ class EntrepriseRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Entreprise
+//    public function findOneBySomeField($value): ?EntrepriseActivite
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

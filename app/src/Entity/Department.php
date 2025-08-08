@@ -40,19 +40,42 @@ class Department
     #[ORM\OneToMany(targetEntity: EntrepriseActivite::class, mappedBy: 'department')]
     private Collection $entrepriseActivites;
 
+    #[ORM\ManyToOne(inversedBy: 'departments')]
+    private ?crm $crm = null;
+
+    /**
+     * @var Collection<int, SousPrefecture>
+     */
+    #[ORM\OneToMany(targetEntity: SousPrefecture::class, mappedBy: 'department')]
+    private Collection $sousPrefectures;
+
 
     public function __construct()
     {
         $this->entreprises = new ArrayCollection();
         $this->entrepriseActivites = new ArrayCollection();
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
+        $this->sousPrefectures = new ArrayCollection();
 
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @param int|null $id
+     * @return Department
+     */
+    public function setId(?int $id): Department
+    {
+        $this->id = $id;
+        return $this;
+    }
+
 
     public function getName(): ?string
     {
@@ -146,6 +169,48 @@ class Department
     public function setCode(string $code): Department
     {
         $this->code = $code;
+        return $this;
+    }
+
+    public function getCrm(): ?crm
+    {
+        return $this->crm;
+    }
+
+    public function setCrm(?crm $crm): static
+    {
+        $this->crm = $crm;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SousPrefecture>
+     */
+    public function getSousPrefectures(): Collection
+    {
+        return $this->sousPrefectures;
+    }
+
+    public function addSousPrefecture(SousPrefecture $sousPrefecture): static
+    {
+        if (!$this->sousPrefectures->contains($sousPrefecture)) {
+            $this->sousPrefectures->add($sousPrefecture);
+            $sousPrefecture->setDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSousPrefecture(SousPrefecture $sousPrefecture): static
+    {
+        if ($this->sousPrefectures->removeElement($sousPrefecture)) {
+            // set the owning side to null (unless already changed)
+            if ($sousPrefecture->getDepartment() === $this) {
+                $sousPrefecture->setDepartment(null);
+            }
+        }
+
         return $this;
     }
 

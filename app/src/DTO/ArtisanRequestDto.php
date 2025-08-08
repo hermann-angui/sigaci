@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Controller\Api\ArtisanImmatriculationController;
 use App\State\ArtisanDtoStateProcessor;
 use App\State\ArtisanDtoStateProvider;
 use DateTimeInterface;
@@ -33,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             uriTemplate: '/artisan/immatriculation',
             inputFormats: ['multipart' => ['multipart/form-data']],
-            controller: ArtisanImmatriculationController::class,
+          //  controller: ArtisanImmatriculationController::class,
             input: ArtisanRequestDto::class,
             output: ArtisanResponseDto::class,
 //          read: false,
@@ -49,8 +48,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             ]
         ),
     ],
-    //normalizationContext: ['groups' => ['artisan_dto:read']],
-    //denormalizationContext: ['groups' => ['artisan_dto:create', 'artisan_dto:update']],
 )]
 class ArtisanRequestDto
 {
@@ -70,7 +67,7 @@ class ArtisanRequestDto
     private ?string $prenoms;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $dateNaissance ;
+    private ?string $dateNaissance ;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
     private ?string $lieuNaissance;
@@ -97,119 +94,119 @@ class ArtisanRequestDto
 
     #[Assert\File(
         maxSize: '10M',
-        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'],
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/svg', 'application/pdf'],
     )]
     //#[Groups(['artisan_dto:create'])]
     private ?File $scanDocument = null;
 
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $lieuDelivrancePieceIdentite;
+    private ?string $lieuDelivrancePieceIdentite = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $dateDelivrancePieceIdentite;
+    private ?DateTimeInterface $dateDelivrancePieceIdentite = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $autoriteDelivrancePieceIdentite;
+    private ?string $autoriteDelivrancePieceIdentite = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $etatCivil;
+    private ?string $etatCivil = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $activiteExerceeLieu;
+    private ?string $activiteExerceeLieu = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $dateDebutActivite;
+    private ?DateTimeInterface $dateDebutActivite = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $dateDebutActivitePro;
+    private ?DateTimeInterface $dateDebutActivitePro = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $telephone;
+    private ?string $telephone = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $whatsapp;
+    private ?string $whatsapp = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $codePostal;
+    private ?string $codePostal = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $cnps;
+    private ?string $cnps = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $numeroRM;
+    private ?string $numeroRM = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $numeroCarteProfessionnelle;
+    private ?string $numeroCarteProfessionnelle = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationNiveauEtude;
+    private ?string $formationNiveauEtude = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationClasseEtude;
+    private ?string $formationClasseEtude = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationDiplomeObtenu;
+    private ?string $formationDiplomeObtenu = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationApprentissageMetier;
+    private ?string $formationApprentissageMetier = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationApprentissageMetierNiveau;
+    private ?string $formationApprentissageMetierNiveau = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $formationApprentissageMetierDiplome;
+    private ?string $formationApprentissageMetierDiplome = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $numeroPermisConduire;
+    private ?string $numeroPermisConduire = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $latitude;
+    private ?string $latitude = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $longitude;
+    private ?string $longitude = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?DateTimeInterface $createdAt;
+    private ?string $createdAt = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $crmCode;
+    private ?string $crmCode = null;
 
-    private ?int $montant;
+    private ?int $montant = null;
 
-    private ?string $numeroReferencePaiement;
+    private ?string $numeroReferencePaiement = null;
 
-    private ?string $reference_externe;
-
-    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $categoryArtisanCode;
+    private ?string $numeroReferenceExterne = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $villeNaissanceCode;
+    private ?string $categoryArtisanCode = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $paysNaissanceCode;
+    private ?string $villeNaissanceCode = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $nationaliteCode;
+    private ?string $paysNaissanceCode = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $codeImmatriculation;
+    private ?string $nationaliteCode = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $codeIdentification;
+    private ?string $codeImmatriculation = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $activiteSecondaireCode;
+    private ?string $codeIdentification = null;
 
     //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
-    private ?string $activiteExerceeCode;
+    private ?string $activiteSecondaireCode = null;
 
-    private ?string $activitePrincipaleCode;
+    //#[Groups(['artisan_dto:read', 'artisan_dto:create'])]
+    private ?string $activiteExerceeCode = null;
 
-    private ?string $typeEnrolement;
+    private ?string $activitePrincipaleCode = null;
 
-    private ?string $activiteCode;
+    private ?string $typeEnrolement = null;
+
+    private ?string $activiteEntrepriseId = null;
 
     public function __construct()
     {
@@ -916,24 +913,6 @@ class ArtisanRequestDto
     /**
      * @return string|null
      */
-    public function getReferenceExterne(): ?string
-    {
-        return $this->reference_externe;
-    }
-
-    /**
-     * @param string|null $reference_externe
-     * @return ArtisanRequestDto
-     */
-    public function setReferenceExterne(?string $reference_externe): ArtisanRequestDto
-    {
-        $this->reference_externe = $reference_externe;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getCategoryArtisanCode(): ?string
     {
         return $this->categoryArtisanCode;
@@ -1114,18 +1093,36 @@ class ArtisanRequestDto
     /**
      * @return string|null
      */
-    public function getActiviteCode(): ?string
+    public function getNumeroReferenceExterne(): ?string
     {
-        return $this->activiteCode;
+        return $this->numeroReferenceExterne;
     }
 
     /**
-     * @param string|null $activiteCode
+     * @param string|null $numeroReferenceExterne
      * @return ArtisanRequestDto
      */
-    public function setActiviteCode(?string $activiteCode): ArtisanRequestDto
+    public function setNumeroReferenceExterne(?string $numeroReferenceExterne): ArtisanRequestDto
     {
-        $this->activiteCode = $activiteCode;
+        $this->numeroReferenceExterne = $numeroReferenceExterne;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActiviteEntrepriseId(): ?string
+    {
+        return $this->activiteEntrepriseId;
+    }
+
+    /**
+     * @param string|null $activiteEntrepriseId
+     * @return ArtisanRequestDto
+     */
+    public function setActiviteEntrepriseId(?string $activiteEntrepriseId): ArtisanRequestDto
+    {
+        $this->activiteEntrepriseId = $activiteEntrepriseId;
         return $this;
     }
 

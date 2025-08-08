@@ -22,8 +22,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ImportNomenclatureMetierCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private ImportNomenclatureMetierFromCsvService $importNomenclatureMetierFromCsvService,
+        private readonly EntityManagerInterface    $em,
+        private readonly ImportNomenclatureMetierFromCsvService $importNomenclatureMetierFromCsvService,
     ) {
         parent::__construct();
     }

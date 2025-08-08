@@ -53,6 +53,15 @@ class CommunesRepository extends ServiceEntityRepository
         return array_combine($d, $d);
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name as Nom', 'c.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    public function findOneBySomeField($value): ?Communes
 //    {
 //        return $this->createQueryBuilder('c')

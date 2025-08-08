@@ -63,4 +63,13 @@ class CrmRepository extends ServiceEntityRepository
         return $data;
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name as Nom', 'c.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

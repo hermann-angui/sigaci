@@ -14,6 +14,7 @@ use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ArtisanRepository::class)]
 #[ORM\Table(name: '`artisans`')]
@@ -109,6 +110,10 @@ class Artisan
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
     private ?string $etatCivil;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['artisan:read'])]
+    private ?string $reference;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['artisan:read', 'artisan:create', 'artisan:update'])]
@@ -252,13 +257,14 @@ class Artisan
     #[ORM\ManyToOne(inversedBy: 'employees')]
     private ?Entreprise $entreprise = null;
 
-    #[ORM\ManyToOne(inversedBy: 'e�mployees')]
+    #[ORM\ManyToOne(inversedBy: 'employees')]
     private ?EntrepriseActivite $entrepriseActivite = null;
 
     public function __construct()
     {
         $this->created_at = new DateTime();
         $this->modified_at = new DateTime();
+        $this->reference = Uuid::v4()->toRfc4122();
     }
 
     public function getId(): ?int
@@ -1149,6 +1155,24 @@ class Artisan
     public function setScanDocument(?MediaObject $scanDocument): Artisan
     {
         $this->scanDocument = $scanDocument;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string|null $reference
+     * @return Artisan
+     */
+    public function setReference(?string $reference): Artisan
+    {
+        $this->reference = $reference;
         return $this;
     }
 

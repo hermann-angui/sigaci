@@ -2,9 +2,10 @@
 
 namespace App\DTO;
 
+use DateTime;
 use DateTimeInterface;
 
-class ArtisanResponseDto
+class EntrepriseResponseDto
 {
 
     public ?string $id = null;
@@ -17,7 +18,7 @@ class ArtisanResponseDto
 
     private ?string $prenoms;
 
-    private ?DateTimeInterface $dateNaissance;
+    private ?DateTime $dateNaissance;
 
     private ?string $lieuNaissance;
 
@@ -71,8 +72,6 @@ class ArtisanResponseDto
 
     private ?string $formationApprentissageMetierDiplome;
 
-    private ?string $numeroPermisConduire;
-
     private ?string $latitude;
 
     private ?string $longitude;
@@ -83,7 +82,7 @@ class ArtisanResponseDto
 
     private ?int $montant;
 
-    private ?int $code_paiement;
+    private ?int $codePaiement;
 
     private ?string $reference_externe;
 
@@ -121,9 +120,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $id
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setId(?string $id): ArtisanResponseDto
+    public function setId(?string $id): EntrepriseResponseDto
     {
         $this->id = $id;
         return $this;
@@ -139,9 +138,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $email
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setEmail(?string $email): ArtisanResponseDto
+    public function setEmail(?string $email): EntrepriseResponseDto
     {
         $this->email = $email;
         return $this;
@@ -157,9 +156,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $nom
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setNom(?string $nom): ArtisanResponseDto
+    public function setNom(?string $nom): EntrepriseResponseDto
     {
         $this->nom = $nom;
         return $this;
@@ -175,9 +174,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $sexe
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setSexe(?string $sexe): ArtisanResponseDto
+    public function setSexe(?string $sexe): EntrepriseResponseDto
     {
         $this->sexe = $sexe;
         return $this;
@@ -193,9 +192,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $prenoms
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setPrenoms(?string $prenoms): ArtisanResponseDto
+    public function setPrenoms(?string $prenoms): EntrepriseResponseDto
     {
         $this->prenoms = $prenoms;
         return $this;
@@ -211,9 +210,9 @@ class ArtisanResponseDto
 
     /**
      * @param DateTimeInterface|null $dateNaissance
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setDateNaissance(?DateTimeInterface $dateNaissance): ArtisanResponseDto
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): EntrepriseResponseDto
     {
         $this->dateNaissance = $dateNaissance;
         return $this;
@@ -229,9 +228,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $lieuNaissance
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setLieuNaissance(?string $lieuNaissance): ArtisanResponseDto
+    public function setLieuNaissance(?string $lieuNaissance): EntrepriseResponseDto
     {
         $this->lieuNaissance = $lieuNaissance;
         return $this;
@@ -247,9 +246,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $domicile
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setDomicile(?string $domicile): ArtisanResponseDto
+    public function setDomicile(?string $domicile): EntrepriseResponseDto
     {
         $this->domicile = $domicile;
         return $this;
@@ -265,9 +264,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $quartier
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setQuartier(?string $quartier): ArtisanResponseDto
+    public function setQuartier(?string $quartier): EntrepriseResponseDto
     {
         $this->quartier = $quartier;
         return $this;
@@ -283,9 +282,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $typePieceIdentite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setTypePieceIdentite(?string $typePieceIdentite): ArtisanResponseDto
+    public function setTypePieceIdentite(?string $typePieceIdentite): EntrepriseResponseDto
     {
         $this->typePieceIdentite = $typePieceIdentite;
         return $this;
@@ -301,9 +300,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $numeroPieceIdentite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setNumeroPieceIdentite(?string $numeroPieceIdentite): ArtisanResponseDto
+    public function setNumeroPieceIdentite(?string $numeroPieceIdentite): EntrepriseResponseDto
     {
         $this->numeroPieceIdentite = $numeroPieceIdentite;
         return $this;
@@ -319,9 +318,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $photo
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setPhoto(?string $photo): ArtisanResponseDto
+    public function setPhoto(?string $photo): EntrepriseResponseDto
     {
         $this->photo = $photo;
         return $this;
@@ -337,9 +336,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $scanDocument
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setScanDocument(?string $scanDocument): ArtisanResponseDto
+    public function setScanDocument(?string $scanDocument): EntrepriseResponseDto
     {
         $this->scanDocument = $scanDocument;
         return $this;
@@ -355,9 +354,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $lieuDelivrancePieceIdentite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setLieuDelivrancePieceIdentite(?string $lieuDelivrancePieceIdentite): ArtisanResponseDto
+    public function setLieuDelivrancePieceIdentite(?string $lieuDelivrancePieceIdentite): EntrepriseResponseDto
     {
         $this->lieuDelivrancePieceIdentite = $lieuDelivrancePieceIdentite;
         return $this;
@@ -373,9 +372,9 @@ class ArtisanResponseDto
 
     /**
      * @param DateTimeInterface|null $dateDelivrancePieceIdentite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setDateDelivrancePieceIdentite(?DateTimeInterface $dateDelivrancePieceIdentite): ArtisanResponseDto
+    public function setDateDelivrancePieceIdentite(?DateTimeInterface $dateDelivrancePieceIdentite): EntrepriseResponseDto
     {
         $this->dateDelivrancePieceIdentite = $dateDelivrancePieceIdentite;
         return $this;
@@ -391,9 +390,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $autoriteDelivrancePieceIdentite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setAutoriteDelivrancePieceIdentite(?string $autoriteDelivrancePieceIdentite): ArtisanResponseDto
+    public function setAutoriteDelivrancePieceIdentite(?string $autoriteDelivrancePieceIdentite): EntrepriseResponseDto
     {
         $this->autoriteDelivrancePieceIdentite = $autoriteDelivrancePieceIdentite;
         return $this;
@@ -409,9 +408,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $etatCivil
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setEtatCivil(?string $etatCivil): ArtisanResponseDto
+    public function setEtatCivil(?string $etatCivil): EntrepriseResponseDto
     {
         $this->etatCivil = $etatCivil;
         return $this;
@@ -427,9 +426,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $activiteExerceeLieu
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setActiviteExerceeLieu(?string $activiteExerceeLieu): ArtisanResponseDto
+    public function setActiviteExerceeLieu(?string $activiteExerceeLieu): EntrepriseResponseDto
     {
         $this->activiteExerceeLieu = $activiteExerceeLieu;
         return $this;
@@ -445,9 +444,9 @@ class ArtisanResponseDto
 
     /**
      * @param DateTimeInterface|null $dateDebutActivite
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setDateDebutActivite(?DateTimeInterface $dateDebutActivite): ArtisanResponseDto
+    public function setDateDebutActivite(?DateTimeInterface $dateDebutActivite): EntrepriseResponseDto
     {
         $this->dateDebutActivite = $dateDebutActivite;
         return $this;
@@ -463,9 +462,9 @@ class ArtisanResponseDto
 
     /**
      * @param DateTimeInterface|null $dateDebutActivitePro
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setDateDebutActivitePro(?DateTimeInterface $dateDebutActivitePro): ArtisanResponseDto
+    public function setDateDebutActivitePro(?DateTimeInterface $dateDebutActivitePro): EntrepriseResponseDto
     {
         $this->dateDebutActivitePro = $dateDebutActivitePro;
         return $this;
@@ -481,9 +480,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $telephone
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setTelephone(?string $telephone): ArtisanResponseDto
+    public function setTelephone(?string $telephone): EntrepriseResponseDto
     {
         $this->telephone = $telephone;
         return $this;
@@ -499,9 +498,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $whatsapp
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setWhatsapp(?string $whatsapp): ArtisanResponseDto
+    public function setWhatsapp(?string $whatsapp): EntrepriseResponseDto
     {
         $this->whatsapp = $whatsapp;
         return $this;
@@ -517,9 +516,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $codePostal
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCodePostal(?string $codePostal): ArtisanResponseDto
+    public function setCodePostal(?string $codePostal): EntrepriseResponseDto
     {
         $this->codePostal = $codePostal;
         return $this;
@@ -535,9 +534,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $cnps
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCnps(?string $cnps): ArtisanResponseDto
+    public function setCnps(?string $cnps): EntrepriseResponseDto
     {
         $this->cnps = $cnps;
         return $this;
@@ -553,9 +552,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $numeroRM
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setNumeroRM(?string $numeroRM): ArtisanResponseDto
+    public function setNumeroRM(?string $numeroRM): EntrepriseResponseDto
     {
         $this->numeroRM = $numeroRM;
         return $this;
@@ -571,9 +570,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $numeroCarteProfessionnelle
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setNumeroCarteProfessionnelle(?string $numeroCarteProfessionnelle): ArtisanResponseDto
+    public function setNumeroCarteProfessionnelle(?string $numeroCarteProfessionnelle): EntrepriseResponseDto
     {
         $this->numeroCarteProfessionnelle = $numeroCarteProfessionnelle;
         return $this;
@@ -589,9 +588,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationNiveauEtude
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationNiveauEtude(?string $formationNiveauEtude): ArtisanResponseDto
+    public function setFormationNiveauEtude(?string $formationNiveauEtude): EntrepriseResponseDto
     {
         $this->formationNiveauEtude = $formationNiveauEtude;
         return $this;
@@ -607,9 +606,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationClasseEtude
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationClasseEtude(?string $formationClasseEtude): ArtisanResponseDto
+    public function setFormationClasseEtude(?string $formationClasseEtude): EntrepriseResponseDto
     {
         $this->formationClasseEtude = $formationClasseEtude;
         return $this;
@@ -625,9 +624,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationDiplomeObtenu
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationDiplomeObtenu(?string $formationDiplomeObtenu): ArtisanResponseDto
+    public function setFormationDiplomeObtenu(?string $formationDiplomeObtenu): EntrepriseResponseDto
     {
         $this->formationDiplomeObtenu = $formationDiplomeObtenu;
         return $this;
@@ -643,9 +642,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationApprentissageMetier
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationApprentissageMetier(?string $formationApprentissageMetier): ArtisanResponseDto
+    public function setFormationApprentissageMetier(?string $formationApprentissageMetier): EntrepriseResponseDto
     {
         $this->formationApprentissageMetier = $formationApprentissageMetier;
         return $this;
@@ -661,9 +660,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationApprentissageMetierNiveau
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationApprentissageMetierNiveau(?string $formationApprentissageMetierNiveau): ArtisanResponseDto
+    public function setFormationApprentissageMetierNiveau(?string $formationApprentissageMetierNiveau): EntrepriseResponseDto
     {
         $this->formationApprentissageMetierNiveau = $formationApprentissageMetierNiveau;
         return $this;
@@ -679,31 +678,15 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $formationApprentissageMetierDiplome
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setFormationApprentissageMetierDiplome(?string $formationApprentissageMetierDiplome): ArtisanResponseDto
+    public function setFormationApprentissageMetierDiplome(?string $formationApprentissageMetierDiplome): EntrepriseResponseDto
     {
         $this->formationApprentissageMetierDiplome = $formationApprentissageMetierDiplome;
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getNumeroPermisConduire(): ?string
-    {
-        return $this->numeroPermisConduire;
-    }
 
-    /**
-     * @param string|null $numeroPermisConduire
-     * @return ArtisanResponseDto
-     */
-    public function setNumeroPermisConduire(?string $numeroPermisConduire): ArtisanResponseDto
-    {
-        $this->numeroPermisConduire = $numeroPermisConduire;
-        return $this;
-    }
 
     /**
      * @return string|null
@@ -715,9 +698,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $latitude
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setLatitude(?string $latitude): ArtisanResponseDto
+    public function setLatitude(?string $latitude): EntrepriseResponseDto
     {
         $this->latitude = $latitude;
         return $this;
@@ -733,9 +716,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $longitude
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setLongitude(?string $longitude): ArtisanResponseDto
+    public function setLongitude(?string $longitude): EntrepriseResponseDto
     {
         $this->longitude = $longitude;
         return $this;
@@ -751,9 +734,9 @@ class ArtisanResponseDto
 
     /**
      * @param DateTimeInterface|null $created_at
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCreatedAt(?DateTimeInterface $created_at): ArtisanResponseDto
+    public function setCreatedAt(?DateTimeInterface $created_at): EntrepriseResponseDto
     {
         $this->created_at = $created_at;
         return $this;
@@ -769,9 +752,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $crmCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCrmCode(?string $crmCode): ArtisanResponseDto
+    public function setCrmCode(?string $crmCode): EntrepriseResponseDto
     {
         $this->crmCode = $crmCode;
         return $this;
@@ -787,31 +770,33 @@ class ArtisanResponseDto
 
     /**
      * @param int|null $montant
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setMontant(?int $montant): ArtisanResponseDto
+    public function setMontant(?int $montant): EntrepriseResponseDto
     {
         $this->montant = $montant;
         return $this;
     }
+
 
     /**
      * @return int|null
      */
     public function getCodePaiement(): ?int
     {
-        return $this->code_paiement;
+        return $this->codePaiement;
     }
 
     /**
-     * @param int|null $code_paiement
-     * @return ArtisanResponseDto
+     * @param int|null $codePaiement
+     * @return EntrepriseResponseDto
      */
-    public function setCodePaiement(?int $code_paiement): ArtisanResponseDto
+    public function setCodePaiement(?int $codePaiement): EntrepriseResponseDto
     {
-        $this->code_paiement = $code_paiement;
+        $this->codePaiement = $codePaiement;
         return $this;
     }
+
 
     /**
      * @return string|null
@@ -823,9 +808,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $reference_externe
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setReferenceExterne(?string $reference_externe): ArtisanResponseDto
+    public function setReferenceExterne(?string $reference_externe): EntrepriseResponseDto
     {
         $this->reference_externe = $reference_externe;
         return $this;
@@ -842,9 +827,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $villeNaissanceCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setVilleNaissanceCode(?string $villeNaissanceCode): ArtisanResponseDto
+    public function setVilleNaissanceCode(?string $villeNaissanceCode): EntrepriseResponseDto
     {
         $this->villeNaissanceCode = $villeNaissanceCode;
         return $this;
@@ -860,9 +845,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $paysNaissanceCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setPaysNaissanceCode(?string $paysNaissanceCode): ArtisanResponseDto
+    public function setPaysNaissanceCode(?string $paysNaissanceCode): EntrepriseResponseDto
     {
         $this->paysNaissanceCode = $paysNaissanceCode;
         return $this;
@@ -878,9 +863,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $nationaliteCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setNationaliteCode(?string $nationaliteCode): ArtisanResponseDto
+    public function setNationaliteCode(?string $nationaliteCode): EntrepriseResponseDto
     {
         $this->nationaliteCode = $nationaliteCode;
         return $this;
@@ -896,9 +881,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $codeImmatriculation
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCodeImmatriculation(?string $codeImmatriculation): ArtisanResponseDto
+    public function setCodeImmatriculation(?string $codeImmatriculation): EntrepriseResponseDto
     {
         $this->codeImmatriculation = $codeImmatriculation;
         return $this;
@@ -914,9 +899,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $codeIdentification
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCodeIdentification(?string $codeIdentification): ArtisanResponseDto
+    public function setCodeIdentification(?string $codeIdentification): EntrepriseResponseDto
     {
         $this->codeIdentification = $codeIdentification;
         return $this;
@@ -932,9 +917,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $activiteSecondaireCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setActiviteSecondaireCode(?string $activiteSecondaireCode): ArtisanResponseDto
+    public function setActiviteSecondaireCode(?string $activiteSecondaireCode): EntrepriseResponseDto
     {
         $this->activiteSecondaireCode = $activiteSecondaireCode;
         return $this;
@@ -950,9 +935,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $activiteExerceeCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setActiviteExerceeCode(?string $activiteExerceeCode): ArtisanResponseDto
+    public function setActiviteExerceeCode(?string $activiteExerceeCode): EntrepriseResponseDto
     {
         $this->activiteExerceeCode = $activiteExerceeCode;
         return $this;
@@ -968,9 +953,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $activitePrincipaleCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setActivitePrincipaleCode(?string $activitePrincipaleCode): ArtisanResponseDto
+    public function setActivitePrincipaleCode(?string $activitePrincipaleCode): EntrepriseResponseDto
     {
         $this->activitePrincipaleCode = $activitePrincipaleCode;
         return $this;
@@ -986,9 +971,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $entrepriseNumeroIdentification
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setEntrepriseNumeroIdentification(?string $entrepriseNumeroIdentification): ArtisanResponseDto
+    public function setEntrepriseNumeroIdentification(?string $entrepriseNumeroIdentification): EntrepriseResponseDto
     {
         $this->entrepriseNumeroIdentification = $entrepriseNumeroIdentification;
         return $this;
@@ -1004,9 +989,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $entrepriseNumeroImmatriculation
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setEntrepriseNumeroImmatriculation(?string $entrepriseNumeroImmatriculation): ArtisanResponseDto
+    public function setEntrepriseNumeroImmatriculation(?string $entrepriseNumeroImmatriculation): EntrepriseResponseDto
     {
         $this->entrepriseNumeroImmatriculation = $entrepriseNumeroImmatriculation;
         return $this;
@@ -1022,9 +1007,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $activiteCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setActiviteCode(?string $activiteCode): ArtisanResponseDto
+    public function setActiviteCode(?string $activiteCode): EntrepriseResponseDto
     {
         $this->activiteCode = $activiteCode;
         return $this;
@@ -1040,9 +1025,9 @@ class ArtisanResponseDto
 
     /**
      * @param string|null $categoryArtisanCode
-     * @return ArtisanResponseDto
+     * @return EntrepriseResponseDto
      */
-    public function setCategoryArtisanCode(?string $categoryArtisanCode): ArtisanResponseDto
+    public function setCategoryArtisanCode(?string $categoryArtisanCode): EntrepriseResponseDto
     {
         $this->categoryArtisanCode = $categoryArtisanCode;
         return $this;

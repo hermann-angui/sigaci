@@ -12,7 +12,7 @@ class FileHelper {
     }
 
     public static function generateUniqFileName(File $file): string {
-        return  time() . uniqid() . '.'. ($file->guessExtension() ? $file->guessExtension(): '');
+        return  Uuid::v4()->toString() . '.'. ($file->guessExtension() ? $file->guessExtension(): '');
     }
 
     public static function generateUuidFileName(File $file): string {

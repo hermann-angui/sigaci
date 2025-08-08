@@ -26,14 +26,29 @@ class SousPrefecture
     #[ORM\Column(length: 10)]
     private string $code;
 
+    #[ORM\ManyToOne(inversedBy: 'sousPrefectures')]
+    private ?Department $department = null;
+
     public function __construct()
     {
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return SousPrefecture
+     */
+    public function setId(?int $id): SousPrefecture
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getName(): ?string
@@ -68,6 +83,18 @@ class SousPrefecture
     public function setCode(string $code): SousPrefecture
     {
         $this->code = $code;
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): static
+    {
+        $this->department = $department;
+
         return $this;
     }
 

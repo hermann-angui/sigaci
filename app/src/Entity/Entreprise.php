@@ -8,6 +8,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
 #[ORM\Table(name: '`entreprises`')]
@@ -25,6 +26,9 @@ class Entreprise
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sigle;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reference;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $objetSocial;
@@ -113,9 +117,17 @@ class Entreprise
     #[ORM\ManyToOne(inversedBy: 'entreprises')]
     private ?Villes $ville = null;
 
+    /**
+     * @var Collection<int, EntrepriseActivite>
+     */
+    #[ORM\OneToMany(targetEntity: EntrepriseActivite::class, mappedBy: 'entreprise')]
+    private Collection $activites;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+        $this->reference = Uuid::v4()->toString();
+        $this->activites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -652,5 +664,51 @@ class Entreprise
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
 
+    /**
+     * @param string|null $reference
+     * @return Entreprise
+     */
+    public function setReference(?string $reference): Entreprise
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EntrepriseActivite>
+     */
+    public function getActivites(): Collection
+    {
+        return $this->activites;
+    }
+
+    public function addActivite(EntrepriseActivite $activite): static
+    {
+        if (!$this->activites->contains($activite)) {
+            $this->activites->add($activite);
+            $activite->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivite(EntrepriseActivite $activite): static
+    {
+        if ($this->activites->removeElement($activite)) {
+            // set the owning side to null (unless already changed)
+            if ($activite->getEntreprise() === $this) {
+                $activite->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
 }

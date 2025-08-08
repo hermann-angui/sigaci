@@ -16,6 +16,15 @@ class CategoryArtisanRepository extends ServiceEntityRepository
         parent::__construct($registry, CategoryArtisan::class);
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('ca')
+            ->select('ca.name as Nom', 'ca.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return CategoryArtisan[] Returns an array of CategoryArtisan objects
     //     */

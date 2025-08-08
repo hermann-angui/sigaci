@@ -34,8 +34,11 @@ class Identification
     #[ORM\Column(length: 150, nullable: true, unique: true)]
     private ?string $reference;
 
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $code;
+
     #[ORM\Column(type:"string", unique:true)]
-    private ?string $internal_code;
+    private ?string $numeroReferenceExterne;
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $source;
@@ -54,7 +57,7 @@ class Identification
 
     public function __construct()
     {
-        $this->internal_code = Uuid::v4()->toRfc4122();
+        $this->reference = Uuid::v4()->toRfc4122();
         $this->created_at = new DateTime();
         $this->modified_at = new DateTime();
     }
@@ -192,20 +195,38 @@ class Identification
     }
 
     /**
-     * @return ?string|null
+     * @return string|null
      */
-    public function getInternalCode(): ?string
+    public function getNumeroReferenceExterne(): ?string
     {
-        return $this->internal_code;
+        return $this->numeroReferenceExterne;
     }
 
     /**
-     * @param string|null $internal_code
+     * @param string|null $numeroReferenceExterne
      * @return Identification
      */
-    public function setInternalCode(?string $internal_code): Identification
+    public function setNumeroReferenceExterne(?string $numeroReferenceExterne): Identification
     {
-        $this->internal_code = $internal_code;
+        $this->numeroReferenceExterne = $numeroReferenceExterne;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     * @return Identification
+     */
+    public function setCode(?string $code): Identification
+    {
+        $this->code = $code;
         return $this;
     }
 

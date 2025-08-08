@@ -24,6 +24,34 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
 
+    App\Service\Wave\WaveService:
+        arguments:
+            $container: '@service_container'
+
+    App\Service\Email\EmailService:
+        arguments:
+            $mailer: '@mailer.mailer'
+
+    App\Service\Artisan\ArtisanService:
+        arguments:
+            $container: '@service_container'
+
+    App\Service\Artisan\ArtisanCardGeneratorService:
+        arguments:
+            $container: '@service_container'
+
+    App\Helper\CsvReaderHelper:
+
+    App\Helper\FileHelper:
+
+    App\Helper\UserHelper:
+        arguments:
+            $uploadDirectory: '%kernel.project_dir%'
+
+    App\Helper\ArtisanAssetHelper:
+        arguments:
+            $uploadDirectory: '%kernel.project_dir%'
+
     App\Service\Sms\TwilioService:
         public: true
 

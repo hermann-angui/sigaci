@@ -442,8 +442,8 @@ class ArtisanService extends AbstractService
     public function generateAllPhotoThumbnails(){
         $artisans = $this->artisanRepository->findAll();
         foreach($artisans as $artisan){
-            FileHelper::deleteExistingFile($this->artisanAssetHelper->getArtisanDir($artisan) . $artisan->getPhoto());
-            $this->artisanAssetHelper->createThumbnail($artisan->getPhoto(),  $artisan->getReference(), 128, 128);
+           // FileHelper::deleteExistingFile($this->artisanAssetHelper->getArtisanDir($artisan) . $artisan->getPhoto());
+           // $this->artisanAssetHelper->createThumbnail($artisan->getPhoto(),  $artisan->getReference(), 128, 128);
         }
     }
 

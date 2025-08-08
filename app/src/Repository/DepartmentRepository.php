@@ -39,6 +39,16 @@ class DepartmentRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCodeAndName(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.name as Nom', 'd.code as Code')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 //    /**
 //     * @return Department[] Returns an array of Department objects
 //     */

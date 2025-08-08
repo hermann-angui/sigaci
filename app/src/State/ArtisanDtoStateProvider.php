@@ -12,9 +12,7 @@ use App\Repository\ArtisanRepository;
 
 class ArtisanDtoStateProvider implements ProviderInterface
 {
-    public function __construct(
-        private readonly ArtisanRepository $artisanRepository
-    ) {}
+    public function __construct(private readonly ArtisanRepository $artisanRepository) {}
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
@@ -54,6 +52,10 @@ class ArtisanDtoStateProvider implements ProviderInterface
         $dto = new ArtisanResponseDto();
         $dto->setId((string) $artisan->getId());
         $dto->setSexe((string) $artisan->getSexe());
+        $dto->setLongitude((string) $artisan->getLongitude());
+        $dto->setLatitude((string) $artisan->getLatitude());
+        $dto->setCnps((string) $artisan->getCnps());
+        $dto->setCreatedAt( $artisan->getCreatedAt());
 
         return $dto;
     }

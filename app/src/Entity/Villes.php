@@ -34,18 +34,27 @@ class Villes
     #[ORM\OneToMany(targetEntity: Entreprise::class, mappedBy: 'ville')]
     private Collection $entreprises;
 
-    /**
-     * @throws RandomException
-     */
     public function __construct()
     {
         $this->entreprises = new ArrayCollection();
-        $this->code = substr(bin2hex(random_bytes(10)), 0, 10);
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return Villes
+     */
+    public function setId(?int $id): Villes
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getName(): ?string

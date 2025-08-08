@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\EntrepriseRepository;
+use App\Repository\EntrepriseActiviteRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
+#[ORM\Entity(repositoryClass: EntrepriseActiviteRepository::class)]
 #[ORM\Table(name: '`entreprise_activites`')]
 #[ORM\HasLifecycleCallbacks()]
 #[ApiResource()]
@@ -22,7 +22,7 @@ class EntrepriseActivite
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTime $dateDebutActivite;
+    private ?\DateTimeInterface $dateDebutActivite;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adressPostale;
@@ -74,12 +74,6 @@ class EntrepriseActivite
     private ?self $crm = null;
 
     /**
-     * @var Collection<int, self>
-     */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'crm')]
-    private Collection $entrepriseActivites;
-
-    /**
      * @var Collection<int, Artisan>
      */
     #[ORM\OneToMany(targetEntity: Artisan::class, mappedBy: 'entrepriseActivite')]
@@ -92,7 +86,7 @@ class EntrepriseActivite
     private ?Communes $commune = null;
 
     #[ORM\ManyToOne]
-    private ?Communes $sousPrefecture = null;
+    private ?SousPrefecture $sousPrefecture = null;
 
     #[ORM\ManyToOne]
     private ?Villes $ville = null;
@@ -103,10 +97,12 @@ class EntrepriseActivite
     #[ORM\ManyToOne(inversedBy: 'entrepriseActivites')]
     private ?Metiers $activite = null;
 
+    #[ORM\ManyToOne(inversedBy: 'activites')]
+    private ?Entreprise $entreprise = null;
+
     public function __construct()
     {
-        $this->entrepriseActivites = new ArrayCollection();
-        $this->e�mployees = new ArrayCollection();
+        $this->employees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,46 +130,11 @@ class EntrepriseActivite
         $this->longitude = $longitude;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSigle(): ?string
-    {
-        return $this->sigle;
-    }
 
     /**
-     * @param string|null $sigle
-     * @return Entreprise
+     * @return \DateTimeInterface
      */
-    public function setSigle(?string $sigle): EntrepriseActivite
-    {
-        $this->sigle = $sigle;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getObjetSocial(): ?string
-    {
-        return $this->objetSocial;
-    }
-
-    /**
-     * @param string|null $objetSocial
-     * @return Entreprise
-     */
-    public function setObjetSocial(?string $objetSocial): EntrepriseActivite
-    {
-        $this->objetSocial = $objetSocial;
-        return $this;
-    }
-
-    /**
-     * @return DateTime|null
-     */
-    public function getDateDebutActivite(): ?DateTime
+    public function getDateDebutActivite(): \DateTimeInterface
     {
         return $this->dateDebutActivite;
     }
@@ -186,16 +147,6 @@ class EntrepriseActivite
     {
         $this->dateDebutActivite = $dateDebutActivite;
         return $this;
-    }
-
-
-
-    /**
-     * @return string|null
-     */
-    public function getDureePersonne(): ?string
-    {
-        return $this->dureePersonne;
     }
 
 
@@ -433,18 +384,6 @@ class EntrepriseActivite
         return $this;
     }
 
-    public function getPays(): ?Pays
-    {
-        return $this->pays;
-    }
-
-    public function setPays(?Pays $pays): static
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
     public function getVille(): ?Villes
     {
         return $this->ville;
@@ -492,66 +431,6 @@ class EntrepriseActivite
         return $this;
     }
 
-    /**
-     * @return Collection<int, self>
-     */
-    public function getEntrepriseActivites(): Collection
-    {
-        return $this->entrepriseActivites;
-    }
-
-    public function addEntrepriseActivite(self $entrepriseActivite): static
-    {
-        if (!$this->entrepriseActivites->contains($entrepriseActivite)) {
-            $this->entrepriseActivites->add($entrepriseActivite);
-            $entrepriseActivite->setCrm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEntrepriseActivite(self $entrepriseActivite): static
-    {
-        if ($this->entrepriseActivites->removeElement($entrepriseActivite)) {
-            // set the owning side to null (unless already changed)
-            if ($entrepriseActivite->getCrm() === $this) {
-                $entrepriseActivite->setCrm(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Artisan>
-     */
-    public function getE�mployees(): Collection
-    {
-        return $this->e�mployees;
-    }
-
-    public function addEMployee(Artisan $eMployee): static
-    {
-        if (!$this->e�mployees->contains($eMployee)) {
-            $this->e�mployees->add($eMployee);
-            $eMployee->setEntrepriseActivite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEMployee(Artisan $eMployee): static
-    {
-        if ($this->e�mployees->removeElement($eMployee)) {
-            // set the owning side to null (unless already changed)
-            if ($eMployee->getEntrepriseActivite() === $this) {
-                $eMployee->setEntrepriseActivite(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getRegistre(): ?Registre
     {
         return $this->registre;
@@ -572,6 +451,18 @@ class EntrepriseActivite
     public function setActivite(?Metiers $activite): static
     {
         $this->activite = $activite;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
 
         return $this;
     }

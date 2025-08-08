@@ -5,7 +5,7 @@ namespace App\Helper;
 class ImageHelper
 {
 
-    public function createThumbnail($source_file, $thumbpath, $thumbnail_width, $thumbnail_height, $background=false) : ?string{
+    public function createThumbnail($source_file, $fileBaseName, $thumbpath, $thumbnail_width, $thumbnail_height, $background=false) : ?string{
 
         $d = gd_info();
 
@@ -23,17 +23,17 @@ class ImageHelper
 
         if ($original_type === 1) {
             $imgt = "imagegif";
-            $fileName =  $thumbpath . 'thumbnail.gif';
+            $fileName =  $thumbpath . $fileBaseName .  '_thumbnail.gif';
             $imgcreatefrom = "imagecreatefromgif";
         } else if ($original_type === 2) {
             $imgt = "imagejpeg";
             $quality = 100;
-            $fileName =  $thumbpath . 'thumbnail.jpg';
+            $fileName =   $thumbpath . $fileBaseName . '_thumbnail.jpg';
             $imgcreatefrom = "imagecreatefromjpeg";
         } else if ($original_type === 3) {
             $imgt = "imagepng";
             $quality = 9;
-            $fileName = $thumbpath . 'thumbnail.png';
+            $fileName =  $thumbpath . $fileBaseName . '_thumbnail.png';
             $imgcreatefrom = "imagecreatefrompng";
         } else {
             return null;
